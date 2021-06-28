@@ -7,7 +7,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.mycompany.myapp.IntegrationTest;
 import com.mycompany.myapp.domain.Controle;
-import com.mycompany.myapp.domain.enumeration.ContType;
+import com.mycompany.myapp.domain.enumeration.TypeControle;
 import com.mycompany.myapp.repository.ControleRepository;
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -38,8 +38,8 @@ class ControleResourceIT {
     private static final Integer DEFAULT_COEF_CONT = 0;
     private static final Integer UPDATED_COEF_CONT = 1;
 
-    private static final ContType DEFAULT_TYPE = ContType.CE;
-    private static final ContType UPDATED_TYPE = ContType.CO;
+    private static final TypeControle DEFAULT_TYPE = TypeControle.CE;
+    private static final TypeControle UPDATED_TYPE = TypeControle.CO;
 
     private static final String ENTITY_API_URL = "/api/controles";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";

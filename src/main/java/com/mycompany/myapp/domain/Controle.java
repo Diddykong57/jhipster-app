@@ -1,7 +1,7 @@
 package com.mycompany.myapp.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.mycompany.myapp.domain.enumeration.ContType;
+import com.mycompany.myapp.domain.enumeration.TypeControle;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.HashSet;
@@ -36,7 +36,7 @@ public class Controle implements Serializable {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "type")
-    private ContType type;
+    private TypeControle type;
 
     @OneToMany(mappedBy = "controle")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
@@ -83,16 +83,16 @@ public class Controle implements Serializable {
         this.coefCont = coefCont;
     }
 
-    public ContType getType() {
+    public TypeControle getType() {
         return this.type;
     }
 
-    public Controle type(ContType type) {
+    public Controle type(TypeControle type) {
         this.type = type;
         return this;
     }
 
-    public void setType(ContType type) {
+    public void setType(TypeControle type) {
         this.type = type;
     }
 

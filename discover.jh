@@ -11,11 +11,11 @@ entity Diplome {
 entity Controle {
     date LocalDate
     coefCont Integer min(0) max(4)
-    type ContType
+    type TypeControle
 }
 
 entity Matiere{
-    nameMat String
+    nameMat TypeMatiere
     coefMat Integer min(0)
 }
 
@@ -23,11 +23,22 @@ entity Obtient {
 	note Float required min(0) max(20)
 }
 
-enum ContType {
+enum TypeControle {
 	CE (comprehensionEcrite),
     CO (comprehensionOrale),
     EE (expressionEcrite),
     EO (expressionOrale)
+}
+
+enum TypeMatiere {
+	MATHS (Mathematiques),
+    FR (Francais),
+    EN (Anglais),
+    PHY (Physique),
+    CHI (Chimie),
+    PHILO (Philosophie),
+    SPORT (Sport),
+    SVT (Science)
 }
 
 relationship OneToOne {

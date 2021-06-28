@@ -13,7 +13,17 @@
 
         <div class="form-group">
           <label class="form-control-label" for="field_nameMat">Name Mat</label>
-          <input type="text" class="form-control" name="nameMat" id="field_nameMat" data-cy="nameMat" formControlName="nameMat" />
+          <select class="form-control" name="nameMat" formControlName="nameMat" id="field_nameMat" data-cy="nameMat">
+            <option [ngValue]="null"></option>
+            <option value="MATHS">Mathematiques</option>
+            <option value="FR">Francais</option>
+            <option value="EN">Anglais</option>
+            <option value="PHY">Physique</option>
+            <option value="CHI">Chimie</option>
+            <option value="PHILO">Philosophie</option>
+            <option value="SPORT">Sport</option>
+            <option value="SVT">Science</option>
+          </select>
         </div>
 
         <div class="form-group">
