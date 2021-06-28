@@ -13,14 +13,18 @@
     {
       "relationshipType": "many-to-one",
       "otherEntityName": "controle",
-      "otherEntityRelationshipName": "idCont",
-      "relationshipName": "controle"
+      "otherEntityRelationshipName": "obtient",
+      "relationshipValidateRules": "required",
+      "relationshipName": "controle",
+      "otherEntityField": "date"
     },
     {
       "relationshipType": "many-to-one",
       "otherEntityName": "etudiant",
-      "otherEntityRelationshipName": "idEtud",
-      "relationshipName": "etudiant"
+      "otherEntityRelationshipName": "obtient",
+      "relationshipValidateRules": "required",
+      "relationshipName": "etudiant",
+      "otherEntityField": "firstname"
     }
   ],
   "entityTableName": "obtient",

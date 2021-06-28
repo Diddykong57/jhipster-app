@@ -26,7 +26,6 @@ describe('Service Tests', () => {
 
       elemDefault = {
         id: 0,
-        idCont: 0,
         date: currentDate,
         coefCont: 0,
         type: 'AAAAAAA',
@@ -76,7 +75,6 @@ describe('Service Tests', () => {
         const returnedFromService = Object.assign(
           {
             id: 1,
-            idCont: 1,
             date: currentDate.format(DATE_FORMAT),
             coefCont: 1,
             type: 'BBBBBB',
@@ -99,12 +97,7 @@ describe('Service Tests', () => {
       });
 
       it('should partial update a Controle', () => {
-        const patchObject = Object.assign(
-          {
-            type: 'BBBBBB',
-          },
-          new Controle()
-        );
+        const patchObject = Object.assign({}, new Controle());
 
         const returnedFromService = Object.assign(patchObject, elemDefault);
 
@@ -126,7 +119,6 @@ describe('Service Tests', () => {
         const returnedFromService = Object.assign(
           {
             id: 1,
-            idCont: 1,
             date: currentDate.format(DATE_FORMAT),
             coefCont: 1,
             type: 'BBBBBB',
@@ -186,7 +178,7 @@ describe('Service Tests', () => {
         });
 
         it('should add only unique Controle to an array', () => {
-          const controleArray: IControle[] = [{ id: 123 }, { id: 456 }, { id: 70597 }];
+          const controleArray: IControle[] = [{ id: 123 }, { id: 456 }, { id: 68363 }];
           const controleCollection: IControle[] = [{ id: 123 }];
           expectedResult = service.addControleToCollectionIfMissing(controleCollection, ...controleArray);
           expect(expectedResult).toHaveLength(3);

@@ -33,11 +33,9 @@
       <thead>
         <tr>
           <th scope="col"><span>ID</span></th>
-          <th scope="col"><span>Id Cont</span></th>
           <th scope="col"><span>Date</span></th>
           <th scope="col"><span>Coef Cont</span></th>
           <th scope="col"><span>Type</span></th>
-          <th scope="col"><span>Id Cont</span></th>
           <th scope="col"></th>
         </tr>
       </thead>
@@ -46,15 +44,9 @@
           <td>
             <a [routerLink]="['/controle', controle.id, 'view']">{{ controle.id }}</a>
           </td>
-          <td>{{ controle.idCont }}</td>
           <td>{{ controle.date | formatMediumDate }}</td>
           <td>{{ controle.coefCont }}</td>
           <td>{{ controle.type }}</td>
-          <td>
-            <div *ngIf="controle.idCont">
-              <a [routerLink]="['/matiere', controle.idCont?.id, 'view']">{{ controle.idCont?.id }}</a>
-            </div>
-          </td>
           <td class="text-right">
             <div class="btn-group">
               <button

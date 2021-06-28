@@ -33,10 +33,8 @@
       <thead>
         <tr>
           <th scope="col"><span>ID</span></th>
-          <th scope="col"><span>Id Etud</span></th>
           <th scope="col"><span>First Name</span></th>
           <th scope="col"><span>Last Name</span></th>
-          <th scope="col"><span>First Name</span></th>
           <th scope="col"></th>
         </tr>
       </thead>
@@ -45,14 +43,8 @@
           <td>
             <a [routerLink]="['/etudiant', etudiant.id, 'view']">{{ etudiant.id }}</a>
           </td>
-          <td>{{ etudiant.idEtud }}</td>
           <td>{{ etudiant.firstName }}</td>
           <td>{{ etudiant.lastName }}</td>
-          <td>
-            <div *ngIf="etudiant.firstName">
-              <a [routerLink]="['/diplome', etudiant.firstName?.id, 'view']">{{ etudiant.firstName?.id }}</a>
-            </div>
-          </td>
           <td class="text-right">
             <div class="btn-group">
               <button

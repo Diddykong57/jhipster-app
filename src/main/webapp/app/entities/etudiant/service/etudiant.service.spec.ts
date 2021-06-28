@@ -22,7 +22,6 @@ describe('Service Tests', () => {
 
       elemDefault = {
         id: 0,
-        idEtud: 0,
         firstName: 'AAAAAAA',
         lastName: 'AAAAAAA',
       };
@@ -60,7 +59,6 @@ describe('Service Tests', () => {
         const returnedFromService = Object.assign(
           {
             id: 1,
-            idEtud: 1,
             firstName: 'BBBBBB',
             lastName: 'BBBBBB',
           },
@@ -79,7 +77,6 @@ describe('Service Tests', () => {
       it('should partial update a Etudiant', () => {
         const patchObject = Object.assign(
           {
-            idEtud: 1,
             firstName: 'BBBBBB',
             lastName: 'BBBBBB',
           },
@@ -101,7 +98,6 @@ describe('Service Tests', () => {
         const returnedFromService = Object.assign(
           {
             id: 1,
-            idEtud: 1,
             firstName: 'BBBBBB',
             lastName: 'BBBBBB',
           },
@@ -155,7 +151,7 @@ describe('Service Tests', () => {
         });
 
         it('should add only unique Etudiant to an array', () => {
-          const etudiantArray: IEtudiant[] = [{ id: 123 }, { id: 456 }, { id: 18617 }];
+          const etudiantArray: IEtudiant[] = [{ id: 123 }, { id: 456 }, { id: 56652 }];
           const etudiantCollection: IEtudiant[] = [{ id: 123 }];
           expectedResult = service.addEtudiantToCollectionIfMissing(etudiantCollection, ...etudiantArray);
           expect(expectedResult).toHaveLength(3);

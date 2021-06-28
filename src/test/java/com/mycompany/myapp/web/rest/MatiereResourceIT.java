@@ -29,9 +29,6 @@ import org.springframework.transaction.annotation.Transactional;
 @WithMockUser
 class MatiereResourceIT {
 
-    private static final Integer DEFAULT_ID_MAT = 1;
-    private static final Integer UPDATED_ID_MAT = 2;
-
     private static final String DEFAULT_NAME_MAT = "AAAAAAAAAA";
     private static final String UPDATED_NAME_MAT = "BBBBBBBBBB";
 
@@ -62,7 +59,7 @@ class MatiereResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Matiere createEntity(EntityManager em) {
-        Matiere matiere = new Matiere().idMat(DEFAULT_ID_MAT).nameMat(DEFAULT_NAME_MAT).coefMat(DEFAULT_COEF_MAT);
+        Matiere matiere = new Matiere().nameMat(DEFAULT_NAME_MAT).coefMat(DEFAULT_COEF_MAT);
         return matiere;
     }
 
@@ -73,7 +70,7 @@ class MatiereResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Matiere createUpdatedEntity(EntityManager em) {
-        Matiere matiere = new Matiere().idMat(UPDATED_ID_MAT).nameMat(UPDATED_NAME_MAT).coefMat(UPDATED_COEF_MAT);
+        Matiere matiere = new Matiere().nameMat(UPDATED_NAME_MAT).coefMat(UPDATED_COEF_MAT);
         return matiere;
     }
 
@@ -95,7 +92,6 @@ class MatiereResourceIT {
         List<Matiere> matiereList = matiereRepository.findAll();
         assertThat(matiereList).hasSize(databaseSizeBeforeCreate + 1);
         Matiere testMatiere = matiereList.get(matiereList.size() - 1);
-        assertThat(testMatiere.getIdMat()).isEqualTo(DEFAULT_ID_MAT);
         assertThat(testMatiere.getNameMat()).isEqualTo(DEFAULT_NAME_MAT);
         assertThat(testMatiere.getCoefMat()).isEqualTo(DEFAULT_COEF_MAT);
     }
@@ -120,23 +116,6 @@ class MatiereResourceIT {
 
     @Test
     @Transactional
-    void checkIdMatIsRequired() throws Exception {
-        int databaseSizeBeforeTest = matiereRepository.findAll().size();
-        // set the field null
-        matiere.setIdMat(null);
-
-        // Create the Matiere, which fails.
-
-        restMatiereMockMvc
-            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(matiere)))
-            .andExpect(status().isBadRequest());
-
-        List<Matiere> matiereList = matiereRepository.findAll();
-        assertThat(matiereList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
     void getAllMatieres() throws Exception {
         // Initialize the database
         matiereRepository.saveAndFlush(matiere);
@@ -147,7 +126,6 @@ class MatiereResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(matiere.getId().intValue())))
-            .andExpect(jsonPath("$.[*].idMat").value(hasItem(DEFAULT_ID_MAT)))
             .andExpect(jsonPath("$.[*].nameMat").value(hasItem(DEFAULT_NAME_MAT)))
             .andExpect(jsonPath("$.[*].coefMat").value(hasItem(DEFAULT_COEF_MAT)));
     }
@@ -164,7 +142,6 @@ class MatiereResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(matiere.getId().intValue()))
-            .andExpect(jsonPath("$.idMat").value(DEFAULT_ID_MAT))
             .andExpect(jsonPath("$.nameMat").value(DEFAULT_NAME_MAT))
             .andExpect(jsonPath("$.coefMat").value(DEFAULT_COEF_MAT));
     }
@@ -188,7 +165,7 @@ class MatiereResourceIT {
         Matiere updatedMatiere = matiereRepository.findById(matiere.getId()).get();
         // Disconnect from session so that the updates on updatedMatiere are not directly saved in db
         em.detach(updatedMatiere);
-        updatedMatiere.idMat(UPDATED_ID_MAT).nameMat(UPDATED_NAME_MAT).coefMat(UPDATED_COEF_MAT);
+        updatedMatiere.nameMat(UPDATED_NAME_MAT).coefMat(UPDATED_COEF_MAT);
 
         restMatiereMockMvc
             .perform(
@@ -202,7 +179,6 @@ class MatiereResourceIT {
         List<Matiere> matiereList = matiereRepository.findAll();
         assertThat(matiereList).hasSize(databaseSizeBeforeUpdate);
         Matiere testMatiere = matiereList.get(matiereList.size() - 1);
-        assertThat(testMatiere.getIdMat()).isEqualTo(UPDATED_ID_MAT);
         assertThat(testMatiere.getNameMat()).isEqualTo(UPDATED_NAME_MAT);
         assertThat(testMatiere.getCoefMat()).isEqualTo(UPDATED_COEF_MAT);
     }
@@ -275,7 +251,7 @@ class MatiereResourceIT {
         Matiere partialUpdatedMatiere = new Matiere();
         partialUpdatedMatiere.setId(matiere.getId());
 
-        partialUpdatedMatiere.nameMat(UPDATED_NAME_MAT);
+        partialUpdatedMatiere.coefMat(UPDATED_COEF_MAT);
 
         restMatiereMockMvc
             .perform(
@@ -289,9 +265,8 @@ class MatiereResourceIT {
         List<Matiere> matiereList = matiereRepository.findAll();
         assertThat(matiereList).hasSize(databaseSizeBeforeUpdate);
         Matiere testMatiere = matiereList.get(matiereList.size() - 1);
-        assertThat(testMatiere.getIdMat()).isEqualTo(DEFAULT_ID_MAT);
-        assertThat(testMatiere.getNameMat()).isEqualTo(UPDATED_NAME_MAT);
-        assertThat(testMatiere.getCoefMat()).isEqualTo(DEFAULT_COEF_MAT);
+        assertThat(testMatiere.getNameMat()).isEqualTo(DEFAULT_NAME_MAT);
+        assertThat(testMatiere.getCoefMat()).isEqualTo(UPDATED_COEF_MAT);
     }
 
     @Test
@@ -306,7 +281,7 @@ class MatiereResourceIT {
         Matiere partialUpdatedMatiere = new Matiere();
         partialUpdatedMatiere.setId(matiere.getId());
 
-        partialUpdatedMatiere.idMat(UPDATED_ID_MAT).nameMat(UPDATED_NAME_MAT).coefMat(UPDATED_COEF_MAT);
+        partialUpdatedMatiere.nameMat(UPDATED_NAME_MAT).coefMat(UPDATED_COEF_MAT);
 
         restMatiereMockMvc
             .perform(
@@ -320,7 +295,6 @@ class MatiereResourceIT {
         List<Matiere> matiereList = matiereRepository.findAll();
         assertThat(matiereList).hasSize(databaseSizeBeforeUpdate);
         Matiere testMatiere = matiereList.get(matiereList.size() - 1);
-        assertThat(testMatiere.getIdMat()).isEqualTo(UPDATED_ID_MAT);
         assertThat(testMatiere.getNameMat()).isEqualTo(UPDATED_NAME_MAT);
         assertThat(testMatiere.getCoefMat()).isEqualTo(UPDATED_COEF_MAT);
     }

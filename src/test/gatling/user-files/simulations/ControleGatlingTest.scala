@@ -71,8 +71,7 @@ class ControleGatlingTest extends Simulation {
             .post("/api/controles")
             .headers(headers_http_authenticated)
             .body(StringBody("""{
-                "idCont":"0"
-                , "date":"2020-01-01T00:00:00.000Z"
+                "date":"2020-01-01T00:00:00.000Z"
                 , "coefCont":"0"
                 , "type":"SAMPLE_TEXT"
                 }""")).asJson

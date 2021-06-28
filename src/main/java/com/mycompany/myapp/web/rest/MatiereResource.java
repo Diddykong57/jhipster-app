@@ -126,9 +126,6 @@ public class MatiereResource {
             .findById(matiere.getId())
             .map(
                 existingMatiere -> {
-                    if (matiere.getIdMat() != null) {
-                        existingMatiere.setIdMat(matiere.getIdMat());
-                    }
                     if (matiere.getNameMat() != null) {
                         existingMatiere.setNameMat(matiere.getNameMat());
                     }

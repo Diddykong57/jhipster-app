@@ -2,11 +2,6 @@
   "name": "Etudiant",
   "fields": [
     {
-      "fieldName": "idEtud",
-      "fieldType": "Integer",
-      "fieldValidateRules": ["required"]
-    },
-    {
       "fieldName": "firstName",
       "fieldType": "String"
     },
@@ -17,17 +12,10 @@
   ],
   "relationships": [
     {
-      "relationshipType": "one-to-one",
-      "otherEntityName": "diplome",
-      "otherEntityRelationshipName": "etudiant",
-      "relationshipName": "firstName",
-      "ownerSide": true
-    },
-    {
       "relationshipType": "one-to-many",
       "otherEntityName": "obtient",
       "otherEntityRelationshipName": "etudiant",
-      "relationshipName": "idEtud"
+      "relationshipName": "obtient"
     }
   ],
   "entityTableName": "etudiant",

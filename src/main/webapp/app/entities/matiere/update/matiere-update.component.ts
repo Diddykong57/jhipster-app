@@ -7,8 +7,8 @@ import { finalize, map } from 'rxjs/operators';
 
 import { IMatiere, Matiere } from '../matiere.model';
 import { MatiereService } from '../service/matiere.service';
-import { IDiplome } from 'app/entities/diplome/diplome.model';
-import { DiplomeService } from 'app/entities/diplome/service/diplome.service';
+import { IControle } from 'app/entities/controle/controle.model';
+import { ControleService } from 'app/entities/controle/service/controle.service';
 
 @Component({
   selector: 'jhi-matiere-update',
@@ -17,19 +17,18 @@ import { DiplomeService } from 'app/entities/diplome/service/diplome.service';
 export class MatiereUpdateComponent implements OnInit {
   isSaving = false;
 
-  nameMatsCollection: IDiplome[] = [];
+  controlesCollection: IControle[] = [];
 
   editForm = this.fb.group({
     id: [],
-    idMat: [null, [Validators.required]],
     nameMat: [],
     coefMat: [null, [Validators.min(0)]],
-    nameMat: [],
+    controle: [],
   });
 
   constructor(
     protected matiereService: MatiereService,
-    protected diplomeService: DiplomeService,
+    protected controleService: ControleService,
     protected activatedRoute: ActivatedRoute,
     protected fb: FormBuilder
   ) {}
@@ -56,7 +55,7 @@ export class MatiereUpdateComponent implements OnInit {
     }
   }
 
-  trackDiplomeById(index: number, item: IDiplome): number {
+  trackControleById(index: number, item: IControle): number {
     return item.id!;
   }
 
@@ -82,33 +81,33 @@ export class MatiereUpdateComponent implements OnInit {
   protected updateForm(matiere: IMatiere): void {
     this.editForm.patchValue({
       id: matiere.id,
-      idMat: matiere.idMat,
       nameMat: matiere.nameMat,
       coefMat: matiere.coefMat,
-      nameMat: matiere.nameMat,
+      controle: matiere.controle,
     });
 
-    this.nameMatsCollection = this.diplomeService.addDiplomeToCollectionIfMissing(this.nameMatsCollection, matiere.nameMat);
+    this.controlesCollection = this.controleService.addControleToCollectionIfMissing(this.controlesCollection, matiere.controle);
   }
 
   protected loadRelationshipsOptions(): void {
-    this.diplomeService
+    this.controleService
       .query({ filter: 'matiere-is-null' })
-      .pipe(map((res: HttpResponse<IDiplome[]>) => res.body ?? []))
+      .pipe(map((res: HttpResponse<IControle[]>) => res.body ?? []))
       .pipe(
-        map((diplomes: IDiplome[]) => this.diplomeService.addDiplomeToCollectionIfMissing(diplomes, this.editForm.get('nameMat')!.value))
+        map((controles: IControle[]) =>
+          this.controleService.addControleToCollectionIfMissing(controles, this.editForm.get('controle')!.value)
+        )
       )
-      .subscribe((diplomes: IDiplome[]) => (this.nameMatsCollection = diplomes));
+      .subscribe((controles: IControle[]) => (this.controlesCollection = controles));
   }
 
   protected createFromForm(): IMatiere {
     return {
       ...new Matiere(),
       id: this.editForm.get(['id'])!.value,
-      idMat: this.editForm.get(['idMat'])!.value,
       nameMat: this.editForm.get(['nameMat'])!.value,
       coefMat: this.editForm.get(['coefMat'])!.value,
-      nameMat: this.editForm.get(['nameMat'])!.value,
+      controle: this.editForm.get(['controle'])!.value,
     };
   }
 }

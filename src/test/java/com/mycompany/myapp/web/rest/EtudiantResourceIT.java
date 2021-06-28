@@ -29,9 +29,6 @@ import org.springframework.transaction.annotation.Transactional;
 @WithMockUser
 class EtudiantResourceIT {
 
-    private static final Integer DEFAULT_ID_ETUD = 1;
-    private static final Integer UPDATED_ID_ETUD = 2;
-
     private static final String DEFAULT_FIRST_NAME = "AAAAAAAAAA";
     private static final String UPDATED_FIRST_NAME = "BBBBBBBBBB";
 
@@ -62,7 +59,7 @@ class EtudiantResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Etudiant createEntity(EntityManager em) {
-        Etudiant etudiant = new Etudiant().idEtud(DEFAULT_ID_ETUD).firstName(DEFAULT_FIRST_NAME).lastName(DEFAULT_LAST_NAME);
+        Etudiant etudiant = new Etudiant().firstName(DEFAULT_FIRST_NAME).lastName(DEFAULT_LAST_NAME);
         return etudiant;
     }
 
@@ -73,7 +70,7 @@ class EtudiantResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Etudiant createUpdatedEntity(EntityManager em) {
-        Etudiant etudiant = new Etudiant().idEtud(UPDATED_ID_ETUD).firstName(UPDATED_FIRST_NAME).lastName(UPDATED_LAST_NAME);
+        Etudiant etudiant = new Etudiant().firstName(UPDATED_FIRST_NAME).lastName(UPDATED_LAST_NAME);
         return etudiant;
     }
 
@@ -95,7 +92,6 @@ class EtudiantResourceIT {
         List<Etudiant> etudiantList = etudiantRepository.findAll();
         assertThat(etudiantList).hasSize(databaseSizeBeforeCreate + 1);
         Etudiant testEtudiant = etudiantList.get(etudiantList.size() - 1);
-        assertThat(testEtudiant.getIdEtud()).isEqualTo(DEFAULT_ID_ETUD);
         assertThat(testEtudiant.getFirstName()).isEqualTo(DEFAULT_FIRST_NAME);
         assertThat(testEtudiant.getLastName()).isEqualTo(DEFAULT_LAST_NAME);
     }
@@ -120,23 +116,6 @@ class EtudiantResourceIT {
 
     @Test
     @Transactional
-    void checkIdEtudIsRequired() throws Exception {
-        int databaseSizeBeforeTest = etudiantRepository.findAll().size();
-        // set the field null
-        etudiant.setIdEtud(null);
-
-        // Create the Etudiant, which fails.
-
-        restEtudiantMockMvc
-            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(etudiant)))
-            .andExpect(status().isBadRequest());
-
-        List<Etudiant> etudiantList = etudiantRepository.findAll();
-        assertThat(etudiantList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
     void getAllEtudiants() throws Exception {
         // Initialize the database
         etudiantRepository.saveAndFlush(etudiant);
@@ -147,7 +126,6 @@ class EtudiantResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(etudiant.getId().intValue())))
-            .andExpect(jsonPath("$.[*].idEtud").value(hasItem(DEFAULT_ID_ETUD)))
             .andExpect(jsonPath("$.[*].firstName").value(hasItem(DEFAULT_FIRST_NAME)))
             .andExpect(jsonPath("$.[*].lastName").value(hasItem(DEFAULT_LAST_NAME)));
     }
@@ -164,7 +142,6 @@ class EtudiantResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(etudiant.getId().intValue()))
-            .andExpect(jsonPath("$.idEtud").value(DEFAULT_ID_ETUD))
             .andExpect(jsonPath("$.firstName").value(DEFAULT_FIRST_NAME))
             .andExpect(jsonPath("$.lastName").value(DEFAULT_LAST_NAME));
     }
@@ -188,7 +165,7 @@ class EtudiantResourceIT {
         Etudiant updatedEtudiant = etudiantRepository.findById(etudiant.getId()).get();
         // Disconnect from session so that the updates on updatedEtudiant are not directly saved in db
         em.detach(updatedEtudiant);
-        updatedEtudiant.idEtud(UPDATED_ID_ETUD).firstName(UPDATED_FIRST_NAME).lastName(UPDATED_LAST_NAME);
+        updatedEtudiant.firstName(UPDATED_FIRST_NAME).lastName(UPDATED_LAST_NAME);
 
         restEtudiantMockMvc
             .perform(
@@ -202,7 +179,6 @@ class EtudiantResourceIT {
         List<Etudiant> etudiantList = etudiantRepository.findAll();
         assertThat(etudiantList).hasSize(databaseSizeBeforeUpdate);
         Etudiant testEtudiant = etudiantList.get(etudiantList.size() - 1);
-        assertThat(testEtudiant.getIdEtud()).isEqualTo(UPDATED_ID_ETUD);
         assertThat(testEtudiant.getFirstName()).isEqualTo(UPDATED_FIRST_NAME);
         assertThat(testEtudiant.getLastName()).isEqualTo(UPDATED_LAST_NAME);
     }
@@ -275,7 +251,7 @@ class EtudiantResourceIT {
         Etudiant partialUpdatedEtudiant = new Etudiant();
         partialUpdatedEtudiant.setId(etudiant.getId());
 
-        partialUpdatedEtudiant.idEtud(UPDATED_ID_ETUD).firstName(UPDATED_FIRST_NAME);
+        partialUpdatedEtudiant.firstName(UPDATED_FIRST_NAME).lastName(UPDATED_LAST_NAME);
 
         restEtudiantMockMvc
             .perform(
@@ -289,9 +265,8 @@ class EtudiantResourceIT {
         List<Etudiant> etudiantList = etudiantRepository.findAll();
         assertThat(etudiantList).hasSize(databaseSizeBeforeUpdate);
         Etudiant testEtudiant = etudiantList.get(etudiantList.size() - 1);
-        assertThat(testEtudiant.getIdEtud()).isEqualTo(UPDATED_ID_ETUD);
         assertThat(testEtudiant.getFirstName()).isEqualTo(UPDATED_FIRST_NAME);
-        assertThat(testEtudiant.getLastName()).isEqualTo(DEFAULT_LAST_NAME);
+        assertThat(testEtudiant.getLastName()).isEqualTo(UPDATED_LAST_NAME);
     }
 
     @Test
@@ -306,7 +281,7 @@ class EtudiantResourceIT {
         Etudiant partialUpdatedEtudiant = new Etudiant();
         partialUpdatedEtudiant.setId(etudiant.getId());
 
-        partialUpdatedEtudiant.idEtud(UPDATED_ID_ETUD).firstName(UPDATED_FIRST_NAME).lastName(UPDATED_LAST_NAME);
+        partialUpdatedEtudiant.firstName(UPDATED_FIRST_NAME).lastName(UPDATED_LAST_NAME);
 
         restEtudiantMockMvc
             .perform(
@@ -320,7 +295,6 @@ class EtudiantResourceIT {
         List<Etudiant> etudiantList = etudiantRepository.findAll();
         assertThat(etudiantList).hasSize(databaseSizeBeforeUpdate);
         Etudiant testEtudiant = etudiantList.get(etudiantList.size() - 1);
-        assertThat(testEtudiant.getIdEtud()).isEqualTo(UPDATED_ID_ETUD);
         assertThat(testEtudiant.getFirstName()).isEqualTo(UPDATED_FIRST_NAME);
         assertThat(testEtudiant.getLastName()).isEqualTo(UPDATED_LAST_NAME);
     }

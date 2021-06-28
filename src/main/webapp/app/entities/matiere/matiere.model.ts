@@ -1,21 +1,14 @@
-import { IDiplome } from 'app/entities/diplome/diplome.model';
+import { IControle } from 'app/entities/controle/controle.model';
 
 export interface IMatiere {
   id?: number;
-  idMat?: number;
   nameMat?: string | null;
   coefMat?: number | null;
-  nameMat?: IDiplome | null;
+  controle?: IControle | null;
 }
 
 export class Matiere implements IMatiere {
-  constructor(
-    public id?: number,
-    public idMat?: number,
-    public nameMat?: string | null,
-    public coefMat?: number | null,
-    public nameMat?: IDiplome | null
-  ) {}
+  constructor(public id?: number, public nameMat?: string | null, public coefMat?: number | null, public controle?: IControle | null) {}
 }
 
 export function getMatiereIdentifier(matiere: IMatiere): number | undefined {

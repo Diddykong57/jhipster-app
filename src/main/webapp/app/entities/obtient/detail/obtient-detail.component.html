@@ -21,13 +21,13 @@
         <dt><span>Controle</span></dt>
         <dd>
           <div *ngIf="obtient.controle">
-            <a [routerLink]="['/controle', obtient.controle?.id, 'view']">{{ obtient.controle?.id }}</a>
+            <a [routerLink]="['/controle', obtient.controle?.id, 'view']">{{ obtient.controle?.date }}</a>
           </div>
         </dd>
         <dt><span>Etudiant</span></dt>
         <dd>
           <div *ngIf="obtient.etudiant">
-            <a [routerLink]="['/etudiant', obtient.etudiant?.id, 'view']">{{ obtient.etudiant?.id }}</a>
+            <a [routerLink]="['/etudiant', obtient.etudiant?.id, 'view']">{{ obtient.etudiant?.firstname }}</a>
           </div>
         </dd>
       </dl>

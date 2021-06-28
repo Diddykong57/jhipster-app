@@ -22,7 +22,6 @@ describe('Service Tests', () => {
 
       elemDefault = {
         id: 0,
-        idDipl: 0,
         nameDipl: 'AAAAAAA',
       };
     });
@@ -59,7 +58,6 @@ describe('Service Tests', () => {
         const returnedFromService = Object.assign(
           {
             id: 1,
-            idDipl: 1,
             nameDipl: 'BBBBBB',
           },
           elemDefault
@@ -77,7 +75,6 @@ describe('Service Tests', () => {
       it('should partial update a Diplome', () => {
         const patchObject = Object.assign(
           {
-            idDipl: 1,
             nameDipl: 'BBBBBB',
           },
           new Diplome()
@@ -98,7 +95,6 @@ describe('Service Tests', () => {
         const returnedFromService = Object.assign(
           {
             id: 1,
-            idDipl: 1,
             nameDipl: 'BBBBBB',
           },
           elemDefault
@@ -151,7 +147,7 @@ describe('Service Tests', () => {
         });
 
         it('should add only unique Diplome to an array', () => {
-          const diplomeArray: IDiplome[] = [{ id: 123 }, { id: 456 }, { id: 73922 }];
+          const diplomeArray: IDiplome[] = [{ id: 123 }, { id: 456 }, { id: 73169 }];
           const diplomeCollection: IDiplome[] = [{ id: 123 }];
           expectedResult = service.addDiplomeToCollectionIfMissing(diplomeCollection, ...diplomeArray);
           expect(expectedResult).toHaveLength(3);

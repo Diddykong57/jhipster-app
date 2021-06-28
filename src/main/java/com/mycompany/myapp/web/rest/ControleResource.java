@@ -126,9 +126,6 @@ public class ControleResource {
             .findById(controle.getId())
             .map(
                 existingControle -> {
-                    if (controle.getIdCont() != null) {
-                        existingControle.setIdCont(controle.getIdCont());
-                    }
                     if (controle.getDate() != null) {
                         existingControle.setDate(controle.getDate());
                     }

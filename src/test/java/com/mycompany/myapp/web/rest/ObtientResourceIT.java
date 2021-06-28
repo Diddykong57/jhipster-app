@@ -6,6 +6,8 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import com.mycompany.myapp.IntegrationTest;
+import com.mycompany.myapp.domain.Controle;
+import com.mycompany.myapp.domain.Etudiant;
 import com.mycompany.myapp.domain.Obtient;
 import com.mycompany.myapp.repository.ObtientRepository;
 import java.util.List;
@@ -57,6 +59,26 @@ class ObtientResourceIT {
      */
     public static Obtient createEntity(EntityManager em) {
         Obtient obtient = new Obtient().note(DEFAULT_NOTE);
+        // Add required entity
+        Controle controle;
+        if (TestUtil.findAll(em, Controle.class).isEmpty()) {
+            controle = ControleResourceIT.createEntity(em);
+            em.persist(controle);
+            em.flush();
+        } else {
+            controle = TestUtil.findAll(em, Controle.class).get(0);
+        }
+        obtient.setControle(controle);
+        // Add required entity
+        Etudiant etudiant;
+        if (TestUtil.findAll(em, Etudiant.class).isEmpty()) {
+            etudiant = EtudiantResourceIT.createEntity(em);
+            em.persist(etudiant);
+            em.flush();
+        } else {
+            etudiant = TestUtil.findAll(em, Etudiant.class).get(0);
+        }
+        obtient.setEtudiant(etudiant);
         return obtient;
     }
 
@@ -68,6 +90,26 @@ class ObtientResourceIT {
      */
     public static Obtient createUpdatedEntity(EntityManager em) {
         Obtient obtient = new Obtient().note(UPDATED_NOTE);
+        // Add required entity
+        Controle controle;
+        if (TestUtil.findAll(em, Controle.class).isEmpty()) {
+            controle = ControleResourceIT.createUpdatedEntity(em);
+            em.persist(controle);
+            em.flush();
+        } else {
+            controle = TestUtil.findAll(em, Controle.class).get(0);
+        }
+        obtient.setControle(controle);
+        // Add required entity
+        Etudiant etudiant;
+        if (TestUtil.findAll(em, Etudiant.class).isEmpty()) {
+            etudiant = EtudiantResourceIT.createUpdatedEntity(em);
+            em.persist(etudiant);
+            em.flush();
+        } else {
+            etudiant = TestUtil.findAll(em, Etudiant.class).get(0);
+        }
+        obtient.setEtudiant(etudiant);
         return obtient;
     }
 

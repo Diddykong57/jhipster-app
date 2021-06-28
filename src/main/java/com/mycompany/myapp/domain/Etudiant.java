@@ -5,7 +5,6 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.*;
-import javax.validation.constraints.*;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -24,24 +23,16 @@ public class Etudiant implements Serializable {
     @SequenceGenerator(name = "sequenceGenerator")
     private Long id;
 
-    @NotNull
-    @Column(name = "id_etud", nullable = false)
-    private Integer idEtud;
-
     @Column(name = "first_name")
     private String firstName;
 
     @Column(name = "last_name")
     private String lastName;
 
-    @OneToOne
-    @JoinColumn(unique = true)
-    private Diplome firstName;
-
     @OneToMany(mappedBy = "etudiant")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     @JsonIgnoreProperties(value = { "controle", "etudiant" }, allowSetters = true)
-    private Set<Obtient> idEtuds = new HashSet<>();
+    private Set<Obtient> obtients = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
     public Long getId() {
@@ -55,19 +46,6 @@ public class Etudiant implements Serializable {
     public Etudiant id(Long id) {
         this.id = id;
         return this;
-    }
-
-    public Integer getIdEtud() {
-        return this.idEtud;
-    }
-
-    public Etudiant idEtud(Integer idEtud) {
-        this.idEtud = idEtud;
-        return this;
-    }
-
-    public void setIdEtud(Integer idEtud) {
-        this.idEtud = idEtud;
     }
 
     public String getFirstName() {
@@ -96,48 +74,35 @@ public class Etudiant implements Serializable {
         this.lastName = lastName;
     }
 
-    public Diplome getFirstName() {
-        return this.firstName;
+    public Set<Obtient> getObtients() {
+        return this.obtients;
     }
 
-    public Etudiant firstName(Diplome diplome) {
-        this.setFirstName(diplome);
+    public Etudiant obtients(Set<Obtient> obtients) {
+        this.setObtients(obtients);
         return this;
     }
 
-    public void setFirstName(Diplome diplome) {
-        this.firstName = diplome;
-    }
-
-    public Set<Obtient> getIdEtuds() {
-        return this.idEtuds;
-    }
-
-    public Etudiant idEtuds(Set<Obtient> obtients) {
-        this.setIdEtuds(obtients);
-        return this;
-    }
-
-    public Etudiant addIdEtud(Obtient obtient) {
-        this.idEtuds.add(obtient);
+    public Etudiant addObtient(Obtient obtient) {
+        this.obtients.add(obtient);
         obtient.setEtudiant(this);
         return this;
     }
 
-    public Etudiant removeIdEtud(Obtient obtient) {
-        this.idEtuds.remove(obtient);
+    public Etudiant removeObtient(Obtient obtient) {
+        this.obtients.remove(obtient);
         obtient.setEtudiant(null);
         return this;
     }
 
-    public void setIdEtuds(Set<Obtient> obtients) {
-        if (this.idEtuds != null) {
-            this.idEtuds.forEach(i -> i.setEtudiant(null));
+    public void setObtients(Set<Obtient> obtients) {
+        if (this.obtients != null) {
+            this.obtients.forEach(i -> i.setEtudiant(null));
         }
         if (obtients != null) {
             obtients.forEach(i -> i.setEtudiant(this));
         }
-        this.idEtuds = obtients;
+        this.obtients = obtients;
     }
 
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
@@ -164,7 +129,6 @@ public class Etudiant implements Serializable {
     public String toString() {
         return "Etudiant{" +
             "id=" + getId() +
-            ", idEtud=" + getIdEtud() +
             ", firstName='" + getFirstName() + "'" +
             ", lastName='" + getLastName() + "'" +
             "}";

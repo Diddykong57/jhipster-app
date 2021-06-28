@@ -25,8 +25,8 @@ export class ObtientUpdateComponent implements OnInit {
   editForm = this.fb.group({
     id: [],
     note: [null, [Validators.required, Validators.min(0), Validators.max(20)]],
-    controle: [],
-    etudiant: [],
+    controle: [null, Validators.required],
+    etudiant: [null, Validators.required],
   });
 
   constructor(

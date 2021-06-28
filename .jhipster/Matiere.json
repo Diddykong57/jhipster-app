@@ -2,11 +2,6 @@
   "name": "Matiere",
   "fields": [
     {
-      "fieldName": "idMat",
-      "fieldType": "Integer",
-      "fieldValidateRules": ["required"]
-    },
-    {
       "fieldName": "nameMat",
       "fieldType": "String"
     },
@@ -20,9 +15,9 @@
   "relationships": [
     {
       "relationshipType": "one-to-one",
-      "otherEntityName": "diplome",
+      "otherEntityName": "controle",
       "otherEntityRelationshipName": "matiere",
-      "relationshipName": "nameMat",
+      "relationshipName": "controle",
       "ownerSide": true
     }
   ],

@@ -12,17 +12,34 @@
         </div>
 
         <div class="form-group">
-          <label class="form-control-label" for="field_idDipl">Id Dipl</label>
-          <input type="number" class="form-control" name="idDipl" id="field_idDipl" data-cy="idDipl" formControlName="idDipl" />
-          <div *ngIf="editForm.get('idDipl')!.invalid && (editForm.get('idDipl')!.dirty || editForm.get('idDipl')!.touched)">
-            <small class="form-text text-danger" *ngIf="editForm.get('idDipl')?.errors?.required"> This field is required. </small>
-            <small class="form-text text-danger" [hidden]="!editForm.get('idDipl')?.errors?.number"> This field should be a number. </small>
-          </div>
+          <label class="form-control-label" for="field_nameDipl">Name Dipl</label>
+          <input type="text" class="form-control" name="nameDipl" id="field_nameDipl" data-cy="nameDipl" formControlName="nameDipl" />
         </div>
 
         <div class="form-group">
-          <label class="form-control-label" for="field_nameDipl">Name Dipl</label>
-          <input type="text" class="form-control" name="nameDipl" id="field_nameDipl" data-cy="nameDipl" formControlName="nameDipl" />
+          <label class="form-control-label" for="field_etudiant">Etudiant</label>
+          <select class="form-control" id="field_etudiant" data-cy="etudiant" name="etudiant" formControlName="etudiant">
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="etudiantOption.id === editForm.get('etudiant')!.value?.id ? editForm.get('etudiant')!.value : etudiantOption"
+              *ngFor="let etudiantOption of etudiantsCollection; trackBy: trackEtudiantById"
+            >
+              {{ etudiantOption.id }}
+            </option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_matiere">Matiere</label>
+          <select class="form-control" id="field_matiere" data-cy="matiere" name="matiere" formControlName="matiere">
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="matiereOption.id === editForm.get('matiere')!.value?.id ? editForm.get('matiere')!.value : matiereOption"
+              *ngFor="let matiereOption of matieresCollection; trackBy: trackMatiereById"
+            >
+              {{ matiereOption.id }}
+            </option>
+          </select>
         </div>
       </div>
 
