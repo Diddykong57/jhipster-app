@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd">
+    <!--
+        Added the constraints for entity Obtient.
+    -->
+    <changeSet id="20210628115511-2" author="jhipster">
+
+        <addForeignKeyConstraint baseColumnNames="controle_id"
+                                 baseTableName="obtient"
+                                 constraintName="fk_obtient__controle_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="controle"/>
+
+        <addForeignKeyConstraint baseColumnNames="etudiant_id"
+                                 baseTableName="obtient"
+                                 constraintName="fk_obtient__etudiant_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="etudiant"/>
+    </changeSet>
+</databaseChangeLog>

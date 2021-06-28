@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd">
+    <!--
+        Added the constraints for entity Matiere.
+    -->
+    <changeSet id="20210628115510-2" author="jhipster">
+
+        <addForeignKeyConstraint baseColumnNames="name_mat_id"
+                                 baseTableName="matiere"
+                                 constraintName="fk_matiere__name_mat_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="diplome"/>
+    </changeSet>
+</databaseChangeLog>

@@ -1,0 +1,49 @@
+{
+  "name": "Controle",
+  "fields": [
+    {
+      "fieldName": "idCont",
+      "fieldType": "Integer",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "date",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "coefCont",
+      "fieldType": "Integer",
+      "fieldValidateRules": ["min"],
+      "fieldValidateRulesMin": "0"
+    },
+    {
+      "fieldName": "type",
+      "fieldType": "String"
+    }
+  ],
+  "relationships": [
+    {
+      "relationshipType": "one-to-one",
+      "otherEntityName": "matiere",
+      "otherEntityRelationshipName": "controle",
+      "relationshipName": "idCont",
+      "ownerSide": true
+    },
+    {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "obtient",
+      "otherEntityRelationshipName": "controle",
+      "relationshipName": "idCont"
+    }
+  ],
+  "entityTableName": "controle",
+  "dto": "no",
+  "pagination": "no",
+  "service": "no",
+  "jpaMetamodelFiltering": false,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "applications": "*",
+  "changelogDate": "20210628115509"
+}

@@ -1,0 +1,50 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <div *ngIf="controle">
+      <h2 data-cy="controleDetailsHeading"><span>Controle</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span>ID</span></dt>
+        <dd>
+          <span>{{ controle.id }}</span>
+        </dd>
+        <dt><span>Id Cont</span></dt>
+        <dd>
+          <span>{{ controle.idCont }}</span>
+        </dd>
+        <dt><span>Date</span></dt>
+        <dd>
+          <span>{{ controle.date | formatMediumDate }}</span>
+        </dd>
+        <dt><span>Coef Cont</span></dt>
+        <dd>
+          <span>{{ controle.coefCont }}</span>
+        </dd>
+        <dt><span>Type</span></dt>
+        <dd>
+          <span>{{ controle.type }}</span>
+        </dd>
+        <dt><span>Id Cont</span></dt>
+        <dd>
+          <div *ngIf="controle.idCont">
+            <a [routerLink]="['/matiere', controle.idCont?.id, 'view']">{{ controle.idCont?.id }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/controle', controle.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Edit</span>
+      </button>
+    </div>
+  </div>
+</div>
