@@ -37,7 +37,7 @@ relationship OneToOne {
 
 relationship OneToMany{
     Controle{obtient} to Obtient{controle (date) required}, 
-    Etudiant{obtient} to Obtient{etudiant (firstname) required}
+    Etudiant{obtient} to Obtient{etudiant (firstName) required}
 }
 
 

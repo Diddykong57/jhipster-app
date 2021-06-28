@@ -46,7 +46,7 @@
               [ngValue]="etudiantOption.id === editForm.get('etudiant')!.value?.id ? editForm.get('etudiant')!.value : etudiantOption"
               *ngFor="let etudiantOption of etudiantsSharedCollection; trackBy: trackEtudiantById"
             >
-              {{ etudiantOption.firstname }}
+              {{ etudiantOption.firstName }}
             </option>
           </select>
         </div>
