@@ -1,0 +1,39 @@
+{
+  "name": "Matiere",
+  "fields": [
+    {
+      "fieldName": "idMat",
+      "fieldType": "Integer",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "nameMat",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "coefMat",
+      "fieldType": "Integer",
+      "fieldValidateRules": ["min"],
+      "fieldValidateRulesMin": "0"
+    }
+  ],
+  "relationships": [
+    {
+      "relationshipType": "one-to-one",
+      "otherEntityName": "diplome",
+      "otherEntityRelationshipName": "matiere",
+      "relationshipName": "nameMat",
+      "ownerSide": true
+    }
+  ],
+  "entityTableName": "matiere",
+  "dto": "no",
+  "pagination": "no",
+  "service": "no",
+  "jpaMetamodelFiltering": false,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "applications": "*",
+  "changelogDate": "20210628115013"
+}

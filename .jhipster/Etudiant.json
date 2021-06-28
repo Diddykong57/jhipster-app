@@ -1,0 +1,43 @@
+{
+  "name": "Etudiant",
+  "fields": [
+    {
+      "fieldName": "idEtud",
+      "fieldType": "Integer",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "firstName",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "lastName",
+      "fieldType": "String"
+    }
+  ],
+  "relationships": [
+    {
+      "relationshipType": "one-to-one",
+      "otherEntityName": "diplome",
+      "otherEntityRelationshipName": "etudiant",
+      "relationshipName": "firstName",
+      "ownerSide": true
+    },
+    {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "obtient",
+      "otherEntityRelationshipName": "etudiant",
+      "relationshipName": "idEtud"
+    }
+  ],
+  "entityTableName": "etudiant",
+  "dto": "no",
+  "pagination": "no",
+  "service": "no",
+  "jpaMetamodelFiltering": false,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "applications": "*",
+  "changelogDate": "20210628115010"
+}
