@@ -24,7 +24,7 @@
       "otherEntityRelationshipName": "obtient",
       "relationshipValidateRules": "required",
       "relationshipName": "etudiant",
-      "otherEntityField": "firstname"
+      "otherEntityField": "firstName"
     }
   ],
   "entityTableName": "obtient",
