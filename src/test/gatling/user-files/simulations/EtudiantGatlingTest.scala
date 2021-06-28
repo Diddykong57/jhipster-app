@@ -71,8 +71,7 @@ class EtudiantGatlingTest extends Simulation {
             .post("/api/etudiants")
             .headers(headers_http_authenticated)
             .body(StringBody("""{
-                "idEtud":"0"
-                , "firstName":"SAMPLE_TEXT"
+                "firstName":"SAMPLE_TEXT"
                 , "lastName":"SAMPLE_TEXT"
                 }""")).asJson
             .check(status.is(201))

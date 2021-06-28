@@ -71,8 +71,7 @@ class DiplomeGatlingTest extends Simulation {
             .post("/api/diplomes")
             .headers(headers_http_authenticated)
             .body(StringBody("""{
-                "idDipl":"0"
-                , "nameDipl":"SAMPLE_TEXT"
+                "nameDipl":"SAMPLE_TEXT"
                 }""")).asJson
             .check(status.is(201))
             .check(headerRegex("Location", "(.*)").saveAs("new_diplome_url"))).exitHereIfFailed

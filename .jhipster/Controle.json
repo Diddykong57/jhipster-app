@@ -2,11 +2,6 @@
   "name": "Controle",
   "fields": [
     {
-      "fieldName": "idCont",
-      "fieldType": "Integer",
-      "fieldValidateRules": ["required"]
-    },
-    {
       "fieldName": "date",
       "fieldType": "LocalDate"
     },
@@ -23,17 +18,10 @@
   ],
   "relationships": [
     {
-      "relationshipType": "one-to-one",
-      "otherEntityName": "matiere",
-      "otherEntityRelationshipName": "controle",
-      "relationshipName": "idCont",
-      "ownerSide": true
-    },
-    {
       "relationshipType": "one-to-many",
       "otherEntityName": "obtient",
       "otherEntityRelationshipName": "controle",
-      "relationshipName": "idCont"
+      "relationshipName": "obtient"
     }
   ],
   "entityTableName": "controle",

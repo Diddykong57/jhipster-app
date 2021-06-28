@@ -1,8 +1,8 @@
 package com.mycompany.myapp.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
 import javax.persistence.*;
-import javax.validation.constraints.*;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -21,12 +21,18 @@ public class Diplome implements Serializable {
     @SequenceGenerator(name = "sequenceGenerator")
     private Long id;
 
-    @NotNull
-    @Column(name = "id_dipl", nullable = false)
-    private Integer idDipl;
-
     @Column(name = "name_dipl")
     private String nameDipl;
+
+    @JsonIgnoreProperties(value = { "obtients" }, allowSetters = true)
+    @OneToOne
+    @JoinColumn(unique = true)
+    private Etudiant etudiant;
+
+    @JsonIgnoreProperties(value = { "controle" }, allowSetters = true)
+    @OneToOne
+    @JoinColumn(unique = true)
+    private Matiere matiere;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
     public Long getId() {
@@ -42,19 +48,6 @@ public class Diplome implements Serializable {
         return this;
     }
 
-    public Integer getIdDipl() {
-        return this.idDipl;
-    }
-
-    public Diplome idDipl(Integer idDipl) {
-        this.idDipl = idDipl;
-        return this;
-    }
-
-    public void setIdDipl(Integer idDipl) {
-        this.idDipl = idDipl;
-    }
-
     public String getNameDipl() {
         return this.nameDipl;
     }
@@ -66,6 +59,32 @@ public class Diplome implements Serializable {
 
     public void setNameDipl(String nameDipl) {
         this.nameDipl = nameDipl;
+    }
+
+    public Etudiant getEtudiant() {
+        return this.etudiant;
+    }
+
+    public Diplome etudiant(Etudiant etudiant) {
+        this.setEtudiant(etudiant);
+        return this;
+    }
+
+    public void setEtudiant(Etudiant etudiant) {
+        this.etudiant = etudiant;
+    }
+
+    public Matiere getMatiere() {
+        return this.matiere;
+    }
+
+    public Diplome matiere(Matiere matiere) {
+        this.setMatiere(matiere);
+        return this;
+    }
+
+    public void setMatiere(Matiere matiere) {
+        this.matiere = matiere;
     }
 
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
@@ -92,7 +111,6 @@ public class Diplome implements Serializable {
     public String toString() {
         return "Diplome{" +
             "id=" + getId() +
-            ", idDipl=" + getIdDipl() +
             ", nameDipl='" + getNameDipl() + "'" +
             "}";
     }

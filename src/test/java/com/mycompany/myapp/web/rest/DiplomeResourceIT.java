@@ -29,9 +29,6 @@ import org.springframework.transaction.annotation.Transactional;
 @WithMockUser
 class DiplomeResourceIT {
 
-    private static final Integer DEFAULT_ID_DIPL = 1;
-    private static final Integer UPDATED_ID_DIPL = 2;
-
     private static final String DEFAULT_NAME_DIPL = "AAAAAAAAAA";
     private static final String UPDATED_NAME_DIPL = "BBBBBBBBBB";
 
@@ -59,7 +56,7 @@ class DiplomeResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Diplome createEntity(EntityManager em) {
-        Diplome diplome = new Diplome().idDipl(DEFAULT_ID_DIPL).nameDipl(DEFAULT_NAME_DIPL);
+        Diplome diplome = new Diplome().nameDipl(DEFAULT_NAME_DIPL);
         return diplome;
     }
 
@@ -70,7 +67,7 @@ class DiplomeResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Diplome createUpdatedEntity(EntityManager em) {
-        Diplome diplome = new Diplome().idDipl(UPDATED_ID_DIPL).nameDipl(UPDATED_NAME_DIPL);
+        Diplome diplome = new Diplome().nameDipl(UPDATED_NAME_DIPL);
         return diplome;
     }
 
@@ -92,7 +89,6 @@ class DiplomeResourceIT {
         List<Diplome> diplomeList = diplomeRepository.findAll();
         assertThat(diplomeList).hasSize(databaseSizeBeforeCreate + 1);
         Diplome testDiplome = diplomeList.get(diplomeList.size() - 1);
-        assertThat(testDiplome.getIdDipl()).isEqualTo(DEFAULT_ID_DIPL);
         assertThat(testDiplome.getNameDipl()).isEqualTo(DEFAULT_NAME_DIPL);
     }
 
@@ -116,23 +112,6 @@ class DiplomeResourceIT {
 
     @Test
     @Transactional
-    void checkIdDiplIsRequired() throws Exception {
-        int databaseSizeBeforeTest = diplomeRepository.findAll().size();
-        // set the field null
-        diplome.setIdDipl(null);
-
-        // Create the Diplome, which fails.
-
-        restDiplomeMockMvc
-            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(diplome)))
-            .andExpect(status().isBadRequest());
-
-        List<Diplome> diplomeList = diplomeRepository.findAll();
-        assertThat(diplomeList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
     void getAllDiplomes() throws Exception {
         // Initialize the database
         diplomeRepository.saveAndFlush(diplome);
@@ -143,7 +122,6 @@ class DiplomeResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(diplome.getId().intValue())))
-            .andExpect(jsonPath("$.[*].idDipl").value(hasItem(DEFAULT_ID_DIPL)))
             .andExpect(jsonPath("$.[*].nameDipl").value(hasItem(DEFAULT_NAME_DIPL)));
     }
 
@@ -159,7 +137,6 @@ class DiplomeResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(diplome.getId().intValue()))
-            .andExpect(jsonPath("$.idDipl").value(DEFAULT_ID_DIPL))
             .andExpect(jsonPath("$.nameDipl").value(DEFAULT_NAME_DIPL));
     }
 
@@ -182,7 +159,7 @@ class DiplomeResourceIT {
         Diplome updatedDiplome = diplomeRepository.findById(diplome.getId()).get();
         // Disconnect from session so that the updates on updatedDiplome are not directly saved in db
         em.detach(updatedDiplome);
-        updatedDiplome.idDipl(UPDATED_ID_DIPL).nameDipl(UPDATED_NAME_DIPL);
+        updatedDiplome.nameDipl(UPDATED_NAME_DIPL);
 
         restDiplomeMockMvc
             .perform(
@@ -196,7 +173,6 @@ class DiplomeResourceIT {
         List<Diplome> diplomeList = diplomeRepository.findAll();
         assertThat(diplomeList).hasSize(databaseSizeBeforeUpdate);
         Diplome testDiplome = diplomeList.get(diplomeList.size() - 1);
-        assertThat(testDiplome.getIdDipl()).isEqualTo(UPDATED_ID_DIPL);
         assertThat(testDiplome.getNameDipl()).isEqualTo(UPDATED_NAME_DIPL);
     }
 
@@ -280,7 +256,6 @@ class DiplomeResourceIT {
         List<Diplome> diplomeList = diplomeRepository.findAll();
         assertThat(diplomeList).hasSize(databaseSizeBeforeUpdate);
         Diplome testDiplome = diplomeList.get(diplomeList.size() - 1);
-        assertThat(testDiplome.getIdDipl()).isEqualTo(DEFAULT_ID_DIPL);
         assertThat(testDiplome.getNameDipl()).isEqualTo(DEFAULT_NAME_DIPL);
     }
 
@@ -296,7 +271,7 @@ class DiplomeResourceIT {
         Diplome partialUpdatedDiplome = new Diplome();
         partialUpdatedDiplome.setId(diplome.getId());
 
-        partialUpdatedDiplome.idDipl(UPDATED_ID_DIPL).nameDipl(UPDATED_NAME_DIPL);
+        partialUpdatedDiplome.nameDipl(UPDATED_NAME_DIPL);
 
         restDiplomeMockMvc
             .perform(
@@ -310,7 +285,6 @@ class DiplomeResourceIT {
         List<Diplome> diplomeList = diplomeRepository.findAll();
         assertThat(diplomeList).hasSize(databaseSizeBeforeUpdate);
         Diplome testDiplome = diplomeList.get(diplomeList.size() - 1);
-        assertThat(testDiplome.getIdDipl()).isEqualTo(UPDATED_ID_DIPL);
         assertThat(testDiplome.getNameDipl()).isEqualTo(UPDATED_NAME_DIPL);
     }
 

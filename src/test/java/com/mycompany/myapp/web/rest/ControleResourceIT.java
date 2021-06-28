@@ -31,9 +31,6 @@ import org.springframework.transaction.annotation.Transactional;
 @WithMockUser
 class ControleResourceIT {
 
-    private static final Integer DEFAULT_ID_CONT = 1;
-    private static final Integer UPDATED_ID_CONT = 2;
-
     private static final LocalDate DEFAULT_DATE = LocalDate.ofEpochDay(0L);
     private static final LocalDate UPDATED_DATE = LocalDate.now(ZoneId.systemDefault());
 
@@ -67,7 +64,7 @@ class ControleResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Controle createEntity(EntityManager em) {
-        Controle controle = new Controle().idCont(DEFAULT_ID_CONT).date(DEFAULT_DATE).coefCont(DEFAULT_COEF_CONT).type(DEFAULT_TYPE);
+        Controle controle = new Controle().date(DEFAULT_DATE).coefCont(DEFAULT_COEF_CONT).type(DEFAULT_TYPE);
         return controle;
     }
 
@@ -78,7 +75,7 @@ class ControleResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Controle createUpdatedEntity(EntityManager em) {
-        Controle controle = new Controle().idCont(UPDATED_ID_CONT).date(UPDATED_DATE).coefCont(UPDATED_COEF_CONT).type(UPDATED_TYPE);
+        Controle controle = new Controle().date(UPDATED_DATE).coefCont(UPDATED_COEF_CONT).type(UPDATED_TYPE);
         return controle;
     }
 
@@ -100,7 +97,6 @@ class ControleResourceIT {
         List<Controle> controleList = controleRepository.findAll();
         assertThat(controleList).hasSize(databaseSizeBeforeCreate + 1);
         Controle testControle = controleList.get(controleList.size() - 1);
-        assertThat(testControle.getIdCont()).isEqualTo(DEFAULT_ID_CONT);
         assertThat(testControle.getDate()).isEqualTo(DEFAULT_DATE);
         assertThat(testControle.getCoefCont()).isEqualTo(DEFAULT_COEF_CONT);
         assertThat(testControle.getType()).isEqualTo(DEFAULT_TYPE);
@@ -126,23 +122,6 @@ class ControleResourceIT {
 
     @Test
     @Transactional
-    void checkIdContIsRequired() throws Exception {
-        int databaseSizeBeforeTest = controleRepository.findAll().size();
-        // set the field null
-        controle.setIdCont(null);
-
-        // Create the Controle, which fails.
-
-        restControleMockMvc
-            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(controle)))
-            .andExpect(status().isBadRequest());
-
-        List<Controle> controleList = controleRepository.findAll();
-        assertThat(controleList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
     void getAllControles() throws Exception {
         // Initialize the database
         controleRepository.saveAndFlush(controle);
@@ -153,7 +132,6 @@ class ControleResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(controle.getId().intValue())))
-            .andExpect(jsonPath("$.[*].idCont").value(hasItem(DEFAULT_ID_CONT)))
             .andExpect(jsonPath("$.[*].date").value(hasItem(DEFAULT_DATE.toString())))
             .andExpect(jsonPath("$.[*].coefCont").value(hasItem(DEFAULT_COEF_CONT)))
             .andExpect(jsonPath("$.[*].type").value(hasItem(DEFAULT_TYPE)));
@@ -171,7 +149,6 @@ class ControleResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(controle.getId().intValue()))
-            .andExpect(jsonPath("$.idCont").value(DEFAULT_ID_CONT))
             .andExpect(jsonPath("$.date").value(DEFAULT_DATE.toString()))
             .andExpect(jsonPath("$.coefCont").value(DEFAULT_COEF_CONT))
             .andExpect(jsonPath("$.type").value(DEFAULT_TYPE));
@@ -196,7 +173,7 @@ class ControleResourceIT {
         Controle updatedControle = controleRepository.findById(controle.getId()).get();
         // Disconnect from session so that the updates on updatedControle are not directly saved in db
         em.detach(updatedControle);
-        updatedControle.idCont(UPDATED_ID_CONT).date(UPDATED_DATE).coefCont(UPDATED_COEF_CONT).type(UPDATED_TYPE);
+        updatedControle.date(UPDATED_DATE).coefCont(UPDATED_COEF_CONT).type(UPDATED_TYPE);
 
         restControleMockMvc
             .perform(
@@ -210,7 +187,6 @@ class ControleResourceIT {
         List<Controle> controleList = controleRepository.findAll();
         assertThat(controleList).hasSize(databaseSizeBeforeUpdate);
         Controle testControle = controleList.get(controleList.size() - 1);
-        assertThat(testControle.getIdCont()).isEqualTo(UPDATED_ID_CONT);
         assertThat(testControle.getDate()).isEqualTo(UPDATED_DATE);
         assertThat(testControle.getCoefCont()).isEqualTo(UPDATED_COEF_CONT);
         assertThat(testControle.getType()).isEqualTo(UPDATED_TYPE);
@@ -284,7 +260,7 @@ class ControleResourceIT {
         Controle partialUpdatedControle = new Controle();
         partialUpdatedControle.setId(controle.getId());
 
-        partialUpdatedControle.date(UPDATED_DATE).type(UPDATED_TYPE);
+        partialUpdatedControle.coefCont(UPDATED_COEF_CONT);
 
         restControleMockMvc
             .perform(
@@ -298,10 +274,9 @@ class ControleResourceIT {
         List<Controle> controleList = controleRepository.findAll();
         assertThat(controleList).hasSize(databaseSizeBeforeUpdate);
         Controle testControle = controleList.get(controleList.size() - 1);
-        assertThat(testControle.getIdCont()).isEqualTo(DEFAULT_ID_CONT);
-        assertThat(testControle.getDate()).isEqualTo(UPDATED_DATE);
-        assertThat(testControle.getCoefCont()).isEqualTo(DEFAULT_COEF_CONT);
-        assertThat(testControle.getType()).isEqualTo(UPDATED_TYPE);
+        assertThat(testControle.getDate()).isEqualTo(DEFAULT_DATE);
+        assertThat(testControle.getCoefCont()).isEqualTo(UPDATED_COEF_CONT);
+        assertThat(testControle.getType()).isEqualTo(DEFAULT_TYPE);
     }
 
     @Test
@@ -316,7 +291,7 @@ class ControleResourceIT {
         Controle partialUpdatedControle = new Controle();
         partialUpdatedControle.setId(controle.getId());
 
-        partialUpdatedControle.idCont(UPDATED_ID_CONT).date(UPDATED_DATE).coefCont(UPDATED_COEF_CONT).type(UPDATED_TYPE);
+        partialUpdatedControle.date(UPDATED_DATE).coefCont(UPDATED_COEF_CONT).type(UPDATED_TYPE);
 
         restControleMockMvc
             .perform(
@@ -330,7 +305,6 @@ class ControleResourceIT {
         List<Controle> controleList = controleRepository.findAll();
         assertThat(controleList).hasSize(databaseSizeBeforeUpdate);
         Controle testControle = controleList.get(controleList.size() - 1);
-        assertThat(testControle.getIdCont()).isEqualTo(UPDATED_ID_CONT);
         assertThat(testControle.getDate()).isEqualTo(UPDATED_DATE);
         assertThat(testControle.getCoefCont()).isEqualTo(UPDATED_COEF_CONT);
         assertThat(testControle.getType()).isEqualTo(UPDATED_TYPE);

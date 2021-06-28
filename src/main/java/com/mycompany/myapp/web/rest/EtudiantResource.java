@@ -8,8 +8,6 @@ import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
-import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -48,7 +46,7 @@ public class EtudiantResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PostMapping("/etudiants")
-    public ResponseEntity<Etudiant> createEtudiant(@Valid @RequestBody Etudiant etudiant) throws URISyntaxException {
+    public ResponseEntity<Etudiant> createEtudiant(@RequestBody Etudiant etudiant) throws URISyntaxException {
         log.debug("REST request to save Etudiant : {}", etudiant);
         if (etudiant.getId() != null) {
             throw new BadRequestAlertException("A new etudiant cannot already have an ID", ENTITY_NAME, "idexists");
@@ -73,7 +71,7 @@ public class EtudiantResource {
     @PutMapping("/etudiants/{id}")
     public ResponseEntity<Etudiant> updateEtudiant(
         @PathVariable(value = "id", required = false) final Long id,
-        @Valid @RequestBody Etudiant etudiant
+        @RequestBody Etudiant etudiant
     ) throws URISyntaxException {
         log.debug("REST request to update Etudiant : {}, {}", id, etudiant);
         if (etudiant.getId() == null) {
@@ -108,7 +106,7 @@ public class EtudiantResource {
     @PatchMapping(value = "/etudiants/{id}", consumes = "application/merge-patch+json")
     public ResponseEntity<Etudiant> partialUpdateEtudiant(
         @PathVariable(value = "id", required = false) final Long id,
-        @NotNull @RequestBody Etudiant etudiant
+        @RequestBody Etudiant etudiant
     ) throws URISyntaxException {
         log.debug("REST request to partial update Etudiant partially : {}, {}", id, etudiant);
         if (etudiant.getId() == null) {
@@ -126,9 +124,6 @@ public class EtudiantResource {
             .findById(etudiant.getId())
             .map(
                 existingEtudiant -> {
-                    if (etudiant.getIdEtud() != null) {
-                        existingEtudiant.setIdEtud(etudiant.getIdEtud());
-                    }
                     if (etudiant.getFirstName() != null) {
                         existingEtudiant.setFirstName(etudiant.getFirstName());
                     }

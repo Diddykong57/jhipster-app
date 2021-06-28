@@ -14,10 +14,6 @@
         <dd>
           <span>{{ etudiant.id }}</span>
         </dd>
-        <dt><span>Id Etud</span></dt>
-        <dd>
-          <span>{{ etudiant.idEtud }}</span>
-        </dd>
         <dt><span>First Name</span></dt>
         <dd>
           <span>{{ etudiant.firstName }}</span>
@@ -25,12 +21,6 @@
         <dt><span>Last Name</span></dt>
         <dd>
           <span>{{ etudiant.lastName }}</span>
-        </dd>
-        <dt><span>First Name</span></dt>
-        <dd>
-          <div *ngIf="etudiant.firstName">
-            <a [routerLink]="['/diplome', etudiant.firstName?.id, 'view']">{{ etudiant.firstName?.id }}</a>
-          </div>
         </dd>
       </dl>
 

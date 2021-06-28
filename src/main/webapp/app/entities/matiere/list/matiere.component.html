@@ -33,10 +33,9 @@
       <thead>
         <tr>
           <th scope="col"><span>ID</span></th>
-          <th scope="col"><span>Id Mat</span></th>
           <th scope="col"><span>Name Mat</span></th>
           <th scope="col"><span>Coef Mat</span></th>
-          <th scope="col"><span>Name Mat</span></th>
+          <th scope="col"><span>Controle</span></th>
           <th scope="col"></th>
         </tr>
       </thead>
@@ -45,12 +44,11 @@
           <td>
             <a [routerLink]="['/matiere', matiere.id, 'view']">{{ matiere.id }}</a>
           </td>
-          <td>{{ matiere.idMat }}</td>
           <td>{{ matiere.nameMat }}</td>
           <td>{{ matiere.coefMat }}</td>
           <td>
-            <div *ngIf="matiere.nameMat">
-              <a [routerLink]="['/diplome', matiere.nameMat?.id, 'view']">{{ matiere.nameMat?.id }}</a>
+            <div *ngIf="matiere.controle">
+              <a [routerLink]="['/controle', matiere.controle?.id, 'view']">{{ matiere.controle?.id }}</a>
             </div>
           </td>
           <td class="text-right">

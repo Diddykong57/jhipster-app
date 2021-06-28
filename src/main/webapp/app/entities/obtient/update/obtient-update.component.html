@@ -25,27 +25,33 @@
         <div class="form-group">
           <label class="form-control-label" for="field_controle">Controle</label>
           <select class="form-control" id="field_controle" data-cy="controle" name="controle" formControlName="controle">
-            <option [ngValue]="null"></option>
+            <option *ngIf="!editForm.get('controle')!.value" [ngValue]="null" selected></option>
             <option
               [ngValue]="controleOption.id === editForm.get('controle')!.value?.id ? editForm.get('controle')!.value : controleOption"
               *ngFor="let controleOption of controlesSharedCollection; trackBy: trackControleById"
             >
-              {{ controleOption.id }}
+              {{ controleOption.date }}
             </option>
           </select>
+        </div>
+        <div *ngIf="editForm.get(['controle'])!.invalid && (editForm.get(['controle'])!.dirty || editForm.get(['controle'])!.touched)">
+          <small class="form-text text-danger" *ngIf="editForm.get(['controle'])?.errors?.required"> This field is required. </small>
         </div>
 
         <div class="form-group">
           <label class="form-control-label" for="field_etudiant">Etudiant</label>
           <select class="form-control" id="field_etudiant" data-cy="etudiant" name="etudiant" formControlName="etudiant">
-            <option [ngValue]="null"></option>
+            <option *ngIf="!editForm.get('etudiant')!.value" [ngValue]="null" selected></option>
             <option
               [ngValue]="etudiantOption.id === editForm.get('etudiant')!.value?.id ? editForm.get('etudiant')!.value : etudiantOption"
               *ngFor="let etudiantOption of etudiantsSharedCollection; trackBy: trackEtudiantById"
             >
-              {{ etudiantOption.id }}
+              {{ etudiantOption.firstname }}
             </option>
           </select>
+        </div>
+        <div *ngIf="editForm.get(['etudiant'])!.invalid && (editForm.get(['etudiant'])!.dirty || editForm.get(['etudiant'])!.touched)">
+          <small class="form-text text-danger" *ngIf="editForm.get(['etudiant'])?.errors?.required"> This field is required. </small>
         </div>
       </div>
 

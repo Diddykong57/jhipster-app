@@ -28,12 +28,14 @@ public class Obtient implements Serializable {
     @Column(name = "note", nullable = false)
     private Float note;
 
-    @ManyToOne
-    @JsonIgnoreProperties(value = { "idCont", "idConts" }, allowSetters = true)
+    @ManyToOne(optional = false)
+    @NotNull
+    @JsonIgnoreProperties(value = { "obtients" }, allowSetters = true)
     private Controle controle;
 
-    @ManyToOne
-    @JsonIgnoreProperties(value = { "firstName", "idEtuds" }, allowSetters = true)
+    @ManyToOne(optional = false)
+    @NotNull
+    @JsonIgnoreProperties(value = { "obtients" }, allowSetters = true)
     private Etudiant etudiant;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here

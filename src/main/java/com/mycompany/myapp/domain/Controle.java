@@ -25,10 +25,6 @@ public class Controle implements Serializable {
     @SequenceGenerator(name = "sequenceGenerator")
     private Long id;
 
-    @NotNull
-    @Column(name = "id_cont", nullable = false)
-    private Integer idCont;
-
     @Column(name = "date")
     private LocalDate date;
 
@@ -39,15 +35,10 @@ public class Controle implements Serializable {
     @Column(name = "type")
     private String type;
 
-    @JsonIgnoreProperties(value = { "nameMat" }, allowSetters = true)
-    @OneToOne
-    @JoinColumn(unique = true)
-    private Matiere idCont;
-
     @OneToMany(mappedBy = "controle")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     @JsonIgnoreProperties(value = { "controle", "etudiant" }, allowSetters = true)
-    private Set<Obtient> idConts = new HashSet<>();
+    private Set<Obtient> obtients = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
     public Long getId() {
@@ -61,19 +52,6 @@ public class Controle implements Serializable {
     public Controle id(Long id) {
         this.id = id;
         return this;
-    }
-
-    public Integer getIdCont() {
-        return this.idCont;
-    }
-
-    public Controle idCont(Integer idCont) {
-        this.idCont = idCont;
-        return this;
-    }
-
-    public void setIdCont(Integer idCont) {
-        this.idCont = idCont;
     }
 
     public LocalDate getDate() {
@@ -115,48 +93,35 @@ public class Controle implements Serializable {
         this.type = type;
     }
 
-    public Matiere getIdCont() {
-        return this.idCont;
+    public Set<Obtient> getObtients() {
+        return this.obtients;
     }
 
-    public Controle idCont(Matiere matiere) {
-        this.setIdCont(matiere);
+    public Controle obtients(Set<Obtient> obtients) {
+        this.setObtients(obtients);
         return this;
     }
 
-    public void setIdCont(Matiere matiere) {
-        this.idCont = matiere;
-    }
-
-    public Set<Obtient> getIdConts() {
-        return this.idConts;
-    }
-
-    public Controle idConts(Set<Obtient> obtients) {
-        this.setIdConts(obtients);
-        return this;
-    }
-
-    public Controle addIdCont(Obtient obtient) {
-        this.idConts.add(obtient);
+    public Controle addObtient(Obtient obtient) {
+        this.obtients.add(obtient);
         obtient.setControle(this);
         return this;
     }
 
-    public Controle removeIdCont(Obtient obtient) {
-        this.idConts.remove(obtient);
+    public Controle removeObtient(Obtient obtient) {
+        this.obtients.remove(obtient);
         obtient.setControle(null);
         return this;
     }
 
-    public void setIdConts(Set<Obtient> obtients) {
-        if (this.idConts != null) {
-            this.idConts.forEach(i -> i.setControle(null));
+    public void setObtients(Set<Obtient> obtients) {
+        if (this.obtients != null) {
+            this.obtients.forEach(i -> i.setControle(null));
         }
         if (obtients != null) {
             obtients.forEach(i -> i.setControle(this));
         }
-        this.idConts = obtients;
+        this.obtients = obtients;
     }
 
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
@@ -183,7 +148,6 @@ public class Controle implements Serializable {
     public String toString() {
         return "Controle{" +
             "id=" + getId() +
-            ", idCont=" + getIdCont() +
             ", date='" + getDate() + "'" +
             ", coefCont=" + getCoefCont() +
             ", type='" + getType() + "'" +

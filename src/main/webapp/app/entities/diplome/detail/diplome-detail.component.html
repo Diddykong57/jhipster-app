@@ -14,13 +14,21 @@
         <dd>
           <span>{{ diplome.id }}</span>
         </dd>
-        <dt><span>Id Dipl</span></dt>
-        <dd>
-          <span>{{ diplome.idDipl }}</span>
-        </dd>
         <dt><span>Name Dipl</span></dt>
         <dd>
           <span>{{ diplome.nameDipl }}</span>
+        </dd>
+        <dt><span>Etudiant</span></dt>
+        <dd>
+          <div *ngIf="diplome.etudiant">
+            <a [routerLink]="['/etudiant', diplome.etudiant?.id, 'view']">{{ diplome.etudiant?.id }}</a>
+          </div>
+        </dd>
+        <dt><span>Matiere</span></dt>
+        <dd>
+          <div *ngIf="diplome.matiere">
+            <a [routerLink]="['/matiere', diplome.matiere?.id, 'view']">{{ diplome.matiere?.id }}</a>
+          </div>
         </dd>
       </dl>
 

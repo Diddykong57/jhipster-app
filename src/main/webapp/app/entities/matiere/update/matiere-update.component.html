@@ -12,15 +12,6 @@
         </div>
 
         <div class="form-group">
-          <label class="form-control-label" for="field_idMat">Id Mat</label>
-          <input type="number" class="form-control" name="idMat" id="field_idMat" data-cy="idMat" formControlName="idMat" />
-          <div *ngIf="editForm.get('idMat')!.invalid && (editForm.get('idMat')!.dirty || editForm.get('idMat')!.touched)">
-            <small class="form-text text-danger" *ngIf="editForm.get('idMat')?.errors?.required"> This field is required. </small>
-            <small class="form-text text-danger" [hidden]="!editForm.get('idMat')?.errors?.number"> This field should be a number. </small>
-          </div>
-        </div>
-
-        <div class="form-group">
           <label class="form-control-label" for="field_nameMat">Name Mat</label>
           <input type="text" class="form-control" name="nameMat" id="field_nameMat" data-cy="nameMat" formControlName="nameMat" />
         </div>
@@ -37,14 +28,14 @@
         </div>
 
         <div class="form-group">
-          <label class="form-control-label" for="field_nameMat">Name Mat</label>
-          <select class="form-control" id="field_nameMat" data-cy="nameMat" name="nameMat" formControlName="nameMat">
+          <label class="form-control-label" for="field_controle">Controle</label>
+          <select class="form-control" id="field_controle" data-cy="controle" name="controle" formControlName="controle">
             <option [ngValue]="null"></option>
             <option
-              [ngValue]="diplomeOption.id === editForm.get('nameMat')!.value?.id ? editForm.get('nameMat')!.value : diplomeOption"
-              *ngFor="let diplomeOption of nameMatsCollection; trackBy: trackDiplomeById"
+              [ngValue]="controleOption.id === editForm.get('controle')!.value?.id ? editForm.get('controle')!.value : controleOption"
+              *ngFor="let controleOption of controlesCollection; trackBy: trackControleById"
             >
-              {{ diplomeOption.id }}
+              {{ controleOption.id }}
             </option>
           </select>
         </div>

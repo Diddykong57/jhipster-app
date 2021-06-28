@@ -4,12 +4,12 @@ import { IEtudiant } from 'app/entities/etudiant/etudiant.model';
 export interface IObtient {
   id?: number;
   note?: number;
-  controle?: IControle | null;
-  etudiant?: IEtudiant | null;
+  controle?: IControle;
+  etudiant?: IEtudiant;
 }
 
 export class Obtient implements IObtient {
-  constructor(public id?: number, public note?: number, public controle?: IControle | null, public etudiant?: IEtudiant | null) {}
+  constructor(public id?: number, public note?: number, public controle?: IControle, public etudiant?: IEtudiant) {}
 }
 
 export function getObtientIdentifier(obtient: IObtient): number | undefined {

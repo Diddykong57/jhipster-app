@@ -22,7 +22,6 @@ describe('Service Tests', () => {
 
       elemDefault = {
         id: 0,
-        idMat: 0,
         nameMat: 'AAAAAAA',
         coefMat: 0,
       };
@@ -60,7 +59,6 @@ describe('Service Tests', () => {
         const returnedFromService = Object.assign(
           {
             id: 1,
-            idMat: 1,
             nameMat: 'BBBBBB',
             coefMat: 1,
           },
@@ -79,7 +77,7 @@ describe('Service Tests', () => {
       it('should partial update a Matiere', () => {
         const patchObject = Object.assign(
           {
-            nameMat: 'BBBBBB',
+            coefMat: 1,
           },
           new Matiere()
         );
@@ -99,7 +97,6 @@ describe('Service Tests', () => {
         const returnedFromService = Object.assign(
           {
             id: 1,
-            idMat: 1,
             nameMat: 'BBBBBB',
             coefMat: 1,
           },
@@ -153,7 +150,7 @@ describe('Service Tests', () => {
         });
 
         it('should add only unique Matiere to an array', () => {
-          const matiereArray: IMatiere[] = [{ id: 123 }, { id: 456 }, { id: 66239 }];
+          const matiereArray: IMatiere[] = [{ id: 123 }, { id: 456 }, { id: 11863 }];
           const matiereCollection: IMatiere[] = [{ id: 123 }];
           expectedResult = service.addMatiereToCollectionIfMissing(matiereCollection, ...matiereArray);
           expect(expectedResult).toHaveLength(3);

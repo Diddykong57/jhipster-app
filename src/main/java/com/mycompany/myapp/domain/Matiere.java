@@ -1,5 +1,6 @@
 package com.mycompany.myapp.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
 import javax.persistence.*;
 import javax.validation.constraints.*;
@@ -21,10 +22,6 @@ public class Matiere implements Serializable {
     @SequenceGenerator(name = "sequenceGenerator")
     private Long id;
 
-    @NotNull
-    @Column(name = "id_mat", nullable = false)
-    private Integer idMat;
-
     @Column(name = "name_mat")
     private String nameMat;
 
@@ -32,9 +29,10 @@ public class Matiere implements Serializable {
     @Column(name = "coef_mat")
     private Integer coefMat;
 
+    @JsonIgnoreProperties(value = { "obtients" }, allowSetters = true)
     @OneToOne
     @JoinColumn(unique = true)
-    private Diplome nameMat;
+    private Controle controle;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
     public Long getId() {
@@ -48,19 +46,6 @@ public class Matiere implements Serializable {
     public Matiere id(Long id) {
         this.id = id;
         return this;
-    }
-
-    public Integer getIdMat() {
-        return this.idMat;
-    }
-
-    public Matiere idMat(Integer idMat) {
-        this.idMat = idMat;
-        return this;
-    }
-
-    public void setIdMat(Integer idMat) {
-        this.idMat = idMat;
     }
 
     public String getNameMat() {
@@ -89,17 +74,17 @@ public class Matiere implements Serializable {
         this.coefMat = coefMat;
     }
 
-    public Diplome getNameMat() {
-        return this.nameMat;
+    public Controle getControle() {
+        return this.controle;
     }
 
-    public Matiere nameMat(Diplome diplome) {
-        this.setNameMat(diplome);
+    public Matiere controle(Controle controle) {
+        this.setControle(controle);
         return this;
     }
 
-    public void setNameMat(Diplome diplome) {
-        this.nameMat = diplome;
+    public void setControle(Controle controle) {
+        this.controle = controle;
     }
 
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
@@ -126,7 +111,6 @@ public class Matiere implements Serializable {
     public String toString() {
         return "Matiere{" +
             "id=" + getId() +
-            ", idMat=" + getIdMat() +
             ", nameMat='" + getNameMat() + "'" +
             ", coefMat=" + getCoefMat() +
             "}";

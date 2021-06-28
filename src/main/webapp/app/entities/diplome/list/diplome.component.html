@@ -33,8 +33,9 @@
       <thead>
         <tr>
           <th scope="col"><span>ID</span></th>
-          <th scope="col"><span>Id Dipl</span></th>
           <th scope="col"><span>Name Dipl</span></th>
+          <th scope="col"><span>Etudiant</span></th>
+          <th scope="col"><span>Matiere</span></th>
           <th scope="col"></th>
         </tr>
       </thead>
@@ -43,8 +44,17 @@
           <td>
             <a [routerLink]="['/diplome', diplome.id, 'view']">{{ diplome.id }}</a>
           </td>
-          <td>{{ diplome.idDipl }}</td>
           <td>{{ diplome.nameDipl }}</td>
+          <td>
+            <div *ngIf="diplome.etudiant">
+              <a [routerLink]="['/etudiant', diplome.etudiant?.id, 'view']">{{ diplome.etudiant?.id }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="diplome.matiere">
+              <a [routerLink]="['/matiere', diplome.matiere?.id, 'view']">{{ diplome.matiere?.id }}</a>
+            </div>
+          </td>
           <td class="text-right">
             <div class="btn-group">
               <button

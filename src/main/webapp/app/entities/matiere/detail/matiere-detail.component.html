@@ -14,10 +14,6 @@
         <dd>
           <span>{{ matiere.id }}</span>
         </dd>
-        <dt><span>Id Mat</span></dt>
-        <dd>
-          <span>{{ matiere.idMat }}</span>
-        </dd>
         <dt><span>Name Mat</span></dt>
         <dd>
           <span>{{ matiere.nameMat }}</span>
@@ -26,10 +22,10 @@
         <dd>
           <span>{{ matiere.coefMat }}</span>
         </dd>
-        <dt><span>Name Mat</span></dt>
+        <dt><span>Controle</span></dt>
         <dd>
-          <div *ngIf="matiere.nameMat">
-            <a [routerLink]="['/diplome', matiere.nameMat?.id, 'view']">{{ matiere.nameMat?.id }}</a>
+          <div *ngIf="matiere.controle">
+            <a [routerLink]="['/controle', matiere.controle?.id, 'view']">{{ matiere.controle?.id }}</a>
           </div>
         </dd>
       </dl>

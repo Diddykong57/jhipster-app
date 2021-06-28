@@ -47,12 +47,12 @@
           <td>{{ obtient.note }}</td>
           <td>
             <div *ngIf="obtient.controle">
-              <a [routerLink]="['/controle', obtient.controle?.id, 'view']">{{ obtient.controle?.id }}</a>
+              <a [routerLink]="['/controle', obtient.controle?.id, 'view']">{{ obtient.controle?.date }}</a>
             </div>
           </td>
           <td>
             <div *ngIf="obtient.etudiant">
-              <a [routerLink]="['/etudiant', obtient.etudiant?.id, 'view']">{{ obtient.etudiant?.id }}</a>
+              <a [routerLink]="['/etudiant', obtient.etudiant?.id, 'view']">{{ obtient.etudiant?.firstname }}</a>
             </div>
           </td>
           <td class="text-right">
