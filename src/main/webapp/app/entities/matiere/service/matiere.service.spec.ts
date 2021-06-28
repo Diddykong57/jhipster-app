@@ -1,7 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 
-import { TypeMatiere } from 'app/entities/enumerations/type-matiere.model';
 import { IMatiere, Matiere } from '../matiere.model';
 
 import { MatiereService } from './matiere.service';
@@ -23,7 +22,7 @@ describe('Service Tests', () => {
 
       elemDefault = {
         id: 0,
-        nameMat: TypeMatiere.MATHS,
+        nameMat: 'AAAAAAA',
         coefMat: 0,
       };
     });
