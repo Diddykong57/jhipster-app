@@ -35,6 +35,7 @@
           <input type="number" class="form-control" name="coefCont" id="field_coefCont" data-cy="coefCont" formControlName="coefCont" />
           <div *ngIf="editForm.get('coefCont')!.invalid && (editForm.get('coefCont')!.dirty || editForm.get('coefCont')!.touched)">
             <small class="form-text text-danger" *ngIf="editForm.get('coefCont')?.errors?.min"> This field should be at least 0. </small>
+            <small class="form-text text-danger" *ngIf="editForm.get('coefCont')?.errors?.max"> This field cannot be more than 4. </small>
             <small class="form-text text-danger" [hidden]="!editForm.get('coefCont')?.errors?.number">
               This field should be a number.
             </small>
@@ -43,7 +44,13 @@
 
         <div class="form-group">
           <label class="form-control-label" for="field_type">Type</label>
-          <input type="text" class="form-control" name="type" id="field_type" data-cy="type" formControlName="type" />
+          <select class="form-control" name="type" formControlName="type" id="field_type" data-cy="type">
+            <option [ngValue]="null"></option>
+            <option value="CE">comprehensionEcrite</option>
+            <option value="CO">comprehensionOrale</option>
+            <option value="EE">expressionEcrite</option>
+            <option value="EO">expressionOrale</option>
+          </select>
         </div>
       </div>
 

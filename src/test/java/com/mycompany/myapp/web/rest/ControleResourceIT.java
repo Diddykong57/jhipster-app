@@ -7,6 +7,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.mycompany.myapp.IntegrationTest;
 import com.mycompany.myapp.domain.Controle;
+import com.mycompany.myapp.domain.enumeration.ContType;
 import com.mycompany.myapp.repository.ControleRepository;
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -37,8 +38,8 @@ class ControleResourceIT {
     private static final Integer DEFAULT_COEF_CONT = 0;
     private static final Integer UPDATED_COEF_CONT = 1;
 
-    private static final String DEFAULT_TYPE = "AAAAAAAAAA";
-    private static final String UPDATED_TYPE = "BBBBBBBBBB";
+    private static final ContType DEFAULT_TYPE = ContType.CE;
+    private static final ContType UPDATED_TYPE = ContType.CO;
 
     private static final String ENTITY_API_URL = "/api/controles";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
@@ -134,7 +135,7 @@ class ControleResourceIT {
             .andExpect(jsonPath("$.[*].id").value(hasItem(controle.getId().intValue())))
             .andExpect(jsonPath("$.[*].date").value(hasItem(DEFAULT_DATE.toString())))
             .andExpect(jsonPath("$.[*].coefCont").value(hasItem(DEFAULT_COEF_CONT)))
-            .andExpect(jsonPath("$.[*].type").value(hasItem(DEFAULT_TYPE)));
+            .andExpect(jsonPath("$.[*].type").value(hasItem(DEFAULT_TYPE.toString())));
     }
 
     @Test
@@ -151,7 +152,7 @@ class ControleResourceIT {
             .andExpect(jsonPath("$.id").value(controle.getId().intValue()))
             .andExpect(jsonPath("$.date").value(DEFAULT_DATE.toString()))
             .andExpect(jsonPath("$.coefCont").value(DEFAULT_COEF_CONT))
-            .andExpect(jsonPath("$.type").value(DEFAULT_TYPE));
+            .andExpect(jsonPath("$.type").value(DEFAULT_TYPE.toString()));
     }
 
     @Test

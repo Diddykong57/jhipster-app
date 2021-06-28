@@ -1,11 +1,12 @@
 import * as dayjs from 'dayjs';
 import { IObtient } from 'app/entities/obtient/obtient.model';
+import { ContType } from 'app/entities/enumerations/cont-type.model';
 
 export interface IControle {
   id?: number;
   date?: dayjs.Dayjs | null;
   coefCont?: number | null;
-  type?: string | null;
+  type?: ContType | null;
   obtients?: IObtient[] | null;
 }
 
@@ -14,7 +15,7 @@ export class Controle implements IControle {
     public id?: number,
     public date?: dayjs.Dayjs | null,
     public coefCont?: number | null,
-    public type?: string | null,
+    public type?: ContType | null,
     public obtients?: IObtient[] | null
   ) {}
 }
