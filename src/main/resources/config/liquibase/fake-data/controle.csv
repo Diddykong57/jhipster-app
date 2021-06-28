@@ -1,11 +1,11 @@
 id;date;coef_cont;type
-1;2021-06-28;62041;Malawi cross-media
-2;2021-06-28;35757;Timor-Leste best-of-breed deposit
-3;2021-06-27;32329;Gloves
-4;2021-06-28;43483;Auto
-5;2021-06-28;88191;Wooden
-6;2021-06-27;17449;convergence withdrawal
-7;2021-06-27;55058;content Louisiana
-8;2021-06-27;48874;Buckinghamshire Outdoors
-9;2021-06-28;81638;Roads
-10;2021-06-28;9713;Rubber
+1;2021-06-28;3;EE
+2;2021-06-27;2;EO
+3;2021-06-28;3;EE
+4;2021-06-28;1;EO
+5;2021-06-27;4;EE
+6;2021-06-28;2;CE
+7;2021-06-27;0;CE
+8;2021-06-27;1;CE
+9;2021-06-28;3;EO
+10;2021-06-28;3;CE

@@ -18,7 +18,7 @@ export class ControleUpdateComponent implements OnInit {
   editForm = this.fb.group({
     id: [],
     date: [],
-    coefCont: [null, [Validators.min(0)]],
+    coefCont: [null, [Validators.min(0), Validators.max(4)]],
     type: [],
   });
 

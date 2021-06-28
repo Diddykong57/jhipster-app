@@ -10,8 +10,8 @@ entity Diplome {
 
 entity Controle {
     date LocalDate
-    coefCont Integer min(0)
-    type String
+    coefCont Integer min(0) max(4)
+    type ContType
 }
 
 entity Matiere{
@@ -21,6 +21,13 @@ entity Matiere{
 
 entity Obtient {
 	note Float required min(0) max(20)
+}
+
+enum ContType {
+	CE (comprehensionEcrite),
+    CO (comprehensionOrale),
+    EE (expressionEcrite),
+    EO (expressionOrale)
 }
 
 relationship OneToOne {

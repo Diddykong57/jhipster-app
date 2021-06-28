@@ -73,7 +73,7 @@ class ControleGatlingTest extends Simulation {
             .body(StringBody("""{
                 "date":"2020-01-01T00:00:00.000Z"
                 , "coefCont":"0"
-                , "type":"SAMPLE_TEXT"
+                , "type":"CE"
                 }""")).asJson
             .check(status.is(201))
             .check(headerRegex("Location", "(.*)").saveAs("new_controle_url"))).exitHereIfFailed

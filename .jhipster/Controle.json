@@ -8,12 +8,14 @@
     {
       "fieldName": "coefCont",
       "fieldType": "Integer",
-      "fieldValidateRules": ["min"],
-      "fieldValidateRulesMin": "0"
+      "fieldValidateRules": ["min", "max"],
+      "fieldValidateRulesMin": "0",
+      "fieldValidateRulesMax": "4"
     },
     {
       "fieldName": "type",
-      "fieldType": "String"
+      "fieldType": "ContType",
+      "fieldValues": "CE (comprehensionEcrite),CO (comprehensionOrale),EE (expressionEcrite),EO (expressionOrale)"
     }
   ],
   "relationships": [
