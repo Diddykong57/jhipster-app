@@ -71,7 +71,7 @@ class MatiereGatlingTest extends Simulation {
             .post("/api/matieres")
             .headers(headers_http_authenticated)
             .body(StringBody("""{
-                "nameMat":"MATHS"
+                "nameMat":"SAMPLE_TEXT"
                 , "coefMat":"0"
                 }""")).asJson
             .check(status.is(201))

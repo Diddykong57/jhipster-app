@@ -15,7 +15,7 @@ entity Controle {
 }
 
 entity Matiere{
-    nameMat TypeMatiere
+    nameMat String
     coefMat Integer min(0)
 }
 
@@ -28,17 +28,6 @@ enum TypeControle {
     CO (comprehensionOrale),
     EE (expressionEcrite),
     EO (expressionOrale)
-}
-
-enum TypeMatiere {
-	MATHS (Mathematiques),
-    FR (Francais),
-    EN (Anglais),
-    PHY (Physique),
-    CHI (Chimie),
-    PHILO (Philosophie),
-    SPORT (Sport),
-    SVT (Science)
 }
 
 relationship OneToOne {
