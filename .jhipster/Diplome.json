@@ -1,0 +1,25 @@
+{
+  "name": "Diplome",
+  "fields": [
+    {
+      "fieldName": "idDipl",
+      "fieldType": "Integer",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "nameDipl",
+      "fieldType": "String"
+    }
+  ],
+  "relationships": [],
+  "entityTableName": "diplome",
+  "dto": "no",
+  "pagination": "no",
+  "service": "no",
+  "jpaMetamodelFiltering": false,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "applications": "*",
+  "changelogDate": "20210628115508"
+}
