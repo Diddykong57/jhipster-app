@@ -1,9 +1,5 @@
 export enum ContType {
-  CE = 'comprehensionEcrite',
+  FRANCE = 'FRANCE',
 
-  CO = 'comprehensionOrale',
-
-  EE = 'expressionEcrite',
-
-  EO = 'expressionOrale',
+  BELGIQUE = 'BELGIQUE',
 }
