@@ -24,7 +24,7 @@
               [ngValue]="etudiantOption.id === editForm.get('etudiant')!.value?.id ? editForm.get('etudiant')!.value : etudiantOption"
               *ngFor="let etudiantOption of etudiantsCollection; trackBy: trackEtudiantById"
             >
-              {{ etudiantOption.id }}
+              {{ etudiantOption.firstName }}
             </option>
           </select>
         </div>
@@ -37,7 +37,7 @@
               [ngValue]="matiereOption.id === editForm.get('matiere')!.value?.id ? editForm.get('matiere')!.value : matiereOption"
               *ngFor="let matiereOption of matieresCollection; trackBy: trackMatiereById"
             >
-              {{ matiereOption.id }}
+              {{ matiereOption.nameMat }}
             </option>
           </select>
         </div>

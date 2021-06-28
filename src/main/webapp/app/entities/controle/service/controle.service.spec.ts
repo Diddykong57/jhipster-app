@@ -29,7 +29,7 @@ describe('Service Tests', () => {
         id: 0,
         date: currentDate,
         coefCont: 0,
-        type: ContType.FRANCE,
+        type: ContType.CE,
       };
     });
 

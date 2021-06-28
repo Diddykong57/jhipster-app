@@ -12,6 +12,7 @@
       "otherEntityName": "etudiant",
       "otherEntityRelationshipName": "diplome",
       "relationshipName": "etudiant",
+      "otherEntityField": "firstName",
       "ownerSide": true
     },
     {
@@ -19,6 +20,7 @@
       "otherEntityName": "matiere",
       "otherEntityRelationshipName": "diplome",
       "relationshipName": "matiere",
+      "otherEntityField": "nameMat",
       "ownerSide": true
     }
   ],
