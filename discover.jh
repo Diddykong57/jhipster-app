@@ -1,24 +1,20 @@
 
 entity Etudiant {
-	idEtud Integer required
 	firstName String
     lastName String
 }
 
 entity Diplome {
-	idDipl Integer required
 	nameDipl String
 }
 
 entity Controle {
-	idCont Integer required
     date LocalDate
     coefCont Integer min(0)
     type String
 }
 
 entity Matiere{
-	idMat Integer required
     nameMat String
     coefMat Integer min(0)
 }
@@ -28,9 +24,9 @@ entity Obtient {
 }
 
 relationship OneToOne {
-	Etudiant{firstName} to Diplome,
-    Controle{idCont} to Matiere,
-    Matiere{nameMat} to Diplome
+	Diplome{etudiant} to Etudiant,
+    Matiere{controle} to Controle,
+    Diplome{matiere} to Matiere
 }
 
 //relationship OneToMany{
@@ -40,8 +36,8 @@ relationship OneToOne {
 //}
 
 relationship OneToMany{
-    Controle{idCont} to Obtient,
-    Etudiant{idEtud} to Obtient
+    Controle{obtient} to Obtient{controle (date) required}, 
+    Etudiant{obtient} to Obtient{etudiant (firstname) required}
 }
 
 
