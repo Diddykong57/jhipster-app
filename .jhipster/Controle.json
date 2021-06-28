@@ -15,7 +15,7 @@
     {
       "fieldName": "type",
       "fieldType": "ContType",
-      "fieldValues": "CE (comprehensionEcrite),CO (comprehensionOrale),EE (expressionEcrite),EO (expressionOrale)"
+      "fieldValues": "FRANCE,BELGIQUE"
     }
   ],
   "relationships": [
