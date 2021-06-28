@@ -3,7 +3,7 @@ import { HttpClientTestingModule, HttpTestingController } from '@angular/common/
 import * as dayjs from 'dayjs';
 
 import { DATE_FORMAT } from 'app/config/input.constants';
-import { ContType } from 'app/entities/enumerations/cont-type.model';
+import { TypeControle } from 'app/entities/enumerations/type-controle.model';
 import { IControle, Controle } from '../controle.model';
 
 import { ControleService } from './controle.service';
@@ -29,7 +29,7 @@ describe('Service Tests', () => {
         id: 0,
         date: currentDate,
         coefCont: 0,
-        type: ContType.CE,
+        type: TypeControle.CE,
       };
     });
 

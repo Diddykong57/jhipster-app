@@ -7,6 +7,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.mycompany.myapp.IntegrationTest;
 import com.mycompany.myapp.domain.Matiere;
+import com.mycompany.myapp.domain.enumeration.TypeMatiere;
 import com.mycompany.myapp.repository.MatiereRepository;
 import java.util.List;
 import java.util.Random;
@@ -29,8 +30,8 @@ import org.springframework.transaction.annotation.Transactional;
 @WithMockUser
 class MatiereResourceIT {
 
-    private static final String DEFAULT_NAME_MAT = "AAAAAAAAAA";
-    private static final String UPDATED_NAME_MAT = "BBBBBBBBBB";
+    private static final TypeMatiere DEFAULT_NAME_MAT = TypeMatiere.MATHS;
+    private static final TypeMatiere UPDATED_NAME_MAT = TypeMatiere.FR;
 
     private static final Integer DEFAULT_COEF_MAT = 0;
     private static final Integer UPDATED_COEF_MAT = 1;
@@ -126,7 +127,7 @@ class MatiereResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(matiere.getId().intValue())))
-            .andExpect(jsonPath("$.[*].nameMat").value(hasItem(DEFAULT_NAME_MAT)))
+            .andExpect(jsonPath("$.[*].nameMat").value(hasItem(DEFAULT_NAME_MAT.toString())))
             .andExpect(jsonPath("$.[*].coefMat").value(hasItem(DEFAULT_COEF_MAT)));
     }
 
@@ -142,7 +143,7 @@ class MatiereResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(matiere.getId().intValue()))
-            .andExpect(jsonPath("$.nameMat").value(DEFAULT_NAME_MAT))
+            .andExpect(jsonPath("$.nameMat").value(DEFAULT_NAME_MAT.toString()))
             .andExpect(jsonPath("$.coefMat").value(DEFAULT_COEF_MAT));
     }
 

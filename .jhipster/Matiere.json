@@ -3,7 +3,8 @@
   "fields": [
     {
       "fieldName": "nameMat",
-      "fieldType": "String"
+      "fieldType": "TypeMatiere",
+      "fieldValues": "MATHS (Mathematiques),FR (Francais),EN (Anglais),PHY (Physique),CHI (Chimie),PHILO (Philosophie),SPORT (Sport),SVT (Science)"
     },
     {
       "fieldName": "coefMat",

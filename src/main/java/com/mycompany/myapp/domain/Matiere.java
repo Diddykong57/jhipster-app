@@ -1,6 +1,7 @@
 package com.mycompany.myapp.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.mycompany.myapp.domain.enumeration.TypeMatiere;
 import java.io.Serializable;
 import javax.persistence.*;
 import javax.validation.constraints.*;
@@ -22,8 +23,9 @@ public class Matiere implements Serializable {
     @SequenceGenerator(name = "sequenceGenerator")
     private Long id;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "name_mat")
-    private String nameMat;
+    private TypeMatiere nameMat;
 
     @Min(value = 0)
     @Column(name = "coef_mat")
@@ -48,16 +50,16 @@ public class Matiere implements Serializable {
         return this;
     }
 
-    public String getNameMat() {
+    public TypeMatiere getNameMat() {
         return this.nameMat;
     }
 
-    public Matiere nameMat(String nameMat) {
+    public Matiere nameMat(TypeMatiere nameMat) {
         this.nameMat = nameMat;
         return this;
     }
 
-    public void setNameMat(String nameMat) {
+    public void setNameMat(TypeMatiere nameMat) {
         this.nameMat = nameMat;
     }
 

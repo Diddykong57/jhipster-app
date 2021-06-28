@@ -14,7 +14,7 @@
     },
     {
       "fieldName": "type",
-      "fieldType": "ContType",
+      "fieldType": "TypeControle",
       "fieldValues": "CE (comprehensionEcrite),CO (comprehensionOrale),EE (expressionEcrite),EO (expressionOrale)"
     }
   ],
