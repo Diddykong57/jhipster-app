@@ -24,18 +24,16 @@ entity Obtient {
 }
 
 enum ContType {
-	//CE (comprehensionEcrite),
-    //CO (comprehensionOrale),
-    //EE (expressionEcrite),
-    //EO (expressionOrale)
-    FRANCE,
-    BELGIQUE
+	CE (comprehensionEcrite),
+    CO (comprehensionOrale),
+    EE (expressionEcrite),
+    EO (expressionOrale)
 }
 
 relationship OneToOne {
-	Diplome{etudiant} to Etudiant,
+	Diplome{etudiant (firstName)} to Etudiant,
     Matiere{controle} to Controle,
-    Diplome{matiere} to Matiere
+    Diplome{matiere (nameMat)} to Matiere
 }
 
 //relationship OneToMany{
