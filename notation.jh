@@ -30,16 +30,10 @@ enum TypeControle {
     EO (expressionOrale)
 }
 
-relationship OneToOne {
-//	Etudiant{diplome} to Diplome{etudiant (nameDipl) required},
-    Matiere {diplome} to Diplome{matiere (nameMat) required},
-    Controle{matiere} to Matiere {controle (date) required}
-}
-
 relationship OneToMany{
-//	Matiere{controle} to Controle,
-   	Diplome{etudiant} to Etudiant{diplome (nameDipl) required}
-//    Diplome{matiere} to Matiere{diplome (nameDipl) required}
+	Matiere{controle} to Controle{matiere (nameMat) required},
+   	Diplome{etudiant} to Etudiant{diplome (nameDipl) required},
+    Diplome{matiere} to Matiere{diplome (nameDipl) required}
 }
 
 relationship OneToMany{

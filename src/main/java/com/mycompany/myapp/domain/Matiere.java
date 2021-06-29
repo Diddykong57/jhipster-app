@@ -2,6 +2,8 @@ package com.mycompany.myapp.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import org.hibernate.annotations.Cache;
@@ -30,14 +32,15 @@ public class Matiere implements Serializable {
     @Column(name = "coef_mat")
     private Integer coefMat;
 
-    @JsonIgnoreProperties(value = { "etudiants", "matiere" }, allowSetters = true)
-    @OneToOne
-    @JoinColumn(unique = true)
-    private Diplome diplome;
+    @OneToMany(mappedBy = "matiere")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    @JsonIgnoreProperties(value = { "obtients", "matiere" }, allowSetters = true)
+    private Set<Controle> controles = new HashSet<>();
 
-    @JsonIgnoreProperties(value = { "matiere", "obtients" }, allowSetters = true)
-    @OneToOne(mappedBy = "matiere")
-    private Controle controle;
+    @ManyToOne(optional = false)
+    @NotNull
+    @JsonIgnoreProperties(value = { "etudiants", "matieres" }, allowSetters = true)
+    private Diplome diplome;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
     public Long getId() {
@@ -79,6 +82,37 @@ public class Matiere implements Serializable {
         this.coefMat = coefMat;
     }
 
+    public Set<Controle> getControles() {
+        return this.controles;
+    }
+
+    public Matiere controles(Set<Controle> controles) {
+        this.setControles(controles);
+        return this;
+    }
+
+    public Matiere addControle(Controle controle) {
+        this.controles.add(controle);
+        controle.setMatiere(this);
+        return this;
+    }
+
+    public Matiere removeControle(Controle controle) {
+        this.controles.remove(controle);
+        controle.setMatiere(null);
+        return this;
+    }
+
+    public void setControles(Set<Controle> controles) {
+        if (this.controles != null) {
+            this.controles.forEach(i -> i.setMatiere(null));
+        }
+        if (controles != null) {
+            controles.forEach(i -> i.setMatiere(this));
+        }
+        this.controles = controles;
+    }
+
     public Diplome getDiplome() {
         return this.diplome;
     }
@@ -90,25 +124,6 @@ public class Matiere implements Serializable {
 
     public void setDiplome(Diplome diplome) {
         this.diplome = diplome;
-    }
-
-    public Controle getControle() {
-        return this.controle;
-    }
-
-    public Matiere controle(Controle controle) {
-        this.setControle(controle);
-        return this;
-    }
-
-    public void setControle(Controle controle) {
-        if (this.controle != null) {
-            this.controle.setMatiere(null);
-        }
-        if (controle != null) {
-            controle.setMatiere(this);
-        }
-        this.controle = controle;
     }
 
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here

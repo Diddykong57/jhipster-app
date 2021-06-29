@@ -8,10 +8,6 @@ import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
-import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -50,7 +46,7 @@ public class DiplomeResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PostMapping("/diplomes")
-    public ResponseEntity<Diplome> createDiplome(@Valid @RequestBody Diplome diplome) throws URISyntaxException {
+    public ResponseEntity<Diplome> createDiplome(@RequestBody Diplome diplome) throws URISyntaxException {
         log.debug("REST request to save Diplome : {}", diplome);
         if (diplome.getId() != null) {
             throw new BadRequestAlertException("A new diplome cannot already have an ID", ENTITY_NAME, "idexists");
@@ -73,10 +69,8 @@ public class DiplomeResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PutMapping("/diplomes/{id}")
-    public ResponseEntity<Diplome> updateDiplome(
-        @PathVariable(value = "id", required = false) final Long id,
-        @Valid @RequestBody Diplome diplome
-    ) throws URISyntaxException {
+    public ResponseEntity<Diplome> updateDiplome(@PathVariable(value = "id", required = false) final Long id, @RequestBody Diplome diplome)
+        throws URISyntaxException {
         log.debug("REST request to update Diplome : {}, {}", id, diplome);
         if (diplome.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
@@ -110,7 +104,7 @@ public class DiplomeResource {
     @PatchMapping(value = "/diplomes/{id}", consumes = "application/merge-patch+json")
     public ResponseEntity<Diplome> partialUpdateDiplome(
         @PathVariable(value = "id", required = false) final Long id,
-        @NotNull @RequestBody Diplome diplome
+        @RequestBody Diplome diplome
     ) throws URISyntaxException {
         log.debug("REST request to partial update Diplome partially : {}, {}", id, diplome);
         if (diplome.getId() == null) {
@@ -146,18 +140,10 @@ public class DiplomeResource {
     /**
      * {@code GET  /diplomes} : get all the diplomes.
      *
-     * @param filter the filter of the request.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of diplomes in body.
      */
     @GetMapping("/diplomes")
-    public List<Diplome> getAllDiplomes(@RequestParam(required = false) String filter) {
-        if ("matiere-is-null".equals(filter)) {
-            log.debug("REST request to get all Diplomes where matiere is null");
-            return StreamSupport
-                .stream(diplomeRepository.findAll().spliterator(), false)
-                .filter(diplome -> diplome.getMatiere() == null)
-                .collect(Collectors.toList());
-        }
+    public List<Diplome> getAllDiplomes() {
         log.debug("REST request to get all Diplomes");
         return diplomeRepository.findAll();
     }

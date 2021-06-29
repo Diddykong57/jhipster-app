@@ -15,20 +15,18 @@
   ],
   "relationships": [
     {
-      "relationshipType": "one-to-one",
-      "otherEntityName": "diplome",
-      "otherEntityRelationshipName": "matiere",
-      "relationshipName": "diplome",
-      "ownerSide": true
-    },
-    {
-      "relationshipType": "one-to-one",
+      "relationshipType": "one-to-many",
       "otherEntityName": "controle",
       "otherEntityRelationshipName": "matiere",
+      "relationshipName": "controle"
+    },
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "diplome",
+      "otherEntityRelationshipName": "matiere",
       "relationshipValidateRules": "required",
-      "relationshipName": "controle",
-      "otherEntityField": "date",
-      "ownerSide": false
+      "relationshipName": "diplome",
+      "otherEntityField": "nameDipl"
     }
   ],
   "entityTableName": "matiere",

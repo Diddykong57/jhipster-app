@@ -1,6 +1,6 @@
 import * as dayjs from 'dayjs';
-import { IMatiere } from 'app/entities/matiere/matiere.model';
 import { IObtient } from 'app/entities/obtient/obtient.model';
+import { IMatiere } from 'app/entities/matiere/matiere.model';
 import { TypeControle } from 'app/entities/enumerations/type-controle.model';
 
 export interface IControle {
@@ -8,8 +8,8 @@ export interface IControle {
   date?: dayjs.Dayjs | null;
   coefCont?: number | null;
   type?: TypeControle | null;
-  matiere?: IMatiere | null;
   obtients?: IObtient[] | null;
+  matiere?: IMatiere;
 }
 
 export class Controle implements IControle {
@@ -18,8 +18,8 @@ export class Controle implements IControle {
     public date?: dayjs.Dayjs | null,
     public coefCont?: number | null,
     public type?: TypeControle | null,
-    public matiere?: IMatiere | null,
-    public obtients?: IObtient[] | null
+    public obtients?: IObtient[] | null,
+    public matiere?: IMatiere
   ) {}
 }
 

@@ -17,13 +17,13 @@ import { DiplomeService } from 'app/entities/diplome/service/diplome.service';
 export class MatiereUpdateComponent implements OnInit {
   isSaving = false;
 
-  diplomesCollection: IDiplome[] = [];
+  diplomesSharedCollection: IDiplome[] = [];
 
   editForm = this.fb.group({
     id: [],
     nameMat: [],
     coefMat: [null, [Validators.min(0), Validators.max(5)]],
-    diplome: [],
+    diplome: [null, Validators.required],
   });
 
   constructor(
@@ -86,17 +86,17 @@ export class MatiereUpdateComponent implements OnInit {
       diplome: matiere.diplome,
     });
 
-    this.diplomesCollection = this.diplomeService.addDiplomeToCollectionIfMissing(this.diplomesCollection, matiere.diplome);
+    this.diplomesSharedCollection = this.diplomeService.addDiplomeToCollectionIfMissing(this.diplomesSharedCollection, matiere.diplome);
   }
 
   protected loadRelationshipsOptions(): void {
     this.diplomeService
-      .query({ filter: 'matiere-is-null' })
+      .query()
       .pipe(map((res: HttpResponse<IDiplome[]>) => res.body ?? []))
       .pipe(
         map((diplomes: IDiplome[]) => this.diplomeService.addDiplomeToCollectionIfMissing(diplomes, this.editForm.get('diplome')!.value))
       )
-      .subscribe((diplomes: IDiplome[]) => (this.diplomesCollection = diplomes));
+      .subscribe((diplomes: IDiplome[]) => (this.diplomesSharedCollection = diplomes));
   }
 
   protected createFromForm(): IMatiere {

@@ -29,7 +29,7 @@
         <dt><span>Matiere</span></dt>
         <dd>
           <div *ngIf="controle.matiere">
-            <a [routerLink]="['/matiere', controle.matiere?.id, 'view']">{{ controle.matiere?.id }}</a>
+            <a [routerLink]="['/matiere', controle.matiere?.id, 'view']">{{ controle.matiere?.nameMat }}</a>
           </div>
         </dd>
       </dl>

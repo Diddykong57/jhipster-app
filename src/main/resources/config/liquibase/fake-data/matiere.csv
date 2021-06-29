@@ -1,11 +1,11 @@
-id;name_mat;coef_mat
-1;Checking mobile;5
-2;Granite Bacon;0
-3;interactive Handcrafted;4
-4;Baby;3
-5;Avon Gabon state;3
-6;Knoll card Lao;5
-7;Avon Balanced repurpose;2
-8;Agent input Iowa;0
-9;intangible Balboa;3
-10;solid model Maryland;0
+id;name_mat;coef_mat;diplome_id
+1;Checking mobile;5;1
+2;Granite Bacon;0;2
+3;interactive Handcrafted;4;3
+4;Baby;3;4
+5;Avon Gabon state;3;5
+6;Knoll card Lao;5;6
+7;Avon Balanced repurpose;2;7
+8;Agent input Iowa;0;8
+9;intangible Balboa;3;9
+10;solid model Maryland;0;10

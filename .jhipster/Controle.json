@@ -20,17 +20,18 @@
   ],
   "relationships": [
     {
-      "relationshipType": "one-to-one",
-      "otherEntityName": "matiere",
-      "otherEntityRelationshipName": "controle",
-      "relationshipName": "matiere",
-      "ownerSide": true
-    },
-    {
       "relationshipType": "one-to-many",
       "otherEntityName": "obtient",
       "otherEntityRelationshipName": "controle",
       "relationshipName": "obtient"
+    },
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "matiere",
+      "otherEntityRelationshipName": "controle",
+      "relationshipValidateRules": "required",
+      "relationshipName": "matiere",
+      "otherEntityField": "nameMat"
     }
   ],
   "entityTableName": "controle",

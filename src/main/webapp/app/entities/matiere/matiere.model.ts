@@ -1,12 +1,12 @@
-import { IDiplome } from 'app/entities/diplome/diplome.model';
 import { IControle } from 'app/entities/controle/controle.model';
+import { IDiplome } from 'app/entities/diplome/diplome.model';
 
 export interface IMatiere {
   id?: number;
   nameMat?: string | null;
   coefMat?: number | null;
-  diplome?: IDiplome | null;
-  controle?: IControle;
+  controles?: IControle[] | null;
+  diplome?: IDiplome;
 }
 
 export class Matiere implements IMatiere {
@@ -14,8 +14,8 @@ export class Matiere implements IMatiere {
     public id?: number,
     public nameMat?: string | null,
     public coefMat?: number | null,
-    public diplome?: IDiplome | null,
-    public controle?: IControle
+    public controles?: IControle[] | null,
+    public diplome?: IDiplome
   ) {}
 }
 

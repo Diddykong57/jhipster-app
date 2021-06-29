@@ -14,13 +14,10 @@
       "relationshipName": "etudiant"
     },
     {
-      "relationshipType": "one-to-one",
+      "relationshipType": "one-to-many",
       "otherEntityName": "matiere",
       "otherEntityRelationshipName": "diplome",
-      "relationshipValidateRules": "required",
-      "relationshipName": "matiere",
-      "otherEntityField": "nameMat",
-      "ownerSide": false
+      "relationshipName": "matiere"
     }
   ],
   "entityTableName": "diplome",

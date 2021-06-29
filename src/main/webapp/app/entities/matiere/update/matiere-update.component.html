@@ -31,14 +31,17 @@
         <div class="form-group">
           <label class="form-control-label" for="field_diplome">Diplome</label>
           <select class="form-control" id="field_diplome" data-cy="diplome" name="diplome" formControlName="diplome">
-            <option [ngValue]="null"></option>
+            <option *ngIf="!editForm.get('diplome')!.value" [ngValue]="null" selected></option>
             <option
               [ngValue]="diplomeOption.id === editForm.get('diplome')!.value?.id ? editForm.get('diplome')!.value : diplomeOption"
-              *ngFor="let diplomeOption of diplomesCollection; trackBy: trackDiplomeById"
+              *ngFor="let diplomeOption of diplomesSharedCollection; trackBy: trackDiplomeById"
             >
-              {{ diplomeOption.id }}
+              {{ diplomeOption.nameDipl }}
             </option>
           </select>
+        </div>
+        <div *ngIf="editForm.get(['diplome'])!.invalid && (editForm.get(['diplome'])!.dirty || editForm.get(['diplome'])!.touched)">
+          <small class="form-text text-danger" *ngIf="editForm.get(['diplome'])?.errors?.required"> This field is required. </small>
         </div>
       </div>
 
