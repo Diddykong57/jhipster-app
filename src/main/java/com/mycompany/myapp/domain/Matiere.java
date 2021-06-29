@@ -30,6 +30,11 @@ public class Matiere implements Serializable {
     @Column(name = "coef_mat")
     private Integer coefMat;
 
+    @JsonIgnoreProperties(value = { "etudiant", "matiere" }, allowSetters = true)
+    @OneToOne
+    @JoinColumn(unique = true)
+    private Diplome diplome;
+
     @JsonIgnoreProperties(value = { "matiere", "obtients" }, allowSetters = true)
     @OneToOne(mappedBy = "matiere")
     private Controle controle;
@@ -72,6 +77,19 @@ public class Matiere implements Serializable {
 
     public void setCoefMat(Integer coefMat) {
         this.coefMat = coefMat;
+    }
+
+    public Diplome getDiplome() {
+        return this.diplome;
+    }
+
+    public Matiere diplome(Diplome diplome) {
+        this.setDiplome(diplome);
+        return this;
+    }
+
+    public void setDiplome(Diplome diplome) {
+        this.diplome = diplome;
     }
 
     public Controle getControle() {

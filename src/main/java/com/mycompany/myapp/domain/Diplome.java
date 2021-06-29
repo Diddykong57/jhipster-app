@@ -29,6 +29,10 @@ public class Diplome implements Serializable {
     @OneToOne(mappedBy = "diplome")
     private Etudiant etudiant;
 
+    @JsonIgnoreProperties(value = { "diplome", "controle" }, allowSetters = true)
+    @OneToOne(mappedBy = "diplome")
+    private Matiere matiere;
+
     // jhipster-needle-entity-add-field - JHipster will add fields here
     public Long getId() {
         return id;
@@ -73,6 +77,25 @@ public class Diplome implements Serializable {
             etudiant.setDiplome(this);
         }
         this.etudiant = etudiant;
+    }
+
+    public Matiere getMatiere() {
+        return this.matiere;
+    }
+
+    public Diplome matiere(Matiere matiere) {
+        this.setMatiere(matiere);
+        return this;
+    }
+
+    public void setMatiere(Matiere matiere) {
+        if (this.matiere != null) {
+            this.matiere.setDiplome(null);
+        }
+        if (matiere != null) {
+            matiere.setDiplome(this);
+        }
+        this.matiere = matiere;
     }
 
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here

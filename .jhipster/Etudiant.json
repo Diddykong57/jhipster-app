@@ -16,7 +16,6 @@
       "otherEntityName": "diplome",
       "otherEntityRelationshipName": "etudiant",
       "relationshipName": "diplome",
-      "otherEntityField": "nameDipl",
       "ownerSide": true
     },
     {

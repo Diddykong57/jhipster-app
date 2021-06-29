@@ -20,6 +20,9 @@
             <column name="coef_mat" type="integer">
                 <constraints nullable="true" />
             </column>
+            <column name="diplome_id" type="bigint">
+                <constraints nullable="true" unique="true" uniqueConstraintName="ux_matiere__diplome_id" />
+            </column>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->
         </createTable>
     </changeSet>

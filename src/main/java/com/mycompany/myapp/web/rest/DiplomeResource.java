@@ -158,6 +158,14 @@ public class DiplomeResource {
                 .filter(diplome -> diplome.getEtudiant() == null)
                 .collect(Collectors.toList());
         }
+
+        if ("matiere-is-null".equals(filter)) {
+            log.debug("REST request to get all Diplomes where matiere is null");
+            return StreamSupport
+                .stream(diplomeRepository.findAll().spliterator(), false)
+                .filter(diplome -> diplome.getMatiere() == null)
+                .collect(Collectors.toList());
+        }
         log.debug("REST request to get all Diplomes");
         return diplomeRepository.findAll();
     }

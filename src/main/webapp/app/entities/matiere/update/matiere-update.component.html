@@ -27,6 +27,19 @@
             </small>
           </div>
         </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_diplome">Diplome</label>
+          <select class="form-control" id="field_diplome" data-cy="diplome" name="diplome" formControlName="diplome">
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="diplomeOption.id === editForm.get('diplome')!.value?.id ? editForm.get('diplome')!.value : diplomeOption"
+              *ngFor="let diplomeOption of diplomesCollection; trackBy: trackDiplomeById"
+            >
+              {{ diplomeOption.id }}
+            </option>
+          </select>
+        </div>
       </div>
 
       <div>

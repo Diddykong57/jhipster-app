@@ -16,6 +16,13 @@
   "relationships": [
     {
       "relationshipType": "one-to-one",
+      "otherEntityName": "diplome",
+      "otherEntityRelationshipName": "matiere",
+      "relationshipName": "diplome",
+      "ownerSide": true
+    },
+    {
+      "relationshipType": "one-to-one",
       "otherEntityName": "controle",
       "otherEntityRelationshipName": "matiere",
       "relationshipValidateRules": "required",

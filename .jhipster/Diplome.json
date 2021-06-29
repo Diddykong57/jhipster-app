@@ -15,6 +15,15 @@
       "relationshipName": "etudiant",
       "otherEntityField": "nameDipl",
       "ownerSide": false
+    },
+    {
+      "relationshipType": "one-to-one",
+      "otherEntityName": "matiere",
+      "otherEntityRelationshipName": "diplome",
+      "relationshipValidateRules": "required",
+      "relationshipName": "matiere",
+      "otherEntityField": "nameMat",
+      "ownerSide": false
     }
   ],
   "entityTableName": "diplome",
