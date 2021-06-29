@@ -27,7 +27,7 @@ public class Matiere implements Serializable {
     @Column(name = "name_mat")
     private String nameMat;
 
-    @Min(value = 0)
+    @Min(value = 1)
     @Max(value = 5)
     @Column(name = "coef_mat")
     private Integer coefMat;

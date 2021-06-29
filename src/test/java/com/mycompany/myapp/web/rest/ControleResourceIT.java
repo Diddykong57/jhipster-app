@@ -36,8 +36,8 @@ class ControleResourceIT {
     private static final LocalDate DEFAULT_DATE = LocalDate.ofEpochDay(0L);
     private static final LocalDate UPDATED_DATE = LocalDate.now(ZoneId.systemDefault());
 
-    private static final Integer DEFAULT_COEF_CONT = 0;
-    private static final Integer UPDATED_COEF_CONT = 1;
+    private static final Integer DEFAULT_COEF_CONT = 1;
+    private static final Integer UPDATED_COEF_CONT = 2;
 
     private static final TypeControle DEFAULT_TYPE = TypeControle.CE;
     private static final TypeControle UPDATED_TYPE = TypeControle.CO;

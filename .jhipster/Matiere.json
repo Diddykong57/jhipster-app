@@ -9,7 +9,7 @@
       "fieldName": "coefMat",
       "fieldType": "Integer",
       "fieldValidateRules": ["min", "max"],
-      "fieldValidateRulesMin": "0",
+      "fieldValidateRulesMin": "1",
       "fieldValidateRulesMax": "5"
     }
   ],
