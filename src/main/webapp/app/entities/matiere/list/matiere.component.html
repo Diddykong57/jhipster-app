@@ -48,7 +48,7 @@
           <td>{{ matiere.coefMat }}</td>
           <td>
             <div *ngIf="matiere.controle">
-              <a [routerLink]="['/controle', matiere.controle?.id, 'view']">{{ matiere.controle?.typeControle }}</a>
+              <a [routerLink]="['/controle', matiere.controle?.id, 'view']">{{ matiere.controle?.id }}</a>
             </div>
           </td>
           <td class="text-right">

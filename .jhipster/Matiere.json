@@ -19,7 +19,6 @@
       "otherEntityName": "controle",
       "otherEntityRelationshipName": "matiere",
       "relationshipName": "controle",
-      "otherEntityField": "typeControle",
       "ownerSide": true
     }
   ],
