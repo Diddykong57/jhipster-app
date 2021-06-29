@@ -29,7 +29,7 @@
               [ngValue]="diplomeOption.id === editForm.get('diplome')!.value?.id ? editForm.get('diplome')!.value : diplomeOption"
               *ngFor="let diplomeOption of diplomesCollection; trackBy: trackDiplomeById"
             >
-              {{ diplomeOption.nameDipl }}
+              {{ diplomeOption.id }}
             </option>
           </select>
         </div>

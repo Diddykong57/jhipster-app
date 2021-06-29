@@ -31,7 +31,8 @@ enum TypeControle {
 }
 
 relationship OneToOne {
-	Etudiant{diplome (nameDipl)} to Diplome{etudiant (nameDipl) required},
+	Etudiant{diplome} to Diplome{etudiant (nameDipl) required},
+    Matiere {diplome} to Diplome{matiere (nameMat) required},
     Controle{matiere} to Matiere {controle (date) required}
 }
 

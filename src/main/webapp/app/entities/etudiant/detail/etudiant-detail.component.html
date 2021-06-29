@@ -25,7 +25,7 @@
         <dt><span>Diplome</span></dt>
         <dd>
           <div *ngIf="etudiant.diplome">
-            <a [routerLink]="['/diplome', etudiant.diplome?.id, 'view']">{{ etudiant.diplome?.nameDipl }}</a>
+            <a [routerLink]="['/diplome', etudiant.diplome?.id, 'view']">{{ etudiant.diplome?.id }}</a>
           </div>
         </dd>
       </dl>

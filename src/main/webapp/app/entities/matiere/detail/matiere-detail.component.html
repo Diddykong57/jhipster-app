@@ -22,6 +22,12 @@
         <dd>
           <span>{{ matiere.coefMat }}</span>
         </dd>
+        <dt><span>Diplome</span></dt>
+        <dd>
+          <div *ngIf="matiere.diplome">
+            <a [routerLink]="['/diplome', matiere.diplome?.id, 'view']">{{ matiere.diplome?.id }}</a>
+          </div>
+        </dd>
       </dl>
 
       <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">

@@ -38,7 +38,7 @@ public class Controle implements Serializable {
     @Column(name = "type")
     private TypeControle type;
 
-    @JsonIgnoreProperties(value = { "controle" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "diplome", "controle" }, allowSetters = true)
     @OneToOne
     @JoinColumn(unique = true)
     private Matiere matiere;
