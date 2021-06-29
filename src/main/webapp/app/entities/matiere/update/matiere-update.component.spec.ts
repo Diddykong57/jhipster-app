@@ -9,8 +9,6 @@ import { of, Subject } from 'rxjs';
 
 import { MatiereService } from '../service/matiere.service';
 import { IMatiere, Matiere } from '../matiere.model';
-import { IDiplome } from 'app/entities/diplome/diplome.model';
-import { DiplomeService } from 'app/entities/diplome/service/diplome.service';
 import { IControle } from 'app/entities/controle/controle.model';
 import { ControleService } from 'app/entities/controle/service/controle.service';
 
@@ -22,7 +20,6 @@ describe('Component Tests', () => {
     let fixture: ComponentFixture<MatiereUpdateComponent>;
     let activatedRoute: ActivatedRoute;
     let matiereService: MatiereService;
-    let diplomeService: DiplomeService;
     let controleService: ControleService;
 
     beforeEach(() => {
@@ -37,31 +34,12 @@ describe('Component Tests', () => {
       fixture = TestBed.createComponent(MatiereUpdateComponent);
       activatedRoute = TestBed.inject(ActivatedRoute);
       matiereService = TestBed.inject(MatiereService);
-      diplomeService = TestBed.inject(DiplomeService);
       controleService = TestBed.inject(ControleService);
 
       comp = fixture.componentInstance;
     });
 
     describe('ngOnInit', () => {
-      it('Should call diplome query and add missing value', () => {
-        const matiere: IMatiere = { id: 456 };
-        const diplome: IDiplome = { id: 47586 };
-        matiere.diplome = diplome;
-
-        const diplomeCollection: IDiplome[] = [{ id: 2326 }];
-        jest.spyOn(diplomeService, 'query').mockReturnValue(of(new HttpResponse({ body: diplomeCollection })));
-        const expectedCollection: IDiplome[] = [diplome, ...diplomeCollection];
-        jest.spyOn(diplomeService, 'addDiplomeToCollectionIfMissing').mockReturnValue(expectedCollection);
-
-        activatedRoute.data = of({ matiere });
-        comp.ngOnInit();
-
-        expect(diplomeService.query).toHaveBeenCalled();
-        expect(diplomeService.addDiplomeToCollectionIfMissing).toHaveBeenCalledWith(diplomeCollection, diplome);
-        expect(comp.diplomesCollection).toEqual(expectedCollection);
-      });
-
       it('Should call controle query and add missing value', () => {
         const matiere: IMatiere = { id: 456 };
         const controle: IControle = { id: 61143 };
@@ -82,8 +60,6 @@ describe('Component Tests', () => {
 
       it('Should update editForm', () => {
         const matiere: IMatiere = { id: 456 };
-        const diplome: IDiplome = { id: 77948 };
-        matiere.diplome = diplome;
         const controle: IControle = { id: 56911 };
         matiere.controle = controle;
 
@@ -91,7 +67,6 @@ describe('Component Tests', () => {
         comp.ngOnInit();
 
         expect(comp.editForm.value).toEqual(expect.objectContaining(matiere));
-        expect(comp.diplomesCollection).toContain(diplome);
         expect(comp.controlesCollection).toContain(controle);
       });
     });
@@ -161,14 +136,6 @@ describe('Component Tests', () => {
     });
 
     describe('Tracking relationships identifiers', () => {
-      describe('trackDiplomeById', () => {
-        it('Should return tracked Diplome primary key', () => {
-          const entity = { id: 123 };
-          const trackResult = comp.trackDiplomeById(0, entity);
-          expect(trackResult).toEqual(entity.id);
-        });
-      });
-
       describe('trackControleById', () => {
         it('Should return tracked Controle primary key', () => {
           const entity = { id: 123 };

@@ -24,6 +24,15 @@
       "otherEntityName": "obtient",
       "otherEntityRelationshipName": "controle",
       "relationshipName": "obtient"
+    },
+    {
+      "relationshipType": "one-to-one",
+      "otherEntityName": "matiere",
+      "otherEntityRelationshipName": "controle",
+      "relationshipValidateRules": "required",
+      "relationshipName": "matiere",
+      "otherEntityField": "typeControle",
+      "ownerSide": false
     }
   ],
   "entityTableName": "controle",

@@ -6,7 +6,17 @@
       "fieldType": "String"
     }
   ],
-  "relationships": [],
+  "relationships": [
+    {
+      "relationshipType": "one-to-one",
+      "otherEntityName": "etudiant",
+      "otherEntityRelationshipName": "diplome",
+      "relationshipValidateRules": "required",
+      "relationshipName": "etudiant",
+      "otherEntityField": "nameDipl",
+      "ownerSide": false
+    }
+  ],
   "entityTableName": "diplome",
   "dto": "no",
   "pagination": "no",
