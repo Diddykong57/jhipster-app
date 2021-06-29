@@ -7,6 +7,8 @@ import { finalize, map } from 'rxjs/operators';
 
 import { IMatiere, Matiere } from '../matiere.model';
 import { MatiereService } from '../service/matiere.service';
+import { IDiplome } from 'app/entities/diplome/diplome.model';
+import { DiplomeService } from 'app/entities/diplome/service/diplome.service';
 import { IControle } from 'app/entities/controle/controle.model';
 import { ControleService } from 'app/entities/controle/service/controle.service';
 
@@ -17,17 +19,20 @@ import { ControleService } from 'app/entities/controle/service/controle.service'
 export class MatiereUpdateComponent implements OnInit {
   isSaving = false;
 
+  diplomesCollection: IDiplome[] = [];
   controlesCollection: IControle[] = [];
 
   editForm = this.fb.group({
     id: [],
     nameMat: [],
-    coefMat: [null, [Validators.min(0)]],
+    coefMat: [null, [Validators.min(0), Validators.max(5)]],
+    diplome: [],
     controle: [],
   });
 
   constructor(
     protected matiereService: MatiereService,
+    protected diplomeService: DiplomeService,
     protected controleService: ControleService,
     protected activatedRoute: ActivatedRoute,
     protected fb: FormBuilder
@@ -53,6 +58,10 @@ export class MatiereUpdateComponent implements OnInit {
     } else {
       this.subscribeToSaveResponse(this.matiereService.create(matiere));
     }
+  }
+
+  trackDiplomeById(index: number, item: IDiplome): number {
+    return item.id!;
   }
 
   trackControleById(index: number, item: IControle): number {
@@ -83,13 +92,23 @@ export class MatiereUpdateComponent implements OnInit {
       id: matiere.id,
       nameMat: matiere.nameMat,
       coefMat: matiere.coefMat,
+      diplome: matiere.diplome,
       controle: matiere.controle,
     });
 
+    this.diplomesCollection = this.diplomeService.addDiplomeToCollectionIfMissing(this.diplomesCollection, matiere.diplome);
     this.controlesCollection = this.controleService.addControleToCollectionIfMissing(this.controlesCollection, matiere.controle);
   }
 
   protected loadRelationshipsOptions(): void {
+    this.diplomeService
+      .query({ filter: 'matiere-is-null' })
+      .pipe(map((res: HttpResponse<IDiplome[]>) => res.body ?? []))
+      .pipe(
+        map((diplomes: IDiplome[]) => this.diplomeService.addDiplomeToCollectionIfMissing(diplomes, this.editForm.get('diplome')!.value))
+      )
+      .subscribe((diplomes: IDiplome[]) => (this.diplomesCollection = diplomes));
+
     this.controleService
       .query({ filter: 'matiere-is-null' })
       .pipe(map((res: HttpResponse<IControle[]>) => res.body ?? []))
@@ -107,6 +126,7 @@ export class MatiereUpdateComponent implements OnInit {
       id: this.editForm.get(['id'])!.value,
       nameMat: this.editForm.get(['nameMat'])!.value,
       coefMat: this.editForm.get(['coefMat'])!.value,
+      diplome: this.editForm.get(['diplome'])!.value,
       controle: this.editForm.get(['controle'])!.value,
     };
   }

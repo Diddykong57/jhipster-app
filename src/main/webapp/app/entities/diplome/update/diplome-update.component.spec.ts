@@ -9,10 +9,6 @@ import { of, Subject } from 'rxjs';
 
 import { DiplomeService } from '../service/diplome.service';
 import { IDiplome, Diplome } from '../diplome.model';
-import { IEtudiant } from 'app/entities/etudiant/etudiant.model';
-import { EtudiantService } from 'app/entities/etudiant/service/etudiant.service';
-import { IMatiere } from 'app/entities/matiere/matiere.model';
-import { MatiereService } from 'app/entities/matiere/service/matiere.service';
 
 import { DiplomeUpdateComponent } from './diplome-update.component';
 
@@ -22,8 +18,6 @@ describe('Component Tests', () => {
     let fixture: ComponentFixture<DiplomeUpdateComponent>;
     let activatedRoute: ActivatedRoute;
     let diplomeService: DiplomeService;
-    let etudiantService: EtudiantService;
-    let matiereService: MatiereService;
 
     beforeEach(() => {
       TestBed.configureTestingModule({
@@ -37,62 +31,18 @@ describe('Component Tests', () => {
       fixture = TestBed.createComponent(DiplomeUpdateComponent);
       activatedRoute = TestBed.inject(ActivatedRoute);
       diplomeService = TestBed.inject(DiplomeService);
-      etudiantService = TestBed.inject(EtudiantService);
-      matiereService = TestBed.inject(MatiereService);
 
       comp = fixture.componentInstance;
     });
 
     describe('ngOnInit', () => {
-      it('Should call etudiant query and add missing value', () => {
-        const diplome: IDiplome = { id: 456 };
-        const etudiant: IEtudiant = { id: 46690 };
-        diplome.etudiant = etudiant;
-
-        const etudiantCollection: IEtudiant[] = [{ id: 87593 }];
-        jest.spyOn(etudiantService, 'query').mockReturnValue(of(new HttpResponse({ body: etudiantCollection })));
-        const expectedCollection: IEtudiant[] = [etudiant, ...etudiantCollection];
-        jest.spyOn(etudiantService, 'addEtudiantToCollectionIfMissing').mockReturnValue(expectedCollection);
-
-        activatedRoute.data = of({ diplome });
-        comp.ngOnInit();
-
-        expect(etudiantService.query).toHaveBeenCalled();
-        expect(etudiantService.addEtudiantToCollectionIfMissing).toHaveBeenCalledWith(etudiantCollection, etudiant);
-        expect(comp.etudiantsCollection).toEqual(expectedCollection);
-      });
-
-      it('Should call matiere query and add missing value', () => {
-        const diplome: IDiplome = { id: 456 };
-        const matiere: IMatiere = { id: 9695 };
-        diplome.matiere = matiere;
-
-        const matiereCollection: IMatiere[] = [{ id: 24951 }];
-        jest.spyOn(matiereService, 'query').mockReturnValue(of(new HttpResponse({ body: matiereCollection })));
-        const expectedCollection: IMatiere[] = [matiere, ...matiereCollection];
-        jest.spyOn(matiereService, 'addMatiereToCollectionIfMissing').mockReturnValue(expectedCollection);
-
-        activatedRoute.data = of({ diplome });
-        comp.ngOnInit();
-
-        expect(matiereService.query).toHaveBeenCalled();
-        expect(matiereService.addMatiereToCollectionIfMissing).toHaveBeenCalledWith(matiereCollection, matiere);
-        expect(comp.matieresCollection).toEqual(expectedCollection);
-      });
-
       it('Should update editForm', () => {
         const diplome: IDiplome = { id: 456 };
-        const etudiant: IEtudiant = { id: 76994 };
-        diplome.etudiant = etudiant;
-        const matiere: IMatiere = { id: 39396 };
-        diplome.matiere = matiere;
 
         activatedRoute.data = of({ diplome });
         comp.ngOnInit();
 
         expect(comp.editForm.value).toEqual(expect.objectContaining(diplome));
-        expect(comp.etudiantsCollection).toContain(etudiant);
-        expect(comp.matieresCollection).toContain(matiere);
       });
     });
 
@@ -157,24 +107,6 @@ describe('Component Tests', () => {
         expect(diplomeService.update).toHaveBeenCalledWith(diplome);
         expect(comp.isSaving).toEqual(false);
         expect(comp.previousState).not.toHaveBeenCalled();
-      });
-    });
-
-    describe('Tracking relationships identifiers', () => {
-      describe('trackEtudiantById', () => {
-        it('Should return tracked Etudiant primary key', () => {
-          const entity = { id: 123 };
-          const trackResult = comp.trackEtudiantById(0, entity);
-          expect(trackResult).toEqual(entity.id);
-        });
-      });
-
-      describe('trackMatiereById', () => {
-        it('Should return tracked Matiere primary key', () => {
-          const entity = { id: 123 };
-          const trackResult = comp.trackMatiereById(0, entity);
-          expect(trackResult).toEqual(entity.id);
-        });
       });
     });
   });

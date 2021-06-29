@@ -18,18 +18,6 @@
         <dd>
           <span>{{ diplome.nameDipl }}</span>
         </dd>
-        <dt><span>Etudiant</span></dt>
-        <dd>
-          <div *ngIf="diplome.etudiant">
-            <a [routerLink]="['/etudiant', diplome.etudiant?.id, 'view']">{{ diplome.etudiant?.firstName }}</a>
-          </div>
-        </dd>
-        <dt><span>Matiere</span></dt>
-        <dd>
-          <div *ngIf="diplome.matiere">
-            <a [routerLink]="['/matiere', diplome.matiere?.id, 'view']">{{ diplome.matiere?.nameMat }}</a>
-          </div>
-        </dd>
       </dl>
 
       <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">

@@ -34,8 +34,6 @@
         <tr>
           <th scope="col"><span>ID</span></th>
           <th scope="col"><span>Name Dipl</span></th>
-          <th scope="col"><span>Etudiant</span></th>
-          <th scope="col"><span>Matiere</span></th>
           <th scope="col"></th>
         </tr>
       </thead>
@@ -45,16 +43,6 @@
             <a [routerLink]="['/diplome', diplome.id, 'view']">{{ diplome.id }}</a>
           </td>
           <td>{{ diplome.nameDipl }}</td>
-          <td>
-            <div *ngIf="diplome.etudiant">
-              <a [routerLink]="['/etudiant', diplome.etudiant?.id, 'view']">{{ diplome.etudiant?.firstName }}</a>
-            </div>
-          </td>
-          <td>
-            <div *ngIf="diplome.matiere">
-              <a [routerLink]="['/matiere', diplome.matiere?.id, 'view']">{{ diplome.matiere?.nameMat }}</a>
-            </div>
-          </td>
           <td class="text-right">
             <div class="btn-group">
               <button

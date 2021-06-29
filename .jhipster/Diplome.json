@@ -6,24 +6,7 @@
       "fieldType": "String"
     }
   ],
-  "relationships": [
-    {
-      "relationshipType": "one-to-one",
-      "otherEntityName": "etudiant",
-      "otherEntityRelationshipName": "diplome",
-      "relationshipName": "etudiant",
-      "otherEntityField": "firstName",
-      "ownerSide": true
-    },
-    {
-      "relationshipType": "one-to-one",
-      "otherEntityName": "matiere",
-      "otherEntityRelationshipName": "diplome",
-      "relationshipName": "matiere",
-      "otherEntityField": "nameMat",
-      "ownerSide": true
-    }
-  ],
+  "relationships": [],
   "entityTableName": "diplome",
   "dto": "no",
   "pagination": "no",

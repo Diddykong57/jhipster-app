@@ -8,11 +8,20 @@
     {
       "fieldName": "coefMat",
       "fieldType": "Integer",
-      "fieldValidateRules": ["min"],
-      "fieldValidateRulesMin": "0"
+      "fieldValidateRules": ["min", "max"],
+      "fieldValidateRulesMin": "0",
+      "fieldValidateRulesMax": "5"
     }
   ],
   "relationships": [
+    {
+      "relationshipType": "one-to-one",
+      "otherEntityName": "diplome",
+      "otherEntityRelationshipName": "matiere",
+      "relationshipName": "diplome",
+      "otherEntityField": "nameDipl",
+      "ownerSide": true
+    },
     {
       "relationshipType": "one-to-one",
       "otherEntityName": "controle",

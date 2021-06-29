@@ -22,6 +22,12 @@
         <dd>
           <span>{{ etudiant.lastName }}</span>
         </dd>
+        <dt><span>Diplome</span></dt>
+        <dd>
+          <div *ngIf="etudiant.diplome">
+            <a [routerLink]="['/diplome', etudiant.diplome?.id, 'view']">{{ etudiant.diplome?.nameDipl }}</a>
+          </div>
+        </dd>
       </dl>
 
       <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
