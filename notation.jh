@@ -10,13 +10,13 @@ entity Diplome {
 
 entity Controle {
     date LocalDate
-    coefCont Integer min(0) max(5)
+    coefCont Integer min(1) max(5)
     type TypeControle
 }
 
 entity Matiere{
     nameMat String
-    coefMat Integer min(0) max(5)
+    coefMat Integer min(1) max(5)
 }
 
 entity Obtient {

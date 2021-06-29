@@ -22,7 +22,7 @@ export class MatiereUpdateComponent implements OnInit {
   editForm = this.fb.group({
     id: [],
     nameMat: [],
-    coefMat: [null, [Validators.min(0), Validators.max(5)]],
+    coefMat: [null, [Validators.min(1), Validators.max(5)]],
     diplome: [null, Validators.required],
   });
 

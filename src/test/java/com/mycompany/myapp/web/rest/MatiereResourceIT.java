@@ -33,8 +33,8 @@ class MatiereResourceIT {
     private static final String DEFAULT_NAME_MAT = "AAAAAAAAAA";
     private static final String UPDATED_NAME_MAT = "BBBBBBBBBB";
 
-    private static final Integer DEFAULT_COEF_MAT = 0;
-    private static final Integer UPDATED_COEF_MAT = 1;
+    private static final Integer DEFAULT_COEF_MAT = 1;
+    private static final Integer UPDATED_COEF_MAT = 2;
 
     private static final String ENTITY_API_URL = "/api/matieres";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
