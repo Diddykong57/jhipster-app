@@ -1,0 +1,63 @@
+
+entity Etudiant {
+	firstName String
+    lastName String
+}
+
+entity Diplome {
+	nameDipl String
+}
+
+entity Controle {
+    date LocalDate
+    coefCont Integer min(0) max(5)
+    type TypeControle
+}
+
+entity Matiere{
+    nameMat String
+    coefMat Integer min(0) max(5)
+}
+
+entity Obtient {
+	note Float required min(0) max(20)
+}
+
+enum TypeControle {
+	CE (comprehensionEcrite),
+    CO (comprehensionOrale),
+    EE (expressionEcrite),
+    EO (expressionOrale)
+}
+
+relationship OneToOne {
+	Etudiant{diplome (nameDipl)} to Diplome,
+	Matiere{diplome (nameDipl)} to Diplome,
+    Matiere{controle} to Controle
+}
+
+//relationship OneToMany{
+//	Matiere{controle} to Controle,
+//    Diplome{etudiant} to Etudiant,
+//    Diplome{matiere} to Matiere
+//}
+
+relationship OneToMany{
+    Controle{obtient} to Obtient{controle (date) required}, 
+    Etudiant{obtient} to Obtient{etudiant (firstName) required}
+}
+
+
+
+// Set pagination options
+//paginate JobHistory, Employee with infinite-scroll
+//paginate Job with pagination
+
+// Use Data Transfer Objects (DTO)
+// dto * with mapstruct
+
+// Set service options to all except few
+//service all with serviceImpl except Employee, Job
+
+// Set an angular suffix
+// angularSuffix * with mySuffix
