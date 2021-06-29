@@ -151,14 +151,6 @@ public class DiplomeResource {
      */
     @GetMapping("/diplomes")
     public List<Diplome> getAllDiplomes(@RequestParam(required = false) String filter) {
-        if ("etudiant-is-null".equals(filter)) {
-            log.debug("REST request to get all Diplomes where etudiant is null");
-            return StreamSupport
-                .stream(diplomeRepository.findAll().spliterator(), false)
-                .filter(diplome -> diplome.getEtudiant() == null)
-                .collect(Collectors.toList());
-        }
-
         if ("matiere-is-null".equals(filter)) {
             log.debug("REST request to get all Diplomes where matiere is null");
             return StreamSupport

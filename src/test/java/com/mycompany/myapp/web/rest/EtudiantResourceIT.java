@@ -6,6 +6,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import com.mycompany.myapp.IntegrationTest;
+import com.mycompany.myapp.domain.Diplome;
 import com.mycompany.myapp.domain.Etudiant;
 import com.mycompany.myapp.repository.EtudiantRepository;
 import java.util.List;
@@ -60,6 +61,16 @@ class EtudiantResourceIT {
      */
     public static Etudiant createEntity(EntityManager em) {
         Etudiant etudiant = new Etudiant().firstName(DEFAULT_FIRST_NAME).lastName(DEFAULT_LAST_NAME);
+        // Add required entity
+        Diplome diplome;
+        if (TestUtil.findAll(em, Diplome.class).isEmpty()) {
+            diplome = DiplomeResourceIT.createEntity(em);
+            em.persist(diplome);
+            em.flush();
+        } else {
+            diplome = TestUtil.findAll(em, Diplome.class).get(0);
+        }
+        etudiant.setDiplome(diplome);
         return etudiant;
     }
 
@@ -71,6 +82,16 @@ class EtudiantResourceIT {
      */
     public static Etudiant createUpdatedEntity(EntityManager em) {
         Etudiant etudiant = new Etudiant().firstName(UPDATED_FIRST_NAME).lastName(UPDATED_LAST_NAME);
+        // Add required entity
+        Diplome diplome;
+        if (TestUtil.findAll(em, Diplome.class).isEmpty()) {
+            diplome = DiplomeResourceIT.createUpdatedEntity(em);
+            em.persist(diplome);
+            em.flush();
+        } else {
+            diplome = TestUtil.findAll(em, Diplome.class).get(0);
+        }
+        etudiant.setDiplome(diplome);
         return etudiant;
     }
 

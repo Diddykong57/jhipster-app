@@ -2,6 +2,8 @@ package com.mycompany.myapp.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import org.hibernate.annotations.Cache;
@@ -25,9 +27,10 @@ public class Diplome implements Serializable {
     @Column(name = "name_dipl")
     private String nameDipl;
 
-    @JsonIgnoreProperties(value = { "diplome", "obtients" }, allowSetters = true)
-    @OneToOne(mappedBy = "diplome")
-    private Etudiant etudiant;
+    @OneToMany(mappedBy = "diplome")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    @JsonIgnoreProperties(value = { "obtients", "diplome" }, allowSetters = true)
+    private Set<Etudiant> etudiants = new HashSet<>();
 
     @JsonIgnoreProperties(value = { "diplome", "controle" }, allowSetters = true)
     @OneToOne(mappedBy = "diplome")
@@ -60,23 +63,35 @@ public class Diplome implements Serializable {
         this.nameDipl = nameDipl;
     }
 
-    public Etudiant getEtudiant() {
-        return this.etudiant;
+    public Set<Etudiant> getEtudiants() {
+        return this.etudiants;
     }
 
-    public Diplome etudiant(Etudiant etudiant) {
-        this.setEtudiant(etudiant);
+    public Diplome etudiants(Set<Etudiant> etudiants) {
+        this.setEtudiants(etudiants);
         return this;
     }
 
-    public void setEtudiant(Etudiant etudiant) {
-        if (this.etudiant != null) {
-            this.etudiant.setDiplome(null);
+    public Diplome addEtudiant(Etudiant etudiant) {
+        this.etudiants.add(etudiant);
+        etudiant.setDiplome(this);
+        return this;
+    }
+
+    public Diplome removeEtudiant(Etudiant etudiant) {
+        this.etudiants.remove(etudiant);
+        etudiant.setDiplome(null);
+        return this;
+    }
+
+    public void setEtudiants(Set<Etudiant> etudiants) {
+        if (this.etudiants != null) {
+            this.etudiants.forEach(i -> i.setDiplome(null));
         }
-        if (etudiant != null) {
-            etudiant.setDiplome(this);
+        if (etudiants != null) {
+            etudiants.forEach(i -> i.setDiplome(this));
         }
-        this.etudiant = etudiant;
+        this.etudiants = etudiants;
     }
 
     public Matiere getMatiere() {

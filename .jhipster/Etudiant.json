@@ -12,17 +12,18 @@
   ],
   "relationships": [
     {
-      "relationshipType": "one-to-one",
-      "otherEntityName": "diplome",
-      "otherEntityRelationshipName": "etudiant",
-      "relationshipName": "diplome",
-      "ownerSide": true
-    },
-    {
       "relationshipType": "one-to-many",
       "otherEntityName": "obtient",
       "otherEntityRelationshipName": "etudiant",
       "relationshipName": "obtient"
+    },
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "diplome",
+      "otherEntityRelationshipName": "etudiant",
+      "relationshipValidateRules": "required",
+      "relationshipName": "diplome",
+      "otherEntityField": "nameDipl"
     }
   ],
   "entityTableName": "etudiant",

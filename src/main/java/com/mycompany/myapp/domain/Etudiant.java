@@ -5,6 +5,7 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.*;
+import javax.validation.constraints.*;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -29,15 +30,15 @@ public class Etudiant implements Serializable {
     @Column(name = "last_name")
     private String lastName;
 
-    @JsonIgnoreProperties(value = { "etudiant", "matiere" }, allowSetters = true)
-    @OneToOne
-    @JoinColumn(unique = true)
-    private Diplome diplome;
-
     @OneToMany(mappedBy = "etudiant")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     @JsonIgnoreProperties(value = { "controle", "etudiant" }, allowSetters = true)
     private Set<Obtient> obtients = new HashSet<>();
+
+    @ManyToOne(optional = false)
+    @NotNull
+    @JsonIgnoreProperties(value = { "etudiants", "matiere" }, allowSetters = true)
+    private Diplome diplome;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
     public Long getId() {
@@ -79,19 +80,6 @@ public class Etudiant implements Serializable {
         this.lastName = lastName;
     }
 
-    public Diplome getDiplome() {
-        return this.diplome;
-    }
-
-    public Etudiant diplome(Diplome diplome) {
-        this.setDiplome(diplome);
-        return this;
-    }
-
-    public void setDiplome(Diplome diplome) {
-        this.diplome = diplome;
-    }
-
     public Set<Obtient> getObtients() {
         return this.obtients;
     }
@@ -121,6 +109,19 @@ public class Etudiant implements Serializable {
             obtients.forEach(i -> i.setEtudiant(this));
         }
         this.obtients = obtients;
+    }
+
+    public Diplome getDiplome() {
+        return this.diplome;
+    }
+
+    public Etudiant diplome(Diplome diplome) {
+        this.setDiplome(diplome);
+        return this;
+    }
+
+    public void setDiplome(Diplome diplome) {
+        this.diplome = diplome;
     }
 
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here

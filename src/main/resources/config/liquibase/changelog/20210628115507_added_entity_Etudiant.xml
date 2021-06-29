@@ -21,7 +21,7 @@
                 <constraints nullable="true" />
             </column>
             <column name="diplome_id" type="bigint">
-                <constraints nullable="true" unique="true" uniqueConstraintName="ux_etudiant__diplome_id" />
+                <constraints nullable="false" />
             </column>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->
         </createTable>
@@ -45,6 +45,7 @@
             <column name="id" type="numeric"/>
             <column name="first_name" type="string"/>
             <column name="last_name" type="string"/>
+            <column name="diplome_id" type="numeric"/>
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here -->
         </loadData>
     </changeSet>

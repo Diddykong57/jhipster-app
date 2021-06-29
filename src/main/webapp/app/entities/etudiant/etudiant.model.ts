@@ -1,12 +1,12 @@
-import { IDiplome } from 'app/entities/diplome/diplome.model';
 import { IObtient } from 'app/entities/obtient/obtient.model';
+import { IDiplome } from 'app/entities/diplome/diplome.model';
 
 export interface IEtudiant {
   id?: number;
   firstName?: string | null;
   lastName?: string | null;
-  diplome?: IDiplome | null;
   obtients?: IObtient[] | null;
+  diplome?: IDiplome;
 }
 
 export class Etudiant implements IEtudiant {
@@ -14,8 +14,8 @@ export class Etudiant implements IEtudiant {
     public id?: number,
     public firstName?: string | null,
     public lastName?: string | null,
-    public diplome?: IDiplome | null,
-    public obtients?: IObtient[] | null
+    public obtients?: IObtient[] | null,
+    public diplome?: IDiplome
   ) {}
 }
 
