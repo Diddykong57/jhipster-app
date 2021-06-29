@@ -36,11 +36,11 @@ relationship OneToOne {
     Controle{matiere} to Matiere {controle (date) required}
 }
 
-//relationship OneToMany{
+relationship OneToMany{
 //	Matiere{controle} to Controle,
-//    Diplome{etudiant} to Etudiant,
-//    Diplome{matiere} to Matiere
-//}
+   Diplome{etudiant} to Etudiant{diplome required},
+//    Diplome{matiere} to Matiere{diplome (nameDipl) required}
+}
 
 relationship OneToMany{
     Controle{obtient} to Obtient{controle (date) required}, 
