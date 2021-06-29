@@ -30,7 +30,7 @@ public class Matiere implements Serializable {
     @Column(name = "coef_mat")
     private Integer coefMat;
 
-    @JsonIgnoreProperties(value = { "etudiant", "matiere" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "etudiants", "matiere" }, allowSetters = true)
     @OneToOne
     @JoinColumn(unique = true)
     private Diplome diplome;

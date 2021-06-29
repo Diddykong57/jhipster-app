@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { finalize, map } from 'rxjs/operators';
@@ -17,13 +17,13 @@ import { DiplomeService } from 'app/entities/diplome/service/diplome.service';
 export class EtudiantUpdateComponent implements OnInit {
   isSaving = false;
 
-  diplomesCollection: IDiplome[] = [];
+  diplomesSharedCollection: IDiplome[] = [];
 
   editForm = this.fb.group({
     id: [],
     firstName: [],
     lastName: [],
-    diplome: [],
+    diplome: [null, Validators.required],
   });
 
   constructor(
@@ -86,17 +86,17 @@ export class EtudiantUpdateComponent implements OnInit {
       diplome: etudiant.diplome,
     });
 
-    this.diplomesCollection = this.diplomeService.addDiplomeToCollectionIfMissing(this.diplomesCollection, etudiant.diplome);
+    this.diplomesSharedCollection = this.diplomeService.addDiplomeToCollectionIfMissing(this.diplomesSharedCollection, etudiant.diplome);
   }
 
   protected loadRelationshipsOptions(): void {
     this.diplomeService
-      .query({ filter: 'etudiant-is-null' })
+      .query()
       .pipe(map((res: HttpResponse<IDiplome[]>) => res.body ?? []))
       .pipe(
         map((diplomes: IDiplome[]) => this.diplomeService.addDiplomeToCollectionIfMissing(diplomes, this.editForm.get('diplome')!.value))
       )
-      .subscribe((diplomes: IDiplome[]) => (this.diplomesCollection = diplomes));
+      .subscribe((diplomes: IDiplome[]) => (this.diplomesSharedCollection = diplomes));
   }
 
   protected createFromForm(): IEtudiant {

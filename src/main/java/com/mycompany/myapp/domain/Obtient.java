@@ -35,7 +35,7 @@ public class Obtient implements Serializable {
 
     @ManyToOne(optional = false)
     @NotNull
-    @JsonIgnoreProperties(value = { "diplome", "obtients" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "obtients", "diplome" }, allowSetters = true)
     private Etudiant etudiant;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here

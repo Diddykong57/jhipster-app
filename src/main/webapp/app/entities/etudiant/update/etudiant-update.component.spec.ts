@@ -40,22 +40,23 @@ describe('Component Tests', () => {
     });
 
     describe('ngOnInit', () => {
-      it('Should call diplome query and add missing value', () => {
+      it('Should call Diplome query and add missing value', () => {
         const etudiant: IEtudiant = { id: 456 };
         const diplome: IDiplome = { id: 82310 };
         etudiant.diplome = diplome;
 
         const diplomeCollection: IDiplome[] = [{ id: 54715 }];
         jest.spyOn(diplomeService, 'query').mockReturnValue(of(new HttpResponse({ body: diplomeCollection })));
-        const expectedCollection: IDiplome[] = [diplome, ...diplomeCollection];
+        const additionalDiplomes = [diplome];
+        const expectedCollection: IDiplome[] = [...additionalDiplomes, ...diplomeCollection];
         jest.spyOn(diplomeService, 'addDiplomeToCollectionIfMissing').mockReturnValue(expectedCollection);
 
         activatedRoute.data = of({ etudiant });
         comp.ngOnInit();
 
         expect(diplomeService.query).toHaveBeenCalled();
-        expect(diplomeService.addDiplomeToCollectionIfMissing).toHaveBeenCalledWith(diplomeCollection, diplome);
-        expect(comp.diplomesCollection).toEqual(expectedCollection);
+        expect(diplomeService.addDiplomeToCollectionIfMissing).toHaveBeenCalledWith(diplomeCollection, ...additionalDiplomes);
+        expect(comp.diplomesSharedCollection).toEqual(expectedCollection);
       });
 
       it('Should update editForm', () => {
@@ -67,7 +68,7 @@ describe('Component Tests', () => {
         comp.ngOnInit();
 
         expect(comp.editForm.value).toEqual(expect.objectContaining(etudiant));
-        expect(comp.diplomesCollection).toContain(diplome);
+        expect(comp.diplomesSharedCollection).toContain(diplome);
       });
     });
 

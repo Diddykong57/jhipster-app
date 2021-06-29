@@ -8,13 +8,10 @@
   ],
   "relationships": [
     {
-      "relationshipType": "one-to-one",
+      "relationshipType": "one-to-many",
       "otherEntityName": "etudiant",
       "otherEntityRelationshipName": "diplome",
-      "relationshipValidateRules": "required",
-      "relationshipName": "etudiant",
-      "otherEntityField": "nameDipl",
-      "ownerSide": false
+      "relationshipName": "etudiant"
     },
     {
       "relationshipType": "one-to-one",
