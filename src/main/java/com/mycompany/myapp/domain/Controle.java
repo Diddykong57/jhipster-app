@@ -30,7 +30,7 @@ public class Controle implements Serializable {
     private LocalDate date;
 
     @Min(value = 0)
-    @Max(value = 4)
+    @Max(value = 5)
     @Column(name = "coef_cont")
     private Integer coefCont;
 

@@ -9,6 +9,8 @@ import { of, Subject } from 'rxjs';
 
 import { EtudiantService } from '../service/etudiant.service';
 import { IEtudiant, Etudiant } from '../etudiant.model';
+import { IDiplome } from 'app/entities/diplome/diplome.model';
+import { DiplomeService } from 'app/entities/diplome/service/diplome.service';
 
 import { EtudiantUpdateComponent } from './etudiant-update.component';
 
@@ -18,6 +20,7 @@ describe('Component Tests', () => {
     let fixture: ComponentFixture<EtudiantUpdateComponent>;
     let activatedRoute: ActivatedRoute;
     let etudiantService: EtudiantService;
+    let diplomeService: DiplomeService;
 
     beforeEach(() => {
       TestBed.configureTestingModule({
@@ -31,18 +34,40 @@ describe('Component Tests', () => {
       fixture = TestBed.createComponent(EtudiantUpdateComponent);
       activatedRoute = TestBed.inject(ActivatedRoute);
       etudiantService = TestBed.inject(EtudiantService);
+      diplomeService = TestBed.inject(DiplomeService);
 
       comp = fixture.componentInstance;
     });
 
     describe('ngOnInit', () => {
+      it('Should call diplome query and add missing value', () => {
+        const etudiant: IEtudiant = { id: 456 };
+        const diplome: IDiplome = { id: 82310 };
+        etudiant.diplome = diplome;
+
+        const diplomeCollection: IDiplome[] = [{ id: 54715 }];
+        jest.spyOn(diplomeService, 'query').mockReturnValue(of(new HttpResponse({ body: diplomeCollection })));
+        const expectedCollection: IDiplome[] = [diplome, ...diplomeCollection];
+        jest.spyOn(diplomeService, 'addDiplomeToCollectionIfMissing').mockReturnValue(expectedCollection);
+
+        activatedRoute.data = of({ etudiant });
+        comp.ngOnInit();
+
+        expect(diplomeService.query).toHaveBeenCalled();
+        expect(diplomeService.addDiplomeToCollectionIfMissing).toHaveBeenCalledWith(diplomeCollection, diplome);
+        expect(comp.diplomesCollection).toEqual(expectedCollection);
+      });
+
       it('Should update editForm', () => {
         const etudiant: IEtudiant = { id: 456 };
+        const diplome: IDiplome = { id: 54574 };
+        etudiant.diplome = diplome;
 
         activatedRoute.data = of({ etudiant });
         comp.ngOnInit();
 
         expect(comp.editForm.value).toEqual(expect.objectContaining(etudiant));
+        expect(comp.diplomesCollection).toContain(diplome);
       });
     });
 
@@ -107,6 +132,16 @@ describe('Component Tests', () => {
         expect(etudiantService.update).toHaveBeenCalledWith(etudiant);
         expect(comp.isSaving).toEqual(false);
         expect(comp.previousState).not.toHaveBeenCalled();
+      });
+    });
+
+    describe('Tracking relationships identifiers', () => {
+      describe('trackDiplomeById', () => {
+        it('Should return tracked Diplome primary key', () => {
+          const entity = { id: 123 };
+          const trackResult = comp.trackDiplomeById(0, entity);
+          expect(trackResult).toEqual(entity.id);
+        });
       });
     });
   });

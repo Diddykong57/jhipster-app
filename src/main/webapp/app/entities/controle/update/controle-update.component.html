@@ -35,7 +35,7 @@
           <input type="number" class="form-control" name="coefCont" id="field_coefCont" data-cy="coefCont" formControlName="coefCont" />
           <div *ngIf="editForm.get('coefCont')!.invalid && (editForm.get('coefCont')!.dirty || editForm.get('coefCont')!.touched)">
             <small class="form-text text-danger" *ngIf="editForm.get('coefCont')?.errors?.min"> This field should be at least 0. </small>
-            <small class="form-text text-danger" *ngIf="editForm.get('coefCont')?.errors?.max"> This field cannot be more than 4. </small>
+            <small class="form-text text-danger" *ngIf="editForm.get('coefCont')?.errors?.max"> This field cannot be more than 5. </small>
             <small class="form-text text-danger" [hidden]="!editForm.get('coefCont')?.errors?.number">
               This field should be a number.
             </small>

@@ -10,7 +10,7 @@
       "fieldType": "Integer",
       "fieldValidateRules": ["min", "max"],
       "fieldValidateRulesMin": "0",
-      "fieldValidateRulesMax": "4"
+      "fieldValidateRulesMax": "5"
     },
     {
       "fieldName": "type",

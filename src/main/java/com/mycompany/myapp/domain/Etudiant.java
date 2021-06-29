@@ -29,6 +29,10 @@ public class Etudiant implements Serializable {
     @Column(name = "last_name")
     private String lastName;
 
+    @OneToOne
+    @JoinColumn(unique = true)
+    private Diplome diplome;
+
     @OneToMany(mappedBy = "etudiant")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     @JsonIgnoreProperties(value = { "controle", "etudiant" }, allowSetters = true)
@@ -72,6 +76,19 @@ public class Etudiant implements Serializable {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public Diplome getDiplome() {
+        return this.diplome;
+    }
+
+    public Etudiant diplome(Diplome diplome) {
+        this.setDiplome(diplome);
+        return this;
+    }
+
+    public void setDiplome(Diplome diplome) {
+        this.diplome = diplome;
     }
 
     public Set<Obtient> getObtients() {
