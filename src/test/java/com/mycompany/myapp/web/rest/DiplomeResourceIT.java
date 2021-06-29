@@ -7,7 +7,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.mycompany.myapp.IntegrationTest;
 import com.mycompany.myapp.domain.Diplome;
-import com.mycompany.myapp.domain.Matiere;
 import com.mycompany.myapp.repository.DiplomeRepository;
 import java.util.List;
 import java.util.Random;
@@ -58,16 +57,6 @@ class DiplomeResourceIT {
      */
     public static Diplome createEntity(EntityManager em) {
         Diplome diplome = new Diplome().nameDipl(DEFAULT_NAME_DIPL);
-        // Add required entity
-        Matiere matiere;
-        if (TestUtil.findAll(em, Matiere.class).isEmpty()) {
-            matiere = MatiereResourceIT.createEntity(em);
-            em.persist(matiere);
-            em.flush();
-        } else {
-            matiere = TestUtil.findAll(em, Matiere.class).get(0);
-        }
-        diplome.setMatiere(matiere);
         return diplome;
     }
 
@@ -79,16 +68,6 @@ class DiplomeResourceIT {
      */
     public static Diplome createUpdatedEntity(EntityManager em) {
         Diplome diplome = new Diplome().nameDipl(UPDATED_NAME_DIPL);
-        // Add required entity
-        Matiere matiere;
-        if (TestUtil.findAll(em, Matiere.class).isEmpty()) {
-            matiere = MatiereResourceIT.createUpdatedEntity(em);
-            em.persist(matiere);
-            em.flush();
-        } else {
-            matiere = TestUtil.findAll(em, Matiere.class).get(0);
-        }
-        diplome.setMatiere(matiere);
         return diplome;
     }
 

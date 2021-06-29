@@ -30,7 +30,7 @@ public class Obtient implements Serializable {
 
     @ManyToOne(optional = false)
     @NotNull
-    @JsonIgnoreProperties(value = { "matiere", "obtients" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "obtients", "matiere" }, allowSetters = true)
     private Controle controle;
 
     @ManyToOne(optional = false)

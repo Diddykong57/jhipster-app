@@ -56,14 +56,17 @@
         <div class="form-group">
           <label class="form-control-label" for="field_matiere">Matiere</label>
           <select class="form-control" id="field_matiere" data-cy="matiere" name="matiere" formControlName="matiere">
-            <option [ngValue]="null"></option>
+            <option *ngIf="!editForm.get('matiere')!.value" [ngValue]="null" selected></option>
             <option
               [ngValue]="matiereOption.id === editForm.get('matiere')!.value?.id ? editForm.get('matiere')!.value : matiereOption"
-              *ngFor="let matiereOption of matieresCollection; trackBy: trackMatiereById"
+              *ngFor="let matiereOption of matieresSharedCollection; trackBy: trackMatiereById"
             >
-              {{ matiereOption.id }}
+              {{ matiereOption.nameMat }}
             </option>
           </select>
+        </div>
+        <div *ngIf="editForm.get(['matiere'])!.invalid && (editForm.get(['matiere'])!.dirty || editForm.get(['matiere'])!.touched)">
+          <small class="form-text text-danger" *ngIf="editForm.get(['matiere'])?.errors?.required"> This field is required. </small>
         </div>
       </div>
 

@@ -40,22 +40,23 @@ describe('Component Tests', () => {
     });
 
     describe('ngOnInit', () => {
-      it('Should call matiere query and add missing value', () => {
+      it('Should call Matiere query and add missing value', () => {
         const controle: IControle = { id: 456 };
         const matiere: IMatiere = { id: 53264 };
         controle.matiere = matiere;
 
         const matiereCollection: IMatiere[] = [{ id: 64663 }];
         jest.spyOn(matiereService, 'query').mockReturnValue(of(new HttpResponse({ body: matiereCollection })));
-        const expectedCollection: IMatiere[] = [matiere, ...matiereCollection];
+        const additionalMatieres = [matiere];
+        const expectedCollection: IMatiere[] = [...additionalMatieres, ...matiereCollection];
         jest.spyOn(matiereService, 'addMatiereToCollectionIfMissing').mockReturnValue(expectedCollection);
 
         activatedRoute.data = of({ controle });
         comp.ngOnInit();
 
         expect(matiereService.query).toHaveBeenCalled();
-        expect(matiereService.addMatiereToCollectionIfMissing).toHaveBeenCalledWith(matiereCollection, matiere);
-        expect(comp.matieresCollection).toEqual(expectedCollection);
+        expect(matiereService.addMatiereToCollectionIfMissing).toHaveBeenCalledWith(matiereCollection, ...additionalMatieres);
+        expect(comp.matieresSharedCollection).toEqual(expectedCollection);
       });
 
       it('Should update editForm', () => {
@@ -67,7 +68,7 @@ describe('Component Tests', () => {
         comp.ngOnInit();
 
         expect(comp.editForm.value).toEqual(expect.objectContaining(controle));
-        expect(comp.matieresCollection).toContain(matiere);
+        expect(comp.matieresSharedCollection).toContain(matiere);
       });
     });
 

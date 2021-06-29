@@ -50,7 +50,7 @@
           <td>{{ controle.type }}</td>
           <td>
             <div *ngIf="controle.matiere">
-              <a [routerLink]="['/matiere', controle.matiere?.id, 'view']">{{ controle.matiere?.id }}</a>
+              <a [routerLink]="['/matiere', controle.matiere?.id, 'view']">{{ controle.matiere?.nameMat }}</a>
             </div>
           </td>
           <td class="text-right">

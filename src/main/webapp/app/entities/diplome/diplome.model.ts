@@ -5,11 +5,16 @@ export interface IDiplome {
   id?: number;
   nameDipl?: string | null;
   etudiants?: IEtudiant[] | null;
-  matiere?: IMatiere;
+  matieres?: IMatiere[] | null;
 }
 
 export class Diplome implements IDiplome {
-  constructor(public id?: number, public nameDipl?: string | null, public etudiants?: IEtudiant[] | null, public matiere?: IMatiere) {}
+  constructor(
+    public id?: number,
+    public nameDipl?: string | null,
+    public etudiants?: IEtudiant[] | null,
+    public matieres?: IMatiere[] | null
+  ) {}
 }
 
 export function getDiplomeIdentifier(diplome: IDiplome): number | undefined {

@@ -5,7 +5,6 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.*;
-import javax.validation.constraints.*;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -32,9 +31,10 @@ public class Diplome implements Serializable {
     @JsonIgnoreProperties(value = { "obtients", "diplome" }, allowSetters = true)
     private Set<Etudiant> etudiants = new HashSet<>();
 
-    @JsonIgnoreProperties(value = { "diplome", "controle" }, allowSetters = true)
-    @OneToOne(mappedBy = "diplome")
-    private Matiere matiere;
+    @OneToMany(mappedBy = "diplome")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    @JsonIgnoreProperties(value = { "controles", "diplome" }, allowSetters = true)
+    private Set<Matiere> matieres = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
     public Long getId() {
@@ -94,23 +94,35 @@ public class Diplome implements Serializable {
         this.etudiants = etudiants;
     }
 
-    public Matiere getMatiere() {
-        return this.matiere;
+    public Set<Matiere> getMatieres() {
+        return this.matieres;
     }
 
-    public Diplome matiere(Matiere matiere) {
-        this.setMatiere(matiere);
+    public Diplome matieres(Set<Matiere> matieres) {
+        this.setMatieres(matieres);
         return this;
     }
 
-    public void setMatiere(Matiere matiere) {
-        if (this.matiere != null) {
-            this.matiere.setDiplome(null);
+    public Diplome addMatiere(Matiere matiere) {
+        this.matieres.add(matiere);
+        matiere.setDiplome(this);
+        return this;
+    }
+
+    public Diplome removeMatiere(Matiere matiere) {
+        this.matieres.remove(matiere);
+        matiere.setDiplome(null);
+        return this;
+    }
+
+    public void setMatieres(Set<Matiere> matieres) {
+        if (this.matieres != null) {
+            this.matieres.forEach(i -> i.setDiplome(null));
         }
-        if (matiere != null) {
-            matiere.setDiplome(this);
+        if (matieres != null) {
+            matieres.forEach(i -> i.setDiplome(this));
         }
-        this.matiere = matiere;
+        this.matieres = matieres;
     }
 
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here

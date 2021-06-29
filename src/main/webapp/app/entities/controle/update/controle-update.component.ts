@@ -17,14 +17,14 @@ import { MatiereService } from 'app/entities/matiere/service/matiere.service';
 export class ControleUpdateComponent implements OnInit {
   isSaving = false;
 
-  matieresCollection: IMatiere[] = [];
+  matieresSharedCollection: IMatiere[] = [];
 
   editForm = this.fb.group({
     id: [],
     date: [],
     coefCont: [null, [Validators.min(0), Validators.max(5)]],
     type: [],
-    matiere: [],
+    matiere: [null, Validators.required],
   });
 
   constructor(
@@ -88,17 +88,17 @@ export class ControleUpdateComponent implements OnInit {
       matiere: controle.matiere,
     });
 
-    this.matieresCollection = this.matiereService.addMatiereToCollectionIfMissing(this.matieresCollection, controle.matiere);
+    this.matieresSharedCollection = this.matiereService.addMatiereToCollectionIfMissing(this.matieresSharedCollection, controle.matiere);
   }
 
   protected loadRelationshipsOptions(): void {
     this.matiereService
-      .query({ filter: 'controle-is-null' })
+      .query()
       .pipe(map((res: HttpResponse<IMatiere[]>) => res.body ?? []))
       .pipe(
         map((matieres: IMatiere[]) => this.matiereService.addMatiereToCollectionIfMissing(matieres, this.editForm.get('matiere')!.value))
       )
-      .subscribe((matieres: IMatiere[]) => (this.matieresCollection = matieres));
+      .subscribe((matieres: IMatiere[]) => (this.matieresSharedCollection = matieres));
   }
 
   protected createFromForm(): IControle {

@@ -38,15 +38,15 @@ public class Controle implements Serializable {
     @Column(name = "type")
     private TypeControle type;
 
-    @JsonIgnoreProperties(value = { "diplome", "controle" }, allowSetters = true)
-    @OneToOne
-    @JoinColumn(unique = true)
-    private Matiere matiere;
-
     @OneToMany(mappedBy = "controle")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     @JsonIgnoreProperties(value = { "controle", "etudiant" }, allowSetters = true)
     private Set<Obtient> obtients = new HashSet<>();
+
+    @ManyToOne(optional = false)
+    @NotNull
+    @JsonIgnoreProperties(value = { "controles", "diplome" }, allowSetters = true)
+    private Matiere matiere;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
     public Long getId() {
@@ -101,19 +101,6 @@ public class Controle implements Serializable {
         this.type = type;
     }
 
-    public Matiere getMatiere() {
-        return this.matiere;
-    }
-
-    public Controle matiere(Matiere matiere) {
-        this.setMatiere(matiere);
-        return this;
-    }
-
-    public void setMatiere(Matiere matiere) {
-        this.matiere = matiere;
-    }
-
     public Set<Obtient> getObtients() {
         return this.obtients;
     }
@@ -143,6 +130,19 @@ public class Controle implements Serializable {
             obtients.forEach(i -> i.setControle(this));
         }
         this.obtients = obtients;
+    }
+
+    public Matiere getMatiere() {
+        return this.matiere;
+    }
+
+    public Controle matiere(Matiere matiere) {
+        this.setMatiere(matiere);
+        return this;
+    }
+
+    public void setMatiere(Matiere matiere) {
+        this.matiere = matiere;
     }
 
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
