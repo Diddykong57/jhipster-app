@@ -7,7 +7,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.mycompany.myapp.IntegrationTest;
 import com.mycompany.myapp.domain.Controle;
-import com.mycompany.myapp.domain.Matiere;
 import com.mycompany.myapp.domain.enumeration.TypeControle;
 import com.mycompany.myapp.repository.ControleRepository;
 import java.time.LocalDate;
@@ -67,16 +66,6 @@ class ControleResourceIT {
      */
     public static Controle createEntity(EntityManager em) {
         Controle controle = new Controle().date(DEFAULT_DATE).coefCont(DEFAULT_COEF_CONT).type(DEFAULT_TYPE);
-        // Add required entity
-        Matiere matiere;
-        if (TestUtil.findAll(em, Matiere.class).isEmpty()) {
-            matiere = MatiereResourceIT.createEntity(em);
-            em.persist(matiere);
-            em.flush();
-        } else {
-            matiere = TestUtil.findAll(em, Matiere.class).get(0);
-        }
-        controle.setMatiere(matiere);
         return controle;
     }
 
@@ -88,16 +77,6 @@ class ControleResourceIT {
      */
     public static Controle createUpdatedEntity(EntityManager em) {
         Controle controle = new Controle().date(UPDATED_DATE).coefCont(UPDATED_COEF_CONT).type(UPDATED_TYPE);
-        // Add required entity
-        Matiere matiere;
-        if (TestUtil.findAll(em, Matiere.class).isEmpty()) {
-            matiere = MatiereResourceIT.createUpdatedEntity(em);
-            em.persist(matiere);
-            em.flush();
-        } else {
-            matiere = TestUtil.findAll(em, Matiere.class).get(0);
-        }
-        controle.setMatiere(matiere);
         return controle;
     }
 
