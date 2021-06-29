@@ -8,6 +8,8 @@ import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import org.slf4j.Logger;
@@ -150,10 +152,18 @@ public class ControleResource {
     /**
      * {@code GET  /controles} : get all the controles.
      *
+     * @param filter the filter of the request.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of controles in body.
      */
     @GetMapping("/controles")
-    public List<Controle> getAllControles() {
+    public List<Controle> getAllControles(@RequestParam(required = false) String filter) {
+        if ("matiere-is-null".equals(filter)) {
+            log.debug("REST request to get all Controles where matiere is null");
+            return StreamSupport
+                .stream(controleRepository.findAll().spliterator(), false)
+                .filter(controle -> controle.getMatiere() == null)
+                .collect(Collectors.toList());
+        }
         log.debug("REST request to get all Controles");
         return controleRepository.findAll();
     }

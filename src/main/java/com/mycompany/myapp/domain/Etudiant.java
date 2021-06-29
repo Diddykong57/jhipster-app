@@ -29,6 +29,7 @@ public class Etudiant implements Serializable {
     @Column(name = "last_name")
     private String lastName;
 
+    @JsonIgnoreProperties(value = { "etudiant" }, allowSetters = true)
     @OneToOne
     @JoinColumn(unique = true)
     private Diplome diplome;

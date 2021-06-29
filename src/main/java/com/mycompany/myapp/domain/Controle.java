@@ -43,6 +43,10 @@ public class Controle implements Serializable {
     @JsonIgnoreProperties(value = { "controle", "etudiant" }, allowSetters = true)
     private Set<Obtient> obtients = new HashSet<>();
 
+    @JsonIgnoreProperties(value = { "controle" }, allowSetters = true)
+    @OneToOne(mappedBy = "controle")
+    private Matiere matiere;
+
     // jhipster-needle-entity-add-field - JHipster will add fields here
     public Long getId() {
         return id;
@@ -125,6 +129,25 @@ public class Controle implements Serializable {
             obtients.forEach(i -> i.setControle(this));
         }
         this.obtients = obtients;
+    }
+
+    public Matiere getMatiere() {
+        return this.matiere;
+    }
+
+    public Controle matiere(Matiere matiere) {
+        this.setMatiere(matiere);
+        return this;
+    }
+
+    public void setMatiere(Matiere matiere) {
+        if (this.matiere != null) {
+            this.matiere.setControle(null);
+        }
+        if (matiere != null) {
+            matiere.setControle(this);
+        }
+        this.matiere = matiere;
     }
 
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
