@@ -30,9 +30,8 @@ public class Matiere implements Serializable {
     @Column(name = "coef_mat")
     private Integer coefMat;
 
-    @JsonIgnoreProperties(value = { "obtients" }, allowSetters = true)
-    @OneToOne
-    @JoinColumn(unique = true)
+    @JsonIgnoreProperties(value = { "matiere", "obtients" }, allowSetters = true)
+    @OneToOne(mappedBy = "matiere")
     private Controle controle;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
@@ -85,6 +84,12 @@ public class Matiere implements Serializable {
     }
 
     public void setControle(Controle controle) {
+        if (this.controle != null) {
+            this.controle.setMatiere(null);
+        }
+        if (controle != null) {
+            controle.setMatiere(this);
+        }
         this.controle = controle;
     }
 

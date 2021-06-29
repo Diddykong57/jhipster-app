@@ -9,8 +9,6 @@ import { of, Subject } from 'rxjs';
 
 import { MatiereService } from '../service/matiere.service';
 import { IMatiere, Matiere } from '../matiere.model';
-import { IControle } from 'app/entities/controle/controle.model';
-import { ControleService } from 'app/entities/controle/service/controle.service';
 
 import { MatiereUpdateComponent } from './matiere-update.component';
 
@@ -20,7 +18,6 @@ describe('Component Tests', () => {
     let fixture: ComponentFixture<MatiereUpdateComponent>;
     let activatedRoute: ActivatedRoute;
     let matiereService: MatiereService;
-    let controleService: ControleService;
 
     beforeEach(() => {
       TestBed.configureTestingModule({
@@ -34,40 +31,18 @@ describe('Component Tests', () => {
       fixture = TestBed.createComponent(MatiereUpdateComponent);
       activatedRoute = TestBed.inject(ActivatedRoute);
       matiereService = TestBed.inject(MatiereService);
-      controleService = TestBed.inject(ControleService);
 
       comp = fixture.componentInstance;
     });
 
     describe('ngOnInit', () => {
-      it('Should call controle query and add missing value', () => {
-        const matiere: IMatiere = { id: 456 };
-        const controle: IControle = { id: 61143 };
-        matiere.controle = controle;
-
-        const controleCollection: IControle[] = [{ id: 88446 }];
-        jest.spyOn(controleService, 'query').mockReturnValue(of(new HttpResponse({ body: controleCollection })));
-        const expectedCollection: IControle[] = [controle, ...controleCollection];
-        jest.spyOn(controleService, 'addControleToCollectionIfMissing').mockReturnValue(expectedCollection);
-
-        activatedRoute.data = of({ matiere });
-        comp.ngOnInit();
-
-        expect(controleService.query).toHaveBeenCalled();
-        expect(controleService.addControleToCollectionIfMissing).toHaveBeenCalledWith(controleCollection, controle);
-        expect(comp.controlesCollection).toEqual(expectedCollection);
-      });
-
       it('Should update editForm', () => {
         const matiere: IMatiere = { id: 456 };
-        const controle: IControle = { id: 56911 };
-        matiere.controle = controle;
 
         activatedRoute.data = of({ matiere });
         comp.ngOnInit();
 
         expect(comp.editForm.value).toEqual(expect.objectContaining(matiere));
-        expect(comp.controlesCollection).toContain(controle);
       });
     });
 
@@ -132,16 +107,6 @@ describe('Component Tests', () => {
         expect(matiereService.update).toHaveBeenCalledWith(matiere);
         expect(comp.isSaving).toEqual(false);
         expect(comp.previousState).not.toHaveBeenCalled();
-      });
-    });
-
-    describe('Tracking relationships identifiers', () => {
-      describe('trackControleById', () => {
-        it('Should return tracked Controle primary key', () => {
-          const entity = { id: 123 };
-          const trackResult = comp.trackControleById(0, entity);
-          expect(trackResult).toEqual(entity.id);
-        });
       });
     });
   });

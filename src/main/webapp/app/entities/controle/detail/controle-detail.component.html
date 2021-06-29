@@ -26,6 +26,12 @@
         <dd>
           <span>{{ controle.type }}</span>
         </dd>
+        <dt><span>Matiere</span></dt>
+        <dd>
+          <div *ngIf="controle.matiere">
+            <a [routerLink]="['/matiere', controle.matiere?.id, 'view']">{{ controle.matiere?.id }}</a>
+          </div>
+        </dd>
       </dl>
 
       <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">

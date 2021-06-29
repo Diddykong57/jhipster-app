@@ -3,10 +3,12 @@ import { HttpResponse } from '@angular/common/http';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
-import { finalize } from 'rxjs/operators';
+import { finalize, map } from 'rxjs/operators';
 
 import { IControle, Controle } from '../controle.model';
 import { ControleService } from '../service/controle.service';
+import { IMatiere } from 'app/entities/matiere/matiere.model';
+import { MatiereService } from 'app/entities/matiere/service/matiere.service';
 
 @Component({
   selector: 'jhi-controle-update',
@@ -15,18 +17,28 @@ import { ControleService } from '../service/controle.service';
 export class ControleUpdateComponent implements OnInit {
   isSaving = false;
 
+  matieresCollection: IMatiere[] = [];
+
   editForm = this.fb.group({
     id: [],
     date: [],
     coefCont: [null, [Validators.min(0), Validators.max(5)]],
     type: [],
+    matiere: [],
   });
 
-  constructor(protected controleService: ControleService, protected activatedRoute: ActivatedRoute, protected fb: FormBuilder) {}
+  constructor(
+    protected controleService: ControleService,
+    protected matiereService: MatiereService,
+    protected activatedRoute: ActivatedRoute,
+    protected fb: FormBuilder
+  ) {}
 
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ controle }) => {
       this.updateForm(controle);
+
+      this.loadRelationshipsOptions();
     });
   }
 
@@ -42,6 +54,10 @@ export class ControleUpdateComponent implements OnInit {
     } else {
       this.subscribeToSaveResponse(this.controleService.create(controle));
     }
+  }
+
+  trackMatiereById(index: number, item: IMatiere): number {
+    return item.id!;
   }
 
   protected subscribeToSaveResponse(result: Observable<HttpResponse<IControle>>): void {
@@ -69,7 +85,20 @@ export class ControleUpdateComponent implements OnInit {
       date: controle.date,
       coefCont: controle.coefCont,
       type: controle.type,
+      matiere: controle.matiere,
     });
+
+    this.matieresCollection = this.matiereService.addMatiereToCollectionIfMissing(this.matieresCollection, controle.matiere);
+  }
+
+  protected loadRelationshipsOptions(): void {
+    this.matiereService
+      .query({ filter: 'controle-is-null' })
+      .pipe(map((res: HttpResponse<IMatiere[]>) => res.body ?? []))
+      .pipe(
+        map((matieres: IMatiere[]) => this.matiereService.addMatiereToCollectionIfMissing(matieres, this.editForm.get('matiere')!.value))
+      )
+      .subscribe((matieres: IMatiere[]) => (this.matieresCollection = matieres));
   }
 
   protected createFromForm(): IControle {
@@ -79,6 +108,7 @@ export class ControleUpdateComponent implements OnInit {
       date: this.editForm.get(['date'])!.value,
       coefCont: this.editForm.get(['coefCont'])!.value,
       type: this.editForm.get(['type'])!.value,
+      matiere: this.editForm.get(['matiere'])!.value,
     };
   }
 }

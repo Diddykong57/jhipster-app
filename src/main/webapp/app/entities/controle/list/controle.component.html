@@ -36,6 +36,7 @@
           <th scope="col"><span>Date</span></th>
           <th scope="col"><span>Coef Cont</span></th>
           <th scope="col"><span>Type</span></th>
+          <th scope="col"><span>Matiere</span></th>
           <th scope="col"></th>
         </tr>
       </thead>
@@ -47,6 +48,11 @@
           <td>{{ controle.date | formatMediumDate }}</td>
           <td>{{ controle.coefCont }}</td>
           <td>{{ controle.type }}</td>
+          <td>
+            <div *ngIf="controle.matiere">
+              <a [routerLink]="['/matiere', controle.matiere?.id, 'view']">{{ controle.matiere?.id }}</a>
+            </div>
+          </td>
           <td class="text-right">
             <div class="btn-group">
               <button

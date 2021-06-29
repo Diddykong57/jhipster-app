@@ -4,11 +4,11 @@ export interface IMatiere {
   id?: number;
   nameMat?: string | null;
   coefMat?: number | null;
-  controle?: IControle | null;
+  controle?: IControle;
 }
 
 export class Matiere implements IMatiere {
-  constructor(public id?: number, public nameMat?: string | null, public coefMat?: number | null, public controle?: IControle | null) {}
+  constructor(public id?: number, public nameMat?: string | null, public coefMat?: number | null, public controle?: IControle) {}
 }
 
 export function getMatiereIdentifier(matiere: IMatiere): number | undefined {
