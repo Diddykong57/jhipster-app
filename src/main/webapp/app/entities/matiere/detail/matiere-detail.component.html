@@ -22,12 +22,6 @@
         <dd>
           <span>{{ matiere.coefMat }}</span>
         </dd>
-        <dt><span>Controle</span></dt>
-        <dd>
-          <div *ngIf="matiere.controle">
-            <a [routerLink]="['/controle', matiere.controle?.id, 'view']">{{ matiere.controle?.id }}</a>
-          </div>
-        </dd>
       </dl>
 
       <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">

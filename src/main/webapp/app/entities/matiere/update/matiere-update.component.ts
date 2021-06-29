@@ -3,12 +3,10 @@ import { HttpResponse } from '@angular/common/http';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
-import { finalize, map } from 'rxjs/operators';
+import { finalize } from 'rxjs/operators';
 
 import { IMatiere, Matiere } from '../matiere.model';
 import { MatiereService } from '../service/matiere.service';
-import { IControle } from 'app/entities/controle/controle.model';
-import { ControleService } from 'app/entities/controle/service/controle.service';
 
 @Component({
   selector: 'jhi-matiere-update',
@@ -17,27 +15,17 @@ import { ControleService } from 'app/entities/controle/service/controle.service'
 export class MatiereUpdateComponent implements OnInit {
   isSaving = false;
 
-  controlesCollection: IControle[] = [];
-
   editForm = this.fb.group({
     id: [],
     nameMat: [],
     coefMat: [null, [Validators.min(0), Validators.max(5)]],
-    controle: [],
   });
 
-  constructor(
-    protected matiereService: MatiereService,
-    protected controleService: ControleService,
-    protected activatedRoute: ActivatedRoute,
-    protected fb: FormBuilder
-  ) {}
+  constructor(protected matiereService: MatiereService, protected activatedRoute: ActivatedRoute, protected fb: FormBuilder) {}
 
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ matiere }) => {
       this.updateForm(matiere);
-
-      this.loadRelationshipsOptions();
     });
   }
 
@@ -53,10 +41,6 @@ export class MatiereUpdateComponent implements OnInit {
     } else {
       this.subscribeToSaveResponse(this.matiereService.create(matiere));
     }
-  }
-
-  trackControleById(index: number, item: IControle): number {
-    return item.id!;
   }
 
   protected subscribeToSaveResponse(result: Observable<HttpResponse<IMatiere>>): void {
@@ -83,22 +67,7 @@ export class MatiereUpdateComponent implements OnInit {
       id: matiere.id,
       nameMat: matiere.nameMat,
       coefMat: matiere.coefMat,
-      controle: matiere.controle,
     });
-
-    this.controlesCollection = this.controleService.addControleToCollectionIfMissing(this.controlesCollection, matiere.controle);
-  }
-
-  protected loadRelationshipsOptions(): void {
-    this.controleService
-      .query({ filter: 'matiere-is-null' })
-      .pipe(map((res: HttpResponse<IControle[]>) => res.body ?? []))
-      .pipe(
-        map((controles: IControle[]) =>
-          this.controleService.addControleToCollectionIfMissing(controles, this.editForm.get('controle')!.value)
-        )
-      )
-      .subscribe((controles: IControle[]) => (this.controlesCollection = controles));
   }
 
   protected createFromForm(): IMatiere {
@@ -107,7 +76,6 @@ export class MatiereUpdateComponent implements OnInit {
       id: this.editForm.get(['id'])!.value,
       nameMat: this.editForm.get(['nameMat'])!.value,
       coefMat: this.editForm.get(['coefMat'])!.value,
-      controle: this.editForm.get(['controle'])!.value,
     };
   }
 }

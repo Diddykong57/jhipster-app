@@ -18,8 +18,10 @@
       "relationshipType": "one-to-one",
       "otherEntityName": "controle",
       "otherEntityRelationshipName": "matiere",
+      "relationshipValidateRules": "required",
       "relationshipName": "controle",
-      "ownerSide": true
+      "otherEntityField": "date",
+      "ownerSide": false
     }
   ],
   "entityTableName": "matiere",

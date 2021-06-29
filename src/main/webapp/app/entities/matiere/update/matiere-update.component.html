@@ -27,19 +27,6 @@
             </small>
           </div>
         </div>
-
-        <div class="form-group">
-          <label class="form-control-label" for="field_controle">Controle</label>
-          <select class="form-control" id="field_controle" data-cy="controle" name="controle" formControlName="controle">
-            <option [ngValue]="null"></option>
-            <option
-              [ngValue]="controleOption.id === editForm.get('controle')!.value?.id ? editForm.get('controle')!.value : controleOption"
-              *ngFor="let controleOption of controlesCollection; trackBy: trackControleById"
-            >
-              {{ controleOption.id }}
-            </option>
-          </select>
-        </div>
       </div>
 
       <div>

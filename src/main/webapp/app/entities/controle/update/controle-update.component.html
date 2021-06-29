@@ -52,6 +52,19 @@
             <option value="EO">expressionOrale</option>
           </select>
         </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_matiere">Matiere</label>
+          <select class="form-control" id="field_matiere" data-cy="matiere" name="matiere" formControlName="matiere">
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="matiereOption.id === editForm.get('matiere')!.value?.id ? editForm.get('matiere')!.value : matiereOption"
+              *ngFor="let matiereOption of matieresCollection; trackBy: trackMatiereById"
+            >
+              {{ matiereOption.id }}
+            </option>
+          </select>
+        </div>
       </div>
 
       <div>

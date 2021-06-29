@@ -35,7 +35,6 @@
           <th scope="col"><span>ID</span></th>
           <th scope="col"><span>Name Mat</span></th>
           <th scope="col"><span>Coef Mat</span></th>
-          <th scope="col"><span>Controle</span></th>
           <th scope="col"></th>
         </tr>
       </thead>
@@ -46,11 +45,6 @@
           </td>
           <td>{{ matiere.nameMat }}</td>
           <td>{{ matiere.coefMat }}</td>
-          <td>
-            <div *ngIf="matiere.controle">
-              <a [routerLink]="['/controle', matiere.controle?.id, 'view']">{{ matiere.controle?.id }}</a>
-            </div>
-          </td>
           <td class="text-right">
             <div class="btn-group">
               <button

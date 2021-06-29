@@ -38,6 +38,11 @@ public class Controle implements Serializable {
     @Column(name = "type")
     private TypeControle type;
 
+    @JsonIgnoreProperties(value = { "controle" }, allowSetters = true)
+    @OneToOne
+    @JoinColumn(unique = true)
+    private Matiere matiere;
+
     @OneToMany(mappedBy = "controle")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     @JsonIgnoreProperties(value = { "controle", "etudiant" }, allowSetters = true)
@@ -94,6 +99,19 @@ public class Controle implements Serializable {
 
     public void setType(TypeControle type) {
         this.type = type;
+    }
+
+    public Matiere getMatiere() {
+        return this.matiere;
+    }
+
+    public Controle matiere(Matiere matiere) {
+        this.setMatiere(matiere);
+        return this;
+    }
+
+    public void setMatiere(Matiere matiere) {
+        this.matiere = matiere;
     }
 
     public Set<Obtient> getObtients() {

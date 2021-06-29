@@ -6,6 +6,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import com.mycompany.myapp.IntegrationTest;
+import com.mycompany.myapp.domain.Controle;
 import com.mycompany.myapp.domain.Matiere;
 import com.mycompany.myapp.repository.MatiereRepository;
 import java.util.List;
@@ -60,6 +61,16 @@ class MatiereResourceIT {
      */
     public static Matiere createEntity(EntityManager em) {
         Matiere matiere = new Matiere().nameMat(DEFAULT_NAME_MAT).coefMat(DEFAULT_COEF_MAT);
+        // Add required entity
+        Controle controle;
+        if (TestUtil.findAll(em, Controle.class).isEmpty()) {
+            controle = ControleResourceIT.createEntity(em);
+            em.persist(controle);
+            em.flush();
+        } else {
+            controle = TestUtil.findAll(em, Controle.class).get(0);
+        }
+        matiere.setControle(controle);
         return matiere;
     }
 
@@ -71,6 +82,16 @@ class MatiereResourceIT {
      */
     public static Matiere createUpdatedEntity(EntityManager em) {
         Matiere matiere = new Matiere().nameMat(UPDATED_NAME_MAT).coefMat(UPDATED_COEF_MAT);
+        // Add required entity
+        Controle controle;
+        if (TestUtil.findAll(em, Controle.class).isEmpty()) {
+            controle = ControleResourceIT.createUpdatedEntity(em);
+            em.persist(controle);
+            em.flush();
+        } else {
+            controle = TestUtil.findAll(em, Controle.class).get(0);
+        }
+        matiere.setControle(controle);
         return matiere;
     }
 
