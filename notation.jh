@@ -1,29 +1,29 @@
 
-entity Etudiant {
+entity Student {
 	firstName String
     lastName String
 }
 
-entity Diplome {
+entity Degree {
 	nameDipl String
 }
 
-entity Controle {
+entity Assessment {
     date LocalDate
     coefCont Integer min(1) max(5)
-    type TypeControle
+    type TypeAssessment
 }
 
-entity Matiere{
+entity Subject{
     nameMat String
     coefMat Integer min(1) max(5)
 }
 
-entity Obtient {
+entity Get {
 	note Float required min(0) max(20)
 }
 
-enum TypeControle {
+enum TypeAssessment {
 	CE (comprehensionEcrite),
     CO (comprehensionOrale),
     EE (expressionEcrite),
@@ -34,30 +34,28 @@ enum TypeControle {
 * Entity Obtient
 */
 relationship OneToMany{
-    Controle{obtient} to Obtient{controle (date) required}, 
-    Etudiant{obtient} to Obtient{etudiant (firstName) required}
+    Assessment{get} to Get{assessment (date) required}, 
+    Student{get} to Get{student (firstName) required}
 }
 
 /** 
 * Others
 */
 relationship OneToMany{
-	Matiere{controle} to Controle{matiere (nameMat) required},
-   	Diplome{etudiant} to Etudiant{diplome (nameDipl) required},
-    Diplome{matiere} to Matiere{diplome (nameDipl) required}
+	Subject{assessment} to Assessment{subject (nameMat) required},
+   	Degree{student} to Student{degree (nameDipl) required},
+    Degree{subject} to Subject{degree (nameDipl) required}
 }
 
-
-
 // Set pagination options
-paginate Etudiant, Matiere with infinite-scroll
-paginate Controle with pagination
+paginate Student, Subject with infinite-scroll
+paginate Assessment with pagination
 
 // Use Data Transfer Objects (DTO)
 // dto * with mapstruct
 
 // Set service options to all except few
-service all with serviceImpl except Obtient
+service all with serviceImpl except Get
 
 // Set an angular suffix
 // angularSuffix * with mySuffix

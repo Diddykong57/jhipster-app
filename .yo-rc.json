@@ -44,8 +44,8 @@
     "clientTheme": "none",
     "clientThemeVariant": "",
     "reactive": false,
-    "entities": ["Etudiant", "Diplome", "Controle", "Matiere", "Obtient"],
-    "lastLiquibaseTimestamp": 1624881311000
+    "entities": ["Etudiant", "Diplome", "Controle", "Matiere", "Obtient", "Student", "Degree", "Assessment", "Subject", "Get"],
+    "lastLiquibaseTimestamp": 1625054042000
   },
   "git-provider": "GitHub",
   "git-company": "Diddykong57",
