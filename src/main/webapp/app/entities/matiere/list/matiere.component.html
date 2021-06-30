@@ -3,7 +3,7 @@
     <span>Matieres</span>
 
     <div class="d-flex justify-content-end">
-      <button class="btn btn-info mr-2" (click)="loadAll()" [disabled]="isLoading">
+      <button class="btn btn-info mr-2" (click)="reset()" [disabled]="isLoading">
         <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
         <span>Refresh List</span>
       </button>
@@ -31,15 +31,15 @@
   <div class="table-responsive" id="entities" *ngIf="matieres && matieres.length > 0">
     <table class="table table-striped" aria-describedby="page-heading">
       <thead>
-        <tr>
-          <th scope="col"><span>ID</span></th>
-          <th scope="col"><span>Name Mat</span></th>
-          <th scope="col"><span>Coef Mat</span></th>
-          <th scope="col"><span>Diplome</span></th>
+        <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" [callback]="reset.bind(this)">
+          <th scope="col" jhiSortBy="id"><span>ID</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="nameMat"><span>Name Mat</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="coefMat"><span>Coef Mat</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="diplome.nameDipl"><span>Diplome</span> <fa-icon icon="sort"></fa-icon></th>
           <th scope="col"></th>
         </tr>
       </thead>
-      <tbody>
+      <tbody infinite-scroll (scrolled)="loadPage(page + 1)" [infiniteScrollDisabled]="page >= links['last']" [infiniteScrollDistance]="0">
         <tr *ngFor="let matiere of matieres; trackBy: trackId" data-cy="entityTable">
           <td>
             <a [routerLink]="['/matiere', matiere.id, 'view']">{{ matiere.id }}</a>

@@ -2,6 +2,7 @@ package com.mycompany.myapp.web.rest;
 
 import com.mycompany.myapp.domain.Controle;
 import com.mycompany.myapp.repository.ControleRepository;
+import com.mycompany.myapp.service.ControleService;
 import com.mycompany.myapp.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -13,10 +14,15 @@ import javax.validation.constraints.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import tech.jhipster.web.util.HeaderUtil;
+import tech.jhipster.web.util.PaginationUtil;
 import tech.jhipster.web.util.ResponseUtil;
 
 /**
@@ -24,7 +30,6 @@ import tech.jhipster.web.util.ResponseUtil;
  */
 @RestController
 @RequestMapping("/api")
-@Transactional
 public class ControleResource {
 
     private final Logger log = LoggerFactory.getLogger(ControleResource.class);
@@ -34,9 +39,12 @@ public class ControleResource {
     @Value("${jhipster.clientApp.name}")
     private String applicationName;
 
+    private final ControleService controleService;
+
     private final ControleRepository controleRepository;
 
-    public ControleResource(ControleRepository controleRepository) {
+    public ControleResource(ControleService controleService, ControleRepository controleRepository) {
+        this.controleService = controleService;
         this.controleRepository = controleRepository;
     }
 
@@ -53,7 +61,7 @@ public class ControleResource {
         if (controle.getId() != null) {
             throw new BadRequestAlertException("A new controle cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        Controle result = controleRepository.save(controle);
+        Controle result = controleService.save(controle);
         return ResponseEntity
             .created(new URI("/api/controles/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, false, ENTITY_NAME, result.getId().toString()))
@@ -87,7 +95,7 @@ public class ControleResource {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
 
-        Controle result = controleRepository.save(controle);
+        Controle result = controleService.save(controle);
         return ResponseEntity
             .ok()
             .headers(HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, controle.getId().toString()))
@@ -122,24 +130,7 @@ public class ControleResource {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
 
-        Optional<Controle> result = controleRepository
-            .findById(controle.getId())
-            .map(
-                existingControle -> {
-                    if (controle.getDate() != null) {
-                        existingControle.setDate(controle.getDate());
-                    }
-                    if (controle.getCoefCont() != null) {
-                        existingControle.setCoefCont(controle.getCoefCont());
-                    }
-                    if (controle.getType() != null) {
-                        existingControle.setType(controle.getType());
-                    }
-
-                    return existingControle;
-                }
-            )
-            .map(controleRepository::save);
+        Optional<Controle> result = controleService.partialUpdate(controle);
 
         return ResponseUtil.wrapOrNotFound(
             result,
@@ -150,12 +141,15 @@ public class ControleResource {
     /**
      * {@code GET  /controles} : get all the controles.
      *
+     * @param pageable the pagination information.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of controles in body.
      */
     @GetMapping("/controles")
-    public List<Controle> getAllControles() {
-        log.debug("REST request to get all Controles");
-        return controleRepository.findAll();
+    public ResponseEntity<List<Controle>> getAllControles(Pageable pageable) {
+        log.debug("REST request to get a page of Controles");
+        Page<Controle> page = controleService.findAll(pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        return ResponseEntity.ok().headers(headers).body(page.getContent());
     }
 
     /**
@@ -167,7 +161,7 @@ public class ControleResource {
     @GetMapping("/controles/{id}")
     public ResponseEntity<Controle> getControle(@PathVariable Long id) {
         log.debug("REST request to get Controle : {}", id);
-        Optional<Controle> controle = controleRepository.findById(id);
+        Optional<Controle> controle = controleService.findOne(id);
         return ResponseUtil.wrapOrNotFound(controle);
     }
 
@@ -180,7 +174,7 @@ public class ControleResource {
     @DeleteMapping("/controles/{id}")
     public ResponseEntity<Void> deleteControle(@PathVariable Long id) {
         log.debug("REST request to delete Controle : {}", id);
-        controleRepository.deleteById(id);
+        controleService.delete(id);
         return ResponseEntity
             .noContent()
             .headers(HeaderUtil.createEntityDeletionAlert(applicationName, false, ENTITY_NAME, id.toString()))
