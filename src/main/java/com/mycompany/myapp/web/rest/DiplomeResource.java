@@ -2,6 +2,7 @@ package com.mycompany.myapp.web.rest;
 
 import com.mycompany.myapp.domain.Diplome;
 import com.mycompany.myapp.repository.DiplomeRepository;
+import com.mycompany.myapp.service.DiplomeService;
 import com.mycompany.myapp.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -12,7 +13,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import tech.jhipster.web.util.HeaderUtil;
 import tech.jhipster.web.util.ResponseUtil;
@@ -22,7 +22,6 @@ import tech.jhipster.web.util.ResponseUtil;
  */
 @RestController
 @RequestMapping("/api")
-@Transactional
 public class DiplomeResource {
 
     private final Logger log = LoggerFactory.getLogger(DiplomeResource.class);
@@ -32,9 +31,12 @@ public class DiplomeResource {
     @Value("${jhipster.clientApp.name}")
     private String applicationName;
 
+    private final DiplomeService diplomeService;
+
     private final DiplomeRepository diplomeRepository;
 
-    public DiplomeResource(DiplomeRepository diplomeRepository) {
+    public DiplomeResource(DiplomeService diplomeService, DiplomeRepository diplomeRepository) {
+        this.diplomeService = diplomeService;
         this.diplomeRepository = diplomeRepository;
     }
 
@@ -51,7 +53,7 @@ public class DiplomeResource {
         if (diplome.getId() != null) {
             throw new BadRequestAlertException("A new diplome cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        Diplome result = diplomeRepository.save(diplome);
+        Diplome result = diplomeService.save(diplome);
         return ResponseEntity
             .created(new URI("/api/diplomes/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, false, ENTITY_NAME, result.getId().toString()))
@@ -83,7 +85,7 @@ public class DiplomeResource {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
 
-        Diplome result = diplomeRepository.save(diplome);
+        Diplome result = diplomeService.save(diplome);
         return ResponseEntity
             .ok()
             .headers(HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, diplome.getId().toString()))
@@ -118,18 +120,7 @@ public class DiplomeResource {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
 
-        Optional<Diplome> result = diplomeRepository
-            .findById(diplome.getId())
-            .map(
-                existingDiplome -> {
-                    if (diplome.getNameDipl() != null) {
-                        existingDiplome.setNameDipl(diplome.getNameDipl());
-                    }
-
-                    return existingDiplome;
-                }
-            )
-            .map(diplomeRepository::save);
+        Optional<Diplome> result = diplomeService.partialUpdate(diplome);
 
         return ResponseUtil.wrapOrNotFound(
             result,
@@ -145,7 +136,7 @@ public class DiplomeResource {
     @GetMapping("/diplomes")
     public List<Diplome> getAllDiplomes() {
         log.debug("REST request to get all Diplomes");
-        return diplomeRepository.findAll();
+        return diplomeService.findAll();
     }
 
     /**
@@ -157,7 +148,7 @@ public class DiplomeResource {
     @GetMapping("/diplomes/{id}")
     public ResponseEntity<Diplome> getDiplome(@PathVariable Long id) {
         log.debug("REST request to get Diplome : {}", id);
-        Optional<Diplome> diplome = diplomeRepository.findById(id);
+        Optional<Diplome> diplome = diplomeService.findOne(id);
         return ResponseUtil.wrapOrNotFound(diplome);
     }
 
@@ -170,7 +161,7 @@ public class DiplomeResource {
     @DeleteMapping("/diplomes/{id}")
     public ResponseEntity<Void> deleteDiplome(@PathVariable Long id) {
         log.debug("REST request to delete Diplome : {}", id);
-        diplomeRepository.deleteById(id);
+        diplomeService.delete(id);
         return ResponseEntity
             .noContent()
             .headers(HeaderUtil.createEntityDeletionAlert(applicationName, false, ENTITY_NAME, id.toString()))

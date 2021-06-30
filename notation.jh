@@ -30,28 +30,34 @@ enum TypeControle {
     EO (expressionOrale)
 }
 
+/** 
+* Entity Obtient
+*/
+relationship OneToMany{
+    Controle{obtient} to Obtient{controle (date) required}, 
+    Etudiant{obtient} to Obtient{etudiant (firstName) required}
+}
+
+/** 
+* Others
+*/
 relationship OneToMany{
 	Matiere{controle} to Controle{matiere (nameMat) required},
    	Diplome{etudiant} to Etudiant{diplome (nameDipl) required},
     Diplome{matiere} to Matiere{diplome (nameDipl) required}
 }
 
-relationship OneToMany{
-    Controle{obtient} to Obtient{controle (date) required}, 
-    Etudiant{obtient} to Obtient{etudiant (firstName) required}
-}
-
 
 
 // Set pagination options
-//paginate JobHistory, Employee with infinite-scroll
-//paginate Job with pagination
+paginate Etudiant, Matiere with infinite-scroll
+paginate Controle with pagination
 
 // Use Data Transfer Objects (DTO)
 // dto * with mapstruct
 
 // Set service options to all except few
-//service all with serviceImpl except Employee, Job
+service all with serviceImpl except Obtient
 
 // Set an angular suffix
 // angularSuffix * with mySuffix
